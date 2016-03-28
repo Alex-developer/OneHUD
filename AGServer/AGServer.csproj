@@ -54,6 +54,9 @@
     <Compile Include="Processes\ProcessMonitor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servers\HTTPServer.cs" />
+    <Compile Include="Servers\Net\NetHelpers.cs" />
+    <Compile Include="Servers\Net\Port.cs" />
     <EmbeddedResource Include="AGServer.resx">
       <DependentUpon>AGServer.cs</DependentUpon>
     </EmbeddedResource>
@@ -79,8 +82,14 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Folder Include="Servers\Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\websocket-sharp\websocket-sharp\websocket-sharp.csproj">
+      <Project>{b357bac7-529e-4d81-a0d2-71041b19c8de}</Project>
+      <Name>websocket-sharp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AGData\AGData.csproj">
       <Project>{9f2b6482-bdc7-468a-839f-23393a239dcd}</Project>
       <Name>AGData</Name>
@@ -101,6 +110,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Plugins\RaceRoom.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
