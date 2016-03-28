@@ -131,7 +131,7 @@ namespace AGServer
         }
         #endregion
 
-        #region Web Server
+        #region HTTP Server
         private void StartWebServer()
         {
             UpdateHTTPServerInfo();
@@ -213,9 +213,6 @@ namespace AGServer
         }
         #endregion
         #endregion
-
-
-
 
     }
 }
