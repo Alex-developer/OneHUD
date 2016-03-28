@@ -1,7 +1,14 @@
-# AGRacingDash
-Project Cars Dashboard and Telemetry Analyser
+# AGServer
 
-Realtime Dashboard for iRacing, Project Cars (1 and 2), Raceroom and others.
+AGServer is the server and dashboard component for my sim racing telemetry app.
+
+The server provides data in real time for 
+
+iRacing
+Project Cars
+Assetto Corsa
+Raceroom Experience
+More will be added
 
 Features
 
