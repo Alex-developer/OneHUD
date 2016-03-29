@@ -6,20 +6,27 @@ namespace AGData
 {
     public class TelemetryData
     {
+        public string Game { get; set; }
         public Engine Engine { get; set; }
         public Chassis Chassis { get; set; }
         public Car Car { get; set; }
+
+        private readonly Object _lock = new Object();
 
         public TelemetryData()
         {
             Reset();
         }
 
-        private void Reset()
+        public void Reset()
         {
-            Engine = new Engine();
-            Chassis = new Chassis();
-            Car = new Car();
+            lock (_lock)
+            {
+                Game = null;
+                Engine = new Engine();
+                Chassis = new Chassis();
+                Car = new Car();
+            }
         }
     }
 }

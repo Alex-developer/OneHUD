@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AGServer.Servers.Net
+namespace AGServer.Servers.Utils
 {
     public class Port
     {

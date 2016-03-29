@@ -7,9 +7,9 @@ using System.Net;
 using System.IO;
 using AGServer.Plugin;
 using AGServer.Processes;
+using AGServer.Servers.HTTP;
+using AGServer.Servers.Utils;
 using AGServerInterface;
-using AGServer.Servers;
-using AGServer.Servers.Net;
 using AGData;
 
 namespace AGServer
@@ -38,7 +38,8 @@ namespace AGServer
         #region Startup Code
         public void Startup()
         {
-            
+            _telemetryData = new TelemetryData();
+
             _plugins = new Dictionary<string, IGame>();
             ICollection<IGame> plugins = PluginLoader<IGame>.LoadPlugins("Plugins");
             if (plugins.Count > 0)
@@ -72,7 +73,8 @@ namespace AGServer
             {
                 _game = _plugins[gameName];
                 Status.Text = _game.DisplayName;
-                _telemetryData = new TelemetryData();
+                _telemetryData.Reset();
+                _telemetryData.Game = gameName;
                 _gameReaderThread = new Thread(() => GameReaderThread());
                 _gameReaderThread.Start();
 
@@ -88,6 +90,7 @@ namespace AGServer
         {
             _game.Stop(); // !!!!
             _gameReaderThread.Abort();
+            _telemetryData.Reset();
         }
 
         private void GameClosed(string gameName, EventArgs e)

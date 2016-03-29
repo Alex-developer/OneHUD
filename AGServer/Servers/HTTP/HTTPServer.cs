@@ -4,13 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Net;
-using System.Net.Sockets;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
 using WebSocketSharp.Server;
+using AGServer.Servers.Services;
 using AGData;
 
-namespace AGServer.Servers
+namespace AGServer.Servers.HTTP
 {
     class HTTPServer
     {
@@ -96,12 +94,12 @@ namespace AGServer.Servers
         
             #endregion
         };
-        //   private Thread _serverThread;
-        private string _rootDirectory;
-        private HttpListener listener;
-        private int _port;
-        private IPAddress _ipAddress;
-        private TelemetryData _telemetryData;
+
+        private readonly string _rootDirectory;
+        private readonly HttpListener _listener;
+        private readonly int _port;
+        private readonly IPAddress _ipAddress;
+        private readonly TelemetryData _telemetryData;
         private string _httpServerPath;
 
         private WebSocketSharp.Server.HttpServer _webSocketServer;
@@ -114,9 +112,10 @@ namespace AGServer.Servers
             _ipAddress = ipAddress;
         }
 
+
         public void Start()
         {
-            this.Initialize();
+            Initialise();
         }
 
         public void Stop()
@@ -124,10 +123,12 @@ namespace AGServer.Servers
             _webSocketServer.Stop();
         }
 
-        private void Initialize()
+        private void Initialise()
         {
             _webSocketServer = new WebSocketSharp.Server.HttpServer(_port);
             _webSocketServer.RootPath = _rootDirectory + "\\";
+
+            _webSocketServer.AddWebSocketService<TestService>("/Test", () => new TestService(_telemetryData));
             _webSocketServer.Start();
 
             _webSocketServer.OnPost += (sender, e) =>

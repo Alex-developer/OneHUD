@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
-namespace AGServer.Servers.Net
+namespace AGServer.Servers.Utils
 {
     class NetHelpers
     {

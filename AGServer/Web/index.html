@@ -3,7 +3,38 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>AgServer</title>
+    <script>
+
+        if (location.port !== '') {
+            _uri = location.host.replace(':' + location.port, '') + ':' + location.port;
+        } else {
+            _uri = location.host;
+        }
+
+        _pollingWebsocket = new WebSocket('ws://' + _uri + '/Test');
+        _pollingWebsocket.onopen = function (evt) {
+        };
+        _pollingWebsocket.onclose = function (evt) {
+        };
+        _pollingWebsocket.onmessage = function (evt) {
+            var data = evt.data;
+            console.log(data);
+        };
+
+        setInterval(function () {
+            send();
+        }, 1000);
+
+        function send() {
+            if (_pollingWebsocket.readyState === 1) {
+                _pollingWebsocket.send('test');
+                return true;
+            }
+
+            return false;
+        }
+    </script>
 </head>
 <body>
     <h1>Hello World</h1>
