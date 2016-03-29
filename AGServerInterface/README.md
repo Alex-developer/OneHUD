@@ -5,8 +5,6 @@ AGServerInterface
 
 This is the interface for the game reader engines.
 
- 
-
 if you are developing a game reader then please ensure that it implements this
 interface.
 
@@ -41,7 +39,7 @@ i.e. the user closes it.
 
 ### Events
 
-**GameEvent **This is NOT currently implemented but will allow for game readers
+**GameEvent** This is NOT currently implemented but will allow for game readers
 to fire events back to the core server.
 
  
