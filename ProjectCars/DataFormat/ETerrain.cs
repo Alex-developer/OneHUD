@@ -1,0 +1,42 @@
+﻿namespace ProjectCars.DataFormat
+{
+    public enum ETerrain
+    {
+        TerrainRoad = 0,
+        TerrainLowGripRoad,
+        TerrainBumpyRoad1,
+        TerrainBumpyRoad2,
+        TerrainBumpyRoad3,
+        TerrainMarbles,
+        TerrainGrassyBerms,
+        TerrainGrass,
+        TerrainGravel,
+        TerrainBumpyGravel,
+        TerrainRumbleStrips,
+        TerrainDrains,
+        TerrainTyrewalls,
+        TerrainCementwalls,
+        TerrainGuardrails,
+        TerrainSand,
+        TerrainBumpySand,
+        TerrainDirt,
+        TerrainBumpyDirt,
+        TerrainDirtRoad,
+        TerrainBumpyDirtRoad,
+        TerrainPavement,
+        TerrainDirtBank,
+        TerrainWood,
+        TerrainDryVerge,
+        TerrainExitRumbleStrips,
+        TerrainGrasscrete,
+        TerrainLongGrass,
+        TerrainSlopeGrass,
+        TerrainCobbles,
+        TerrainSandRoad,
+        TerrainBakedClay,
+        TerrainAstroturf,
+        TerrainSnowhalf,
+        TerrainSnowfull,
+        TerrainMax
+    }
+}

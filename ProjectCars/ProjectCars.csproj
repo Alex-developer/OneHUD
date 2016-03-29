@@ -39,7 +39,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataFormat\Memory.cs" />
+    <Compile Include="DataFormat\ECarFlags.cs" />
+    <Compile Include="DataFormat\ECrashDamageState.cs" />
+    <Compile Include="DataFormat\EGameState.cs" />
+    <Compile Include="DataFormat\EHeaderVersion.cs" />
+    <Compile Include="DataFormat\EMaxPart.cs" />
+    <Compile Include="DataFormat\ESessionState.cs" />
+    <Compile Include="DataFormat\EStringLenMax.cs" />
+    <Compile Include="DataFormat\ETerrain.cs" />
+    <Compile Include="DataFormat\ETyreFlags.cs" />
+    <Compile Include="DataFormat\ETyres.cs" />
+    <Compile Include="DataFormat\EVector.cs" />
+    <Compile Include="DataFormat\MCurrentSector.cs" />
+    <Compile Include="DataFormat\MHighestFlagColour.cs" />
+    <Compile Include="DataFormat\mHighestFlagReason.cs" />
+    <Compile Include="DataFormat\mPitMode.cs" />
+    <Compile Include="DataFormat\MPitSchedule.cs" />
+    <Compile Include="DataFormat\MRaceState.cs" />
+    <Compile Include="DataFormat\ParticipantInfo.cs" />
+    <Compile Include="DataFormat\SharedMemory.cs" />
+    <Compile Include="DataFormat\SmString.cs" />
     <Compile Include="ProjectCars.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Readers\SharedMemoryReader.cs" />

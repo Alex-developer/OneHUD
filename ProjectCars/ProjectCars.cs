@@ -112,10 +112,10 @@ namespace ProjectCars
         #region Process Shared memory data
         private void ProcessData()
         {
-            eGameState gameState = (eGameState)_data.mGameState;
-            eSessionState sessionState = (eSessionState)_data.mSessionState;
+            EGameState gameState = (EGameState)_data.MGameState;
+            ESessionState sessionState = (ESessionState)_data.MSessionState;
 
-            if (gameState == eGameState.GAME_INGAME_PLAYING)
+            if (gameState == EGameState.GameIngamePlaying)
             {
                 _telemetryData.Car.InCar = true;
             }
@@ -123,7 +123,7 @@ namespace ProjectCars
             {
                 _telemetryData.Car.InCar = false;
             }
-            _telemetryData.Engine.RPM = _data.mRpm;
+            _telemetryData.Engine.RPM = _data.MRpm;
         }
         #endregion
     }
