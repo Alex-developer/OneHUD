@@ -1,15 +1,26 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.IO;
 using System.Net;
+using System.Web;
+using System.Web.Script.Serialization;
+using AGServer.Servers.DataHandlers.File;
+using AGServer.Servers.DataHandlers.Connected;
+using AGServer.Servers.HTTP.Services;
+using AGServer.Servers.DataHandlers;
 using WebSocketSharp.Server;
-using AGServer.Servers.Services;
 using AGData;
 
 namespace AGServer.Servers.HTTP
 {
+    class AGError
+    {
+        public string result = "Error";
+    }
+
     class HTTPServer
     {
         private readonly string[] indexFiles =
@@ -128,7 +139,8 @@ namespace AGServer.Servers.HTTP
             _webSocketServer = new WebSocketSharp.Server.HttpServer(_port);
             _webSocketServer.RootPath = _rootDirectory + "\\";
 
-            _webSocketServer.AddWebSocketService<TestService>("/Test", () => new TestService(_telemetryData));
+            _webSocketServer.AddWebSocketService<FileService>("/File", () => new FileService(_telemetryData));
+            _webSocketServer.AddWebSocketService<ConnectedService>("/Connected", () => new ConnectedService(_telemetryData));
             _webSocketServer.Start();
 
             _webSocketServer.OnPost += (sender, e) =>
@@ -137,13 +149,47 @@ namespace AGServer.Servers.HTTP
                 {
                     var request = e.Request;
                     var response = e.Response;
-                    string[] rawUrlArray = request.RawUrl.Split('?');
-                    string rawUrl = rawUrlArray[0];
 
-                    List<string> urlBits = rawUrl.Split('/').ToList().Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                    DataHandlerResult result = null;
 
-                    bool haveResult = false;
-                    dynamic result = null;
+                    var uri = request.Url;
+
+                    if (uri.Segments.Length == 2)
+                    {
+                        var action = uri.Segments[1];
+
+                        string postedText = "";
+                        using (var reader = new StreamReader(request.InputStream, request.ContentEncoding))
+                        {
+                            postedText = reader.ReadToEnd();
+                        }
+                        NameValueCollection postData = HttpUtility.ParseQueryString(postedText);
+
+                        switch (action) {
+                            case "File":
+                                result = FileDataHandler.ProcessFileRequest(_telemetryData, postData);
+                                break;
+
+                            case "Connected":
+                                result = ConnectedDataHandler.ProcessConnectedRequest(_telemetryData, postData);
+                                break;
+                        }
+                        response.StatusCode = (int)HttpStatusCode.OK;
+                    }
+                    else
+                    {
+                        result = new DataHandlerError();
+                        response.StatusCode = (int)HttpStatusCode.NotFound;
+                    }
+
+                    string json = new JavaScriptSerializer().Serialize(result);
+                    response.ContentType = "application/json";
+
+                    byte[] content = Encoding.UTF8.GetBytes(json);
+                    response.ContentLength64 = content.Length;
+
+                    System.IO.Stream output = response.OutputStream;
+                    output.Write(content, 0, content.Length);
                 }
             };
 
@@ -177,13 +223,22 @@ namespace AGServer.Servers.HTTP
 
                     byte[] content = _webSocketServer.GetFile(_httpServerPath);
 
-                    response.AddHeader("cache-control", "no-store, must-revalidate, private");
-                    response.AddHeader("Pragma", "no-cache");
 
-                    response.ContentLength64 = content.Length;
+                    if (content != null)
+                    {
 
-                    System.IO.Stream output = response.OutputStream;
-                    output.Write(content, 0, content.Length);
+                        response.AddHeader("cache-control", "no-store, must-revalidate, private");
+                        response.AddHeader("Pragma", "no-cache");
+
+                        response.ContentLength64 = content.Length;
+
+                        System.IO.Stream output = response.OutputStream;
+                        output.Write(content, 0, content.Length);
+                    }
+                    else
+                    {
+                        response.StatusCode = (int)HttpStatusCode.NotFound;
+                    }
                 }
             };
         }

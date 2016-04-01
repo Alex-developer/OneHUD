@@ -75,6 +75,7 @@ namespace AGServer
                 Status.Text = _game.DisplayName;
                 _telemetryData.Reset();
                 _telemetryData.Game = gameName;
+                _telemetryData.Description = _plugins[gameName].DisplayName;
                 _gameReaderThread = new Thread(() => GameReaderThread());
                 _gameReaderThread.Start();
 

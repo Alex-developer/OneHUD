@@ -1,0 +1,51 @@
+﻿{{!-- This is the base layout for your project, and will be used on every page. --}}
+
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGDash</title>
+    <link rel="stylesheet" href="{{root}}css/app.css">
+      <link rel="stylesheet" href="{{root}}js/slick/slick/slick.css">
+      <link rel="stylesheet" href="{{root}}js/slick/slick/slick-theme.css">
+  </head>
+<style>
+    .background-video {
+        position: fixed;
+        width: auto;
+        height: auto;
+        z-index: -3;
+    }
+
+#background-video-mask, .background-video {
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+audio, canvas, progress, video {
+    display: inline-block;
+    vertical-align: baseline;
+}
+
+#home-pages .callout, #home-banner .callout {
+    background: rgba(219,221,227,0.8)
+}
+
+</style>
+  <body>
+
+    {{!-- Pages you create in the src/pages/ folder are inserted here when the flattened page is created. --}}
+    {{> body}}
+
+      <script src="{{root}}js/require/require.js"></script>
+      <script src="{{root}}js/framework/bootstrap.js"></script>
+
+      <script src="{{root}}js/app.js"></script>
+      <script src="{{root}}js/slick/slick/slick.min.js"></script>
+
+  </body>
+</html>

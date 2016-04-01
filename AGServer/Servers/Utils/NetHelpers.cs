@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 
 namespace AGServer.Servers.Utils
 {
@@ -13,17 +14,17 @@ namespace AGServer.Servers.Utils
         public static bool CheckPortIsFree(IPAddress ipAddress, int port)
         {
             bool portAvailable = true;
-            try
+
+            IPGlobalProperties ipProperties = IPGlobalProperties.GetIPGlobalProperties();
+            IPEndPoint[] ipEndPoints = ipProperties.GetActiveTcpListeners();
+
+            foreach (IPEndPoint endPoint in ipEndPoints)
             {
-                TcpListener tcpListener = new TcpListener(ipAddress, port);
-                tcpListener.Start();
-                tcpListener.Stop();
-                tcpListener = null;
-            }
-            catch (SocketException ex)
-            {
-                Console.WriteLine(ex.ToString());
-                portAvailable = false;
+                if (endPoint.Port == port)
+                {
+                    portAvailable = false;
+                    break;
+                }
             }
 
             return portAvailable;

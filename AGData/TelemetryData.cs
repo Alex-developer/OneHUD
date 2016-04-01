@@ -7,6 +7,7 @@ namespace AGData
     public class TelemetryData
     {
         public string Game { get; set; }
+        public string Description { get; set; }
         public Engine Engine { get; set; }
         public Chassis Chassis { get; set; }
         public Car Car { get; set; }
