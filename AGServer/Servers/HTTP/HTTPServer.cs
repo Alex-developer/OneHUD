@@ -7,11 +7,13 @@ using System.IO;
 using System.Net;
 using System.Web;
 using System.Web.Script.Serialization;
-using AGServer.Servers.DataHandlers.File;
+using AGServer.Servers.DataHandlers.Actions;
 using AGServer.Servers.DataHandlers.Connected;
+using AGServer.Servers.DataHandlers.Startup;
 using AGServer.Servers.HTTP.Services;
 using AGServer.Servers.DataHandlers;
 using WebSocketSharp.Server;
+using AGServerInterface;
 using AGData;
 
 namespace AGServer.Servers.HTTP
@@ -112,15 +114,16 @@ namespace AGServer.Servers.HTTP
         private readonly IPAddress _ipAddress;
         private readonly TelemetryData _telemetryData;
         private string _httpServerPath;
-
+        private Dictionary<string, IGame> _plugins;
         private WebSocketSharp.Server.HttpServer _webSocketServer;
 
-        public HTTPServer(string path, int port, TelemetryData gameState, IPAddress ipAddress)
+        public HTTPServer(string path, int port, TelemetryData gameState, IPAddress ipAddress, Dictionary<string, IGame> plugins)
         {
             _telemetryData = gameState;
             _rootDirectory = path;
             _port = port;
             _ipAddress = ipAddress;
+            _plugins = plugins;
         }
 
 
@@ -167,7 +170,7 @@ namespace AGServer.Servers.HTTP
 
                         switch (action) {
                             case "File":
-                                result = FileDataHandler.ProcessFileRequest(_telemetryData, postData);
+                                result = ActionsDataHandler.ProcessFileRequest(_telemetryData, postData);
                                 break;
 
                             case "Connected":
@@ -199,6 +202,7 @@ namespace AGServer.Servers.HTTP
                 {
                     var request = e.Request;
                     var response = e.Response;
+                    DataHandlerResult result = null;
 
                     string[] rawUrlArray = request.RawUrl.Split('?');
                     string rawUrl = rawUrlArray[0];
@@ -217,12 +221,27 @@ namespace AGServer.Servers.HTTP
                         }
                     }
 
+                    byte[] content = _webSocketServer.GetFile(_httpServerPath);
+
+                    if (content == null)
+                    {
+
+                        List<string> urlBits = rawUrl.Split('/').ToList().Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+
+                        switch (urlBits[0])
+                        {
+                            case "Startup":
+                                result = StartupDataHandler.ProcessStartupRequest(_telemetryData, _plugins, request.QueryString);
+                                break;
+                        }
+
+                        string json = new JavaScriptSerializer().Serialize(result);
+                        content = Encoding.UTF8.GetBytes(json);
+                    }
+
                     string mime;
                     response.ContentType = mimeTypeMappings.TryGetValue(Path.GetExtension(_httpServerPath), out mime) ? mime : "application/octet-stream";
                     response.ContentEncoding = Encoding.UTF8;
-
-                    byte[] content = _webSocketServer.GetFile(_httpServerPath);
-
 
                     if (content != null)
                     {

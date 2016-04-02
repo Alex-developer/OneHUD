@@ -47,7 +47,6 @@ namespace AGServer
                 foreach (var item in plugins)
                 {
                     _plugins.Add(item.Name, item);
-                    item.GameEvent += HandleGameEvent;
                 }
                 _processMonitor = new ProcessMonitor(_plugins);
                 _processMonitor.GameLoadedEvent += new ProcessMonitor.GameLoaded(GameLoaded);
@@ -101,10 +100,6 @@ namespace AGServer
             Status.Text = "Waiting ...";
         }
 
-        private void HandleGameEvent(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
 
         #region Cleanup
@@ -141,7 +136,7 @@ namespace AGServer
             UpdateHTTPServerInfo();
             if (NetHelpers.CheckPortIsFree(_ipAddress, _httpServerPort))
             {
-                _httpServerThread = new Thread(() => HTTPServerThread(_telemetryData, _ipAddress, _httpServerPort, _httpServerPath));
+                _httpServerThread = new Thread(() => HTTPServerThread(_telemetryData, _ipAddress, _httpServerPort, _httpServerPath, _plugins));
                 _httpServerThread.Start();
                 UpdateHTTPServerInfo();
             }
@@ -167,9 +162,9 @@ namespace AGServer
             }
         }
 
-        private void HTTPServerThread(TelemetryData telemetryData, IPAddress ipAddress, int port, string httpServerPath)
+        private void HTTPServerThread(TelemetryData telemetryData, IPAddress ipAddress, int port, string httpServerPath, Dictionary<string, IGame> plugins)
         {
-            _httpServer = new HTTPServer(httpServerPath, port, telemetryData, ipAddress);
+            _httpServer = new HTTPServer(httpServerPath, port, telemetryData, ipAddress, plugins);
             _httpServer.Start();
             while (true)
             {

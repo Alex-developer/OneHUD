@@ -12,13 +12,8 @@ using RaceRoom.DataFormat;
 
 namespace RaceRoom
 {
-    public class RaceRoom : IGame
+    public class RaceRoom : GameBase, IGame
     {
-        public event EventHandler GameEvent;
-
-        private readonly string _name = "R3E";
-        private readonly string _displayName = "RaceRoom Experience";
-        private readonly string[] _processNames = { "RRRE" };
         private readonly string _sharedMemoryFileName = "$Race$";
 
         private readonly SharedMemoryReader _memoryReader;
@@ -30,48 +25,26 @@ namespace RaceRoom
         private TelemetryData _telemetryData;
 
         #region Constructor
-        public RaceRoom()
+        public RaceRoom() : base()
         {
+            _name = "R3E";
+            _displayName = "RaceRoom Experience";
+            _processNames.Add("RRRE");
             _memoryReader = new SharedMemoryReader(_sharedMemoryFileName, _bufferSize);
             _cancel = new CancellationTokenSource();
         }
         #endregion
 
-        #region Getters and Setters
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-        }
-
-        public string DisplayName
-        {
-            get
-            {
-                return _displayName;
-            }
-        }
-
-        public string[] ProcessNames
-        {
-            get
-            {
-                return _processNames;
-            }
-        }
-        #endregion
 
         #region Public Methods
-        public bool Start(TelemetryData telemetryData)
+        public override bool Start(TelemetryData telemetryData)
         {
             _telemetryData = telemetryData;
             ReadData(_cancel.Token);
             return true;
         }
 
-        public bool Stop()
+        public override bool Stop()
         {
             _cancel.Cancel();
             return true;

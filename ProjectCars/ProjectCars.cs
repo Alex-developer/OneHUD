@@ -9,13 +9,8 @@ using AGData;
 
 namespace ProjectCars
 {
-    public class AGProjectCars : IGame
+    public class AGProjectCars : GameBase, IGame
     {
-        public event EventHandler GameEvent;
-
-        private readonly string _name = "pCars";
-        private readonly string _displayName = "Project Cars";
-        private readonly string[] _processNames = { "pCARS", "pCARS64", "pCARS2Gld" };
         private readonly string _sharedMemoryFileName = "$pcars$";
 
         private readonly SharedMemoryReader _memoryReader;
@@ -28,48 +23,28 @@ namespace ProjectCars
         private TelemetryData _telemetryData;
 
         #region Constructor
-        public AGProjectCars()
+        public AGProjectCars() : base()
         {
+            _name = "pCars";
+            _displayName = "Project Cars";
+            _processNames.Add("pCARS");
+            _processNames.Add("pCARS64");
+            _processNames.Add("pCARS2Gld");
             _memoryReader = new SharedMemoryReader(_sharedMemoryFileName, _bufferSize);
             _cancel = new CancellationTokenSource();
         }
         #endregion
 
-        #region Getters and Setters
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-        }
-
-        public string DisplayName
-        {
-            get
-            {
-                return _displayName;
-            }
-        }
-
-        public string[] ProcessNames
-        {
-            get
-            {
-                return _processNames;
-            }
-        }
-        #endregion
 
         #region Public Methods
-        public bool Start(TelemetryData telemetryData)
+        public override bool Start(TelemetryData telemetryData)
         {
             _telemetryData = telemetryData;
             ReadData(_cancel.Token);
             return true;
         }
 
-        public bool Stop()
+        public override bool Stop()
         {
             _cancel.Cancel();
             return true;

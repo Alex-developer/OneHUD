@@ -10,15 +10,8 @@ using AGData;
 
 namespace AssettoCorsa
 {
-    public class AssettoCorsa : IGame
+    public class AssettoCorsa : GameBase, IGame
     {
-
-        public event EventHandler GameEvent;
-
-        private readonly string _name = "AC";
-        private readonly string _displayName = "Assetto Corsa";
-        private readonly string[] _processNames = { "acs" };
-
         private TelemetryData _telemetryData;
         private readonly CancellationTokenSource _cancel;
         private DateTime _lastTimeStamp;
@@ -31,48 +24,26 @@ namespace AssettoCorsa
 
 
         #region Constructor
-        public AssettoCorsa()
+        public AssettoCorsa() : base()
         {
+            _name = "AC";
+            _displayName = "Assetto Corsa";
+            _processNames.Add("acs");
+
             _physicsMemoryReader = new SharedMemoryReader(_physicsFileName, _physicsBufferSize);
             _cancel = new CancellationTokenSource();
         }
         #endregion
 
-        #region Getters and Setters
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-        }
-
-        public string DisplayName
-        {
-            get
-            {
-                return _displayName;
-            }
-        }
-
-        public string[] ProcessNames
-        {
-            get
-            {
-                return _processNames;
-            }
-        }
-        #endregion
-
         #region Public Methods
-        public bool Start(TelemetryData telemetryData)
+        public override bool Start(TelemetryData telemetryData)
         {
             _telemetryData = telemetryData;
             ReadData(_cancel.Token);
             return true;
         }
 
-        public bool Stop()
+        public override bool Stop()
         {
             _cancel.Cancel();
             return true;

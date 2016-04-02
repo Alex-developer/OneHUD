@@ -52,7 +52,7 @@ namespace AGServer.Processes
                     {
                         IGame game = key.Value;
 
-                        for (int i = 0; i < game.ProcessNames.Length; ++i)
+                        for (int i = 0; i < game.ProcessNames.Count; ++i)
                         {
                             Process[] processesByName = Process.GetProcessesByName(game.ProcessNames[i]);
                             if (processesByName.Length > 0)

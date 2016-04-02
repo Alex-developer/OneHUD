@@ -60,8 +60,13 @@
     <Compile Include="Servers\DataHandlers\Connected\ConnectedDataHandlerResult.cs" />
     <Compile Include="Servers\DataHandlers\DataHandlerError.cs" />
     <Compile Include="Servers\DataHandlers\DataHandlerResult.cs" />
-    <Compile Include="Servers\DataHandlers\File\FileDataHandler.cs" />
-    <Compile Include="Servers\DataHandlers\File\FileDataHandlerResult.cs" />
+    <Compile Include="Servers\DataHandlers\Actions\ActionsDataHandler.cs" />
+    <Compile Include="Servers\DataHandlers\Actions\ActionsDataHandlerResult.cs" />
+    <Compile Include="Servers\DataHandlers\Startup\SartupDataHandlerPlugin.cs" />
+    <Compile Include="Servers\DataHandlers\Startup\StartupDataHandler.cs" />
+    <Compile Include="Servers\DataHandlers\Startup\StartupDataHandlerResult.cs" />
+    <Compile Include="Servers\DataHandlers\Startup\StartupDataPageInfo.cs" />
+    <Compile Include="Servers\DataHandlers\Startup\StartupDataWidgetInfo.cs" />
     <Compile Include="Servers\HTTP\HTTPServer.cs" />
     <Compile Include="Servers\HTTP\Services\BaseService.cs" />
     <Compile Include="Servers\HTTP\Services\ConnectedService.cs" />
@@ -16405,6 +16410,18 @@
     <Content Include="Web\js\framework\datareader.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Web\js\framework\ui.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\js\pages\dash.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\js\pages\home.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\js\pages\timing.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web\js\require\require.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -16427,6 +16444,12 @@
     </Content>
     <Content Include="Web\js\slick\slick\slick.scss" />
     <Content Include="Web\js\twix\twix.js" />
+    <Content Include="Web\js\widgets\carclass.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\js\widgets\engine\rpm.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="WebSource\dist\assets\img\" />

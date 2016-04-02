@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 
-namespace AGServer.Servers.DataHandlers.File
+namespace AGServer.Servers.DataHandlers.Actions
 {
-    class FileDataHandlerResult : DataHandlerResult
+    class ActionsDataHandlerResult : DataHandlerResult
     {
         public bool Result = true;
 

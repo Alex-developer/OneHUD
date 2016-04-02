@@ -7,6 +7,10 @@
 
     }
 
+    function pageLoader() {
+
+    }
+
     return {
         init: function () {
             init();

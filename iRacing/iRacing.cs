@@ -1,26 +1,29 @@
 ﻿using System;
+
 using AGServerInterface;
 using iRacingSdkWrapper;
 using AGData;
 
-namespace IRacing
+namespace iRacing
 {
-    public class AGIRacing : IGame
+    public class iRacing : GameBase,IGame
     {
-
-        public event EventHandler GameEvent;
-
-        private readonly string _name = "iRacing";
-        private readonly string _displayName = "iRacing";
-        private readonly string[] _processNames = {"iRacingSim", "iRacingSim64", "iRacingSim64DX11" , "iRacingSimDX11"};
 
         private readonly SdkWrapper _wrapper;
 
         private TelemetryData _telemetryData;
 
         #region Constructor
-        public AGIRacing()
+        public iRacing() : base()
         {
+            _name = "iRacing";
+            _displayName = "iRacing";
+            _displayName = "iRacing";
+            _processNames.Add("iRacingSim");
+            _processNames.Add("iRacingSim64");
+            _processNames.Add("iRacingSim64DX11");
+            _processNames.Add("iRacingSimDX11");
+
             _wrapper = new SdkWrapper();
             _wrapper.TelemetryUpdated += OnTelemetryUpdated;
             _wrapper.SessionInfoUpdated += OnSessionInfoUpdated;
@@ -29,39 +32,20 @@ namespace IRacing
         #endregion
 
         #region Getters and Setters
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-        }
 
-        public string DisplayName
-        {
-            get
-            {
-                return _displayName;
-            }
-        }
 
-        public string[] ProcessNames
-        {
-            get {
-                return _processNames;
-            }
-        }
+
         #endregion
 
         #region Start Stop Methods
-        public bool Start(TelemetryData telemetryData)
+        public override bool Start(TelemetryData telemetryData)
         {
             _telemetryData = telemetryData;
             _wrapper.Start();
             return true;
         }
 
-        public bool Stop()
+        public override bool Stop()
         {
             _wrapper.Stop();
             return true;
@@ -93,11 +77,6 @@ namespace IRacing
         }
         #endregion
 
-        public void RaiseBoo()
-        {
-            if (GameEvent != null)
-                GameEvent(this, EventArgs.Empty);
-        }
 
     }
 }

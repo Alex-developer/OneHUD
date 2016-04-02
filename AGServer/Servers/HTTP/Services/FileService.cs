@@ -3,7 +3,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Collections.Specialized;
-using AGServer.Servers.DataHandlers.File;
+using AGServer.Servers.DataHandlers.Actions;
 using AGServer.Servers.Services;
 using AGData;
 using WebSocketSharp;
@@ -20,7 +20,7 @@ namespace AGServer.Servers.HTTP.Services
         protected override void OnMessage(MessageEventArgs e)
         {
             NameValueCollection postData = HttpUtility.ParseQueryString(e.Data);
-            FileDataHandlerResult result = FileDataHandler.ProcessFileRequest(Telemetry, postData);
+            ActionsDataHandlerResult result = ActionsDataHandler.ProcessFileRequest(Telemetry, postData);
             json = new JavaScriptSerializer().Serialize(result);
             Send(json);
         }
