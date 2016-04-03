@@ -31,8 +31,8 @@ audio, canvas, progress, video {
     vertical-align: baseline;
 }
 
-#home-pages .callout, #home-banner .callout {
-    background: rgba(219,221,227,0.8)
+.home-pages .callout {
+    background: rgba(219,221,227,0.8) !important;
 }
 
 </style>
@@ -41,8 +41,11 @@ audio, canvas, progress, video {
     {{!-- Pages you create in the src/pages/ folder are inserted here when the flattened page is created. --}}
     {{> body}}
 
-      <script src="{{root}}js/require/require.js"></script>
+      <script src="{{root}}js/head/head.load.js"></script>
+      <script src="{{root}}js/mustache/mustache.min.js"></script>
       <script src="{{root}}js/framework/bootstrap.js"></script>
+      <script src="{{root}}js/framework/classcache.js"></script>
+      <script src="{{root}}js/framework/ui.js"></script>
 
       <script src="{{root}}js/app.js"></script>
       <script src="{{root}}js/slick/slick/slick.min.js"></script>

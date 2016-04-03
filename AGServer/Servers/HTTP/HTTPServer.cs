@@ -245,14 +245,51 @@ namespace AGServer.Servers.HTTP
 
                     if (content != null)
                     {
+                        int start = 0;
+                        int end = -1;
+                        int byteRange = -1;
 
-                        response.AddHeader("cache-control", "no-store, must-revalidate, private");
-                        response.AddHeader("Pragma", "no-cache");
+                        if (request.Headers.GetValues("Range") != null)
+                        {
+                            string rangeHeader = request.Headers.GetValues("Range")[0].Replace("bytes=", "");
+                            string[] range = rangeHeader.Split('-');
+                            start = int.Parse(range[0]);
+                            if (range[1].Trim().Length > 0)
+                            {
+                                int.TryParse(range[1], out end);
+                            }
+                            if (end == -1) { 
+                                end = content.Length; 
+                            }
 
-                        response.ContentLength64 = content.Length;
+                            byteRange = end - start;
+                            response.AddHeader("Accept-Ranges", "bytes");
+                            response.AddHeader("Content-Range", string.Format("bytes {0}-{1}/{2}", start, byteRange-1, byteRange));
+                            response.AddHeader("X-Content-Duration", "0.0");
+                            response.AddHeader("Content-Duration", "0.0");
+
+                            response.ContentLength64 = byteRange;
+                            response.StatusCode = (int)HttpStatusCode.PartialContent;
+
+                            Console.WriteLine(rangeHeader);
+                            Console.WriteLine(string.Format("bytes {0}-{1}/{2}", start, byteRange-1, byteRange));
+                            Console.WriteLine("Content length" + byteRange.ToString());
+                            var tt = 56;
+                        }
+                        else
+                        {
+
+                           // response.AddHeader("cache-control", "no-store, must-revalidate, private");
+                          //  response.AddHeader("Pragma", "no-cache");
+
+                            response.ContentLength64 = content.Length;
+                            response.StatusCode = (int)HttpStatusCode.OK;
+
+                            byteRange = content.Length;
+                        }
 
                         System.IO.Stream output = response.OutputStream;
-                        output.Write(content, 0, content.Length);
+                        output.Write(content, start, byteRange);
                     }
                     else
                     {

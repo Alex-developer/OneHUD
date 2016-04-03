@@ -22,6 +22,8 @@ namespace AGServer.Servers.DataHandlers.Startup
             result.Pages = new List<StartupDataPageInfo>();
             result.Widgets = new List<StartupDataWidgetInfo>();
 
+            result.DefaultPage = "Home";
+
             result.Version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion;
 
             foreach (var key in plugins)
@@ -53,6 +55,7 @@ namespace AGServer.Servers.DataHandlers.Startup
                     pageInfo.Name = pageName;
                     pageInfo.Icon = pageIcon;
                     pageInfo.Description = pageDescription;
+                    pageInfo.FileName = "js/pages/" + Path.GetFileName(pageJsonFiles[i]);
                     result.Pages.Add(pageInfo);
                 }
             }
@@ -103,7 +106,7 @@ namespace AGServer.Servers.DataHandlers.Startup
                 Match stringFound = regex.Match(lineFound.Value);
                 if (stringFound.Success)
                 {
-                    result = stringFound.Value.Substring(1, stringFound.Value.Length - 2);
+                    result = stringFound.Value.Substring(1, stringFound.Value.Length - 3);
                 }
             }
 

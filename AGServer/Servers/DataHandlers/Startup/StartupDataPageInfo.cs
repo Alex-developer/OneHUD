@@ -8,5 +8,6 @@ namespace AGServer.Servers.DataHandlers.Startup
         public string Name { get; set; }
         public string Icon { get; set; }
         public string Description { get; set; }
+        public string FileName { get; set; }
     }
 }

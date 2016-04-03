@@ -12,12 +12,26 @@
     function init() {
         initDataReader();
 
+        getStartupData().done(function (options) {
+            AGServerClassCache.init(options).done(function (options) {
+                AGServerUI.init(options);
+            });
+        });
+      
+    }
+
+    function getStartupData() {
+        var deferred = jQuery.Deferred();
+
         jQuery.ajax({
             url: _uri + 'Startup',
             cache: false
-        }).done(function () {
-            AGServerUI.init();
-        });        
+        }).done(function (result) {
+            var options = JSON.parse(result);
+            deferred.resolve(options);
+        });
+
+        return deferred.promise();
     }
 
     function initDataReader() {
