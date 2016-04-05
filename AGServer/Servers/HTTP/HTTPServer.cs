@@ -275,6 +275,8 @@ namespace AGServer.Servers.HTTP
                             Console.WriteLine(string.Format("bytes {0}-{1}/{2}", start, byteRange-1, byteRange));
                             Console.WriteLine("Content length" + byteRange.ToString());
                             var tt = 56;
+                            //http://stackoverflow.com/questions/25898922/handle-range-requests-with-httplistener
+                            //http://www.stevesouders.com/blog/2013/04/21/html5-video-bytes-on-ios/
                         }
                         else
                         {

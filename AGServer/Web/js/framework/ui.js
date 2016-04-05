@@ -8,21 +8,35 @@
         _options = options;
         setupMenu();
         addHandlers();
-        pageLoader();
+        pageLoader(getBrowserHashPage());
+    }
+
+    function getBrowserHashPage() {
+        var page = null;
+        var hash = location.hash.substring(location.hash.indexOf('#') + 1);
+        if (hash !== '') {
+            if (AGServerClassCache.pageExists(hash)) {
+                page = hash;
+            }
+        }
+        return page;
     }
 
     function pageLoader(page) {
 
-        if (page === undefined) {
+        if (page === undefined || page === null) {
             page = _options.DefaultPage;
         }
 
-        clearUI();
+        location.hash = page;
+
+        clearContent();
         blockUI();
         _currentPage = AGServerClassCache.getPage(page);
         setupBackgroundVideo();
         _currentPage.init();
         unblockUI();
+        
     }
 
     function setupMenu() {
@@ -49,16 +63,16 @@
         }
     }
 
-    function clearUI() {
+    function clearContent() {
         jQuery('#content').html('');
     }
 
     function blockUI() {
-
+        jQuery.blockUI({ message: '<h1><img src="busy.gif" /> Just a moment...</h1>' });
     }
 
     function unblockUI() {
-
+        jQuery.unblockUI();
     }
 
     function addHandlers() {
@@ -69,6 +83,7 @@
                 case 'loadpage':
                     var page = jQuery(this).data('page');
                     pageLoader(page);
+                    event.preventDefault();
                     break;
             }
         });

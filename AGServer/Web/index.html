@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/app.css">
       <link rel="stylesheet" href="js/slick/slick/slick.css">
       <link rel="stylesheet" href="js/slick/slick/slick-theme.css">
+      <link rel="stylesheet" href="fonts/foundation-icons/foundation-icons.css">
   </head>
 <style>
     .background-video {
@@ -40,7 +41,7 @@ audio, canvas, progress, video {
         <div class="top-bar">
             <div class="top-bar-left">
                 <ul class="dropdown menu" data-dropdown-menu>
-                    <li class="menu-text">AGDash</li>
+                    <li class="menu-text"><a href="#" data-action="loadpage" data-page="Home">AGDash</a></li>
                     <li>
                         <a href="#">Pages</a>
                         <ul class="menu vertical" id="page-menu">
@@ -53,12 +54,14 @@ audio, canvas, progress, video {
                     <li><a href="#">Three</a></li>
                 </ul>
             </div>
+            <!--
             <div class="top-bar-right">
                 <ul class="menu">
                     <li><input type="search" placeholder="Search"></li>
                     <li><button type="button" class="button">Search</button></li>
                 </ul>
             </div>
+            -->
         </div>
     
         <div id="content">
@@ -75,6 +78,7 @@ audio, canvas, progress, video {
 
       <script src="js/app.js"></script>
       <script src="js/slick/slick/slick.min.js"></script>
+      <script src="js/blockui/blockUI.min.js"></script>
 
   </body>
 </html>

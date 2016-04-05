@@ -31,6 +31,14 @@
 
         getPage: function (page) {
             return _pages[page];
+        },
+
+        pageExists: function (page) {
+            if (_pages[page] !== undefined) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 }();

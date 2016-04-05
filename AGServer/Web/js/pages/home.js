@@ -13,7 +13,6 @@
     function buildPage() {
         var options = AGServerUI.options();
         var template = '\
-        <div style="height:5%"></div>\
         <div class="row" id="home-pages-row" data-equalizer data-equalize-on="medium">\
             <div class="home-pages">\
                 {{#Pages}}\

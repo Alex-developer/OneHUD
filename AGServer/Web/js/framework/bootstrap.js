@@ -35,8 +35,12 @@
     }
 
     function initDataReader() {
-        _worker = new Worker('/js/datareader.js');
+        _worker = new Worker('/js/framework/datamanager.js');
         _worker.addEventListener('message', function (e) {
+            switch (e.data.action) {
+                case 'error':
+                    break;
+            }
         });
     }
 
