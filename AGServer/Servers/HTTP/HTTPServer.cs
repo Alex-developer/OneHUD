@@ -10,6 +10,7 @@ using System.Web.Script.Serialization;
 using AGServer.Servers.DataHandlers.Actions;
 using AGServer.Servers.DataHandlers.Connected;
 using AGServer.Servers.DataHandlers.Startup;
+using AGServer.Servers.DataHandlers.HeartBeat;
 using AGServer.Servers.HTTP.Services;
 using AGServer.Servers.DataHandlers;
 using WebSocketSharp.Server;
@@ -142,8 +143,10 @@ namespace AGServer.Servers.HTTP
             _webSocketServer = new WebSocketSharp.Server.HttpServer(_port);
             _webSocketServer.RootPath = _rootDirectory + "\\";
 
-            _webSocketServer.AddWebSocketService<FileService>("/File", () => new FileService(_telemetryData));
-            _webSocketServer.AddWebSocketService<ConnectedService>("/Connected", () => new ConnectedService(_telemetryData));
+           // _webSocketServer.AddWebSocketService<FileService>("/File", () => new FileService(_telemetryData));
+            _webSocketServer.AddWebSocketService<TelemetryService>("/Telemetry", () => new TelemetryService(_telemetryData));
+            _webSocketServer.AddWebSocketService<HeartBeatService>("/HeartBeat", () => new HeartBeatService(_telemetryData));
+ 
             _webSocketServer.Start();
 
             _webSocketServer.OnPost += (sender, e) =>
@@ -175,6 +178,10 @@ namespace AGServer.Servers.HTTP
 
                             case "Connected":
                                 result = ConnectedDataHandler.ProcessConnectedRequest(_telemetryData, postData);
+                                break;
+
+                            case "heartbeat":
+                                result = HeartBeatDataHandler.ProcessConnectedRequest(_telemetryData, postData);
                                 break;
                         }
                         response.StatusCode = (int)HttpStatusCode.OK;

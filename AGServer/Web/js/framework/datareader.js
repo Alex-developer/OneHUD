@@ -26,39 +26,19 @@
 
         if (typeof WebSocket === 'function') {
             _usingWebSockets = true;
+            setupSocket();
         } else {
             _usingWebSockets = false;
         }
-
-        start();
     }
 
-    function start() {
-        if (_usingWebSockets) {
-            startSocket();
-        } else {
-            startJSON();
-        }
-    }
-
-    function stop() {
-        clearInterval(_timer);
-        if (_usingWebSockets) {
-            stopSocket();
-        } else {
-            stopJSON();
-        }
-    }
-
-    function startSocket() {
-        _socket = new WebSocket('ws://' + _url + '/' +_config.urn);
+    function setupSocket() {
+        _socket = new WebSocket('ws://' + _url + '/' + _config.urn);
 
         _socket.onopen = function (e) {
-            _timer = setInterval(readData(), _config.frequency);
         }
 
         _socket.onclose = function (e) {
-            debugger;
         }
 
         _socket.onerror = function (e) {
@@ -74,18 +54,20 @@
         }
     }
 
-    function stopSocket() {
-        if (_socket.readyState === 1) {
-            _socket.close();
+    function start() {
+        _timer = setInterval(readData, _config.frequency);
+    }
+
+    function stop() {
+        clearInterval(_timer);
+    }
+
+    function destroy() {
+        if (_usingWebSockets) {
+            if (_socket.readyState === 1) {
+                _socket.close();
+            }
         }
-    }
-
-    function startJSON() {
-        _timer = setInterval(readData(), _config.frequency);
-    }
-
-    function stopJSON() {
-
     }
 
     function readData() {
@@ -93,7 +75,11 @@
             _processing = true;
 
             if (_usingWebSockets) {
-                _socket.send('.');
+                if (_socket.readyState === 1) {
+                    _socket.send('.');
+                } else {
+                    _processing = false;
+                }
             } else {
                 Twix.ajax({
                     url: _uri + '/' + _config.urn + '/' + '?nonce=' + (new Date()).getTime(),
@@ -125,8 +111,16 @@
             init(config);
         },
 
+        start: function() {
+            start();
+        },
+
         stop: function () {
             stop();
+        },
+
+        destroy: function () {
+
         }
     }
 };

@@ -3,9 +3,17 @@
 
     var _options = null;
     var _currentPage = null;
+    var _worker = null;
+    var _currentGame = null;
 
-    function init(options) {
+    function init(options, worker) {
         _options = options;
+        _worker = worker;
+
+        _worker.addEventListener('message', function (e) {
+            dataEvent(e);
+        });
+
         setupMenu();
         addHandlers();
         pageLoader(getBrowserHashPage());
@@ -32,11 +40,21 @@
 
         clearContent();
         blockUI();
+        updateHeader();
         _currentPage = AGServerClassCache.getPage(page);
         setupBackgroundVideo();
         _currentPage.init();
         unblockUI();
         
+    }
+
+    function updateHeader() {
+        var text = 'Waiting';
+
+        if (_currentGame !== null) {
+            text = _currentGame.GameLongName;
+        }
+        jQuery('#connected-game').html(text);
     }
 
     function setupMenu() {
@@ -89,10 +107,76 @@
         });
     }
 
+    function getGameConfig(gameName) {
+        for (var i = 0; i < _options.Plugins.length; i++) {
+            if (_options.Plugins[i].GameShortName == gameName) {
+                return _options.Plugins[i];
+                break;
+            }
+        }
+        return null;
+    }
+
+    function messageDataReader(command, data) {
+
+        if (_worker !== null) {
+            var message = {
+                cmd: command,
+                data: data
+            };
+            _worker.postMessage(message);
+        }
+    }
+
+    function startDataReader(config) {
+        messageDataReader('start', config);
+    }
+
+    function stopDataReader() {
+        messageDataReader('stop', {});
+    }
+
+    function dataEvent(e) {
+
+        var message = JSON.parse(e.data);
+
+        switch (message.action) {
+            case 'data':
+                switch (message.datatype) {
+                    case 'heartbeat':
+                        handleHeartBeat(message);
+                        break;
+
+                    case 'telemetry':
+                        debugger;
+                        break;
+
+                    case 'error':
+                        break;
+                }
+                break;
+        }
+    }
+
+    function handleHeartBeat(message) {
+        if (message.data.Game !== null) {
+            if (_currentGame == null || (_currentGame.GameShortName !== message.data.Game)) {
+                _currentGame = getGameConfig(message.data.Game);
+                pageLoader(getBrowserHashPage());
+                startDataReader();
+            }
+        } else {
+            if (_currentGame !== null) {
+                _currentGame = null;
+                stopDataReader();
+                pageLoader(getBrowserHashPage());
+            }
+        }
+    }
 
     return {
-        init: function (options) {
-            init(options);
+        init: function (options, worker) {
+            init(options, worker);
         },
 
         options: function () {

@@ -14,7 +14,7 @@
 
         getStartupData().done(function (options) {
             AGServerClassCache.init(options).done(function (options) {
-                AGServerUI.init(options);
+                AGServerUI.init(options, _worker);
             });
         });
       
@@ -24,7 +24,7 @@
         var deferred = jQuery.Deferred();
 
         jQuery.ajax({
-            url: _uri + 'Startup',
+            url: _uri + '/Startup',
             cache: false
         }).done(function (result) {
             var options = JSON.parse(result);
@@ -36,12 +36,6 @@
 
     function initDataReader() {
         _worker = new Worker('/js/framework/datamanager.js');
-        _worker.addEventListener('message', function (e) {
-            switch (e.data.action) {
-                case 'error':
-                    break;
-            }
-        });
     }
 
     return {

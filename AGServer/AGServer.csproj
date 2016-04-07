@@ -62,15 +62,20 @@
     <Compile Include="Servers\DataHandlers\DataHandlerResult.cs" />
     <Compile Include="Servers\DataHandlers\Actions\ActionsDataHandler.cs" />
     <Compile Include="Servers\DataHandlers\Actions\ActionsDataHandlerResult.cs" />
+    <Compile Include="Servers\DataHandlers\HeartBeat\HeartBeatDataHandler.cs" />
+    <Compile Include="Servers\DataHandlers\HeartBeat\HeartBeatDataHandlerResult.cs" />
     <Compile Include="Servers\DataHandlers\Startup\SartupDataHandlerPlugin.cs" />
     <Compile Include="Servers\DataHandlers\Startup\StartupDataHandler.cs" />
     <Compile Include="Servers\DataHandlers\Startup\StartupDataHandlerResult.cs" />
     <Compile Include="Servers\DataHandlers\Startup\StartupDataPageInfo.cs" />
     <Compile Include="Servers\DataHandlers\Startup\StartupDataWidgetInfo.cs" />
+    <Compile Include="Servers\DataHandlers\Telemetry\TelemetryDataHandler.cs" />
     <Compile Include="Servers\HTTP\HTTPServer.cs" />
     <Compile Include="Servers\HTTP\Services\BaseService.cs" />
     <Compile Include="Servers\HTTP\Services\ConnectedService.cs" />
     <Compile Include="Servers\HTTP\Services\FileService.cs" />
+    <Compile Include="Servers\HTTP\Services\HeartBeatService.cs" />
+    <Compile Include="Servers\HTTP\Services\TelemetryService.cs" />
     <Compile Include="Servers\HTTP\Services\TestService.cs" />
     <Compile Include="Servers\Utils\NetHelpers.cs" />
     <Compile Include="Servers\Utils\Port.cs" />
@@ -17293,6 +17298,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\js\framework\classcache.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\js\framework\datareaderconfig.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\js\framework\datamanager.js">
