@@ -5,17 +5,20 @@
         heartbeat: {
             urn: 'HeartBeat',
             frequency: 500,
-            eventName: 'heartbeat'
+            eventName: 'heartbeat',
+            persistant: true
         },
-        cardata: {
+        telemetry: {
             urn: 'Telemetry',
             frequency: 10,
-            eventName: 'telemetry'
+            eventName: 'telemetry',
+            persistant: false
         },
         timingdata: {
             urn: 'Timing',
             frequency: 500,
-            eventName: 'timing'
+            eventName: 'timing',
+            persistant: false
         }
     };
 

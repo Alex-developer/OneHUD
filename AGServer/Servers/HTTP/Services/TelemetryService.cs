@@ -12,20 +12,16 @@ namespace AGServer.Servers.HTTP.Services
 {
     class TelemetryService : BaseService
     {
-        class TelemetryService : BaseService
+        public TelemetryService(TelemetryData telemetryData) : base(telemetryData)
         {
-            public TelemetryService(TelemetryData telemetryData)
-                : base(telemetryData)
-            {
-            }
+        }
 
-            protected override void OnMessage(MessageEventArgs e)
-            {
-                NameValueCollection postData = HttpUtility.ParseQueryString(e.Data);
-                TelemetryData result = TelemetryDataHandler.ProcessConnectedRequest(Telemetry, postData);
-                json = new JavaScriptSerializer().Serialize(result);
-                Send(json);
-            }
+        protected override void OnMessage(MessageEventArgs e)
+        {
+            NameValueCollection postData = HttpUtility.ParseQueryString(e.Data);
+            TelemetryData result = TelemetryDataHandler.ProcessConnectedRequest(Telemetry, postData);
+            json = new JavaScriptSerializer().Serialize(result);
+            Send(json);
         }
     }
 }

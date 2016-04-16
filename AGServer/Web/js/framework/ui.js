@@ -83,6 +83,7 @@
 
     function clearContent() {
         jQuery('#content').html('');
+        jQuery('#page-icons').html('');
     }
 
     function blockUI() {
@@ -148,7 +149,9 @@
                         break;
 
                     case 'telemetry':
-                        debugger;
+                        if (_currentPage.update !== undefined) {
+                            _currentPage.update(message.data);
+                        }
                         break;
 
                     case 'error':

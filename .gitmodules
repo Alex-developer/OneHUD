@@ -1,3 +1,0 @@
-[submodule "AGServer/Web/js/gauge"]
-	path = AGServer/Web/js/gauge
-	url = https://github.com/Mikhus/canv-gauge.git

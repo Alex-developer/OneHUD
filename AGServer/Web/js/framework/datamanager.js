@@ -9,7 +9,6 @@
 
     setupDataReader('heartbeat', true);
     setupDataReader('telemetry');
-  //  setupDataReader('timingdata');
 
     
     function setupDataReader(dataReader, start) {
@@ -28,9 +27,35 @@
             }
         }
     }
+    
+    function startReaders() {
+        for (var reader in _readers) {
+            if (!_readers[reader].persistant) {
+                _readers[reader].start();
+            }
+        };
+    }
+
+    function stopReaders() {
+        for (var reader in _readers) {
+            if (!_readers[reader].persistant) {
+                _readers[reader].stop();
+            }
+        };
+    }
 
     function processMessage(e) {
+        var command = e.data;
 
+        switch (command.cmd) {
+            case 'start':
+                startReaders();
+                break;
+
+            case 'stop':
+                stopReaders();
+                break;
+        }
     }
 
     return {

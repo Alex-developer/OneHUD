@@ -48,6 +48,13 @@ namespace AGServer.Servers.DataHandlers.Startup
                 string pageName = ParseVariable(pageText, "_name");
                 string pageIcon = ParseVariable(pageText, "_icon");
                 string pageDescription = ParseVariable(pageText, "_description");
+                string order = ParseVariable(pageText, "_order", false);
+                int pageOrder = 1;
+
+                if (!int.TryParse(order, out pageOrder))
+                {
+                    pageOrder = 1;
+                }
 
                 if (pageName != null && pageIcon != null && pageDescription != null)
                 {
@@ -55,10 +62,13 @@ namespace AGServer.Servers.DataHandlers.Startup
                     pageInfo.Name = pageName;
                     pageInfo.Icon = pageIcon;
                     pageInfo.Description = pageDescription;
+                    pageInfo.Order = pageOrder;
                     pageInfo.FileName = "js/pages/" + Path.GetFileName(pageJsonFiles[i]);
                     result.Pages.Add(pageInfo);
                 }
             }
+
+            result.Pages = result.Pages.OrderBy(o => o.Order).ToList();
 
             basePath = Directory.GetCurrentDirectory();
             basePath += @"\Web\js\widgets";
@@ -80,14 +90,12 @@ namespace AGServer.Servers.DataHandlers.Startup
 
                     StartupDataWidgetInfo widget = new StartupDataWidgetInfo() { Name = widgetName, Icon = widgetIcon, Description = widgetDescription };
                     result.Widgets.Add(widget);
-
                 }
 
                 foreach (string d in Directory.GetDirectories(dir))
                 {
                     DirSearch(d, result);
                 }
-
             }
             catch (System.Exception ex)
             {
@@ -95,18 +103,42 @@ namespace AGServer.Servers.DataHandlers.Startup
             }
         }
 
-        private static string ParseVariable(string text, string varName)
+        private static string ParseVariable(string text, string varName, bool quoted = true)
         {
             string result = null;
-            Regex regex = new Regex(@"var " + varName  + " = '(.)+';");
+            Regex regex;
+
+            if (quoted)
+            {
+                regex = new Regex(@"var " + varName + " = '(.)+';");
+            }
+            else
+            {
+                regex = new Regex(@"var " + varName + " = (.)+;");
+            }
+
             Match lineFound = regex.Match(text);
             if (lineFound.Success)
             {
-                regex = new Regex(@"'(.)+';");
+                if (quoted)
+                {
+                    regex = new Regex(@"'(.)+';");
+                }
+                else
+                {
+                    regex = new Regex(@"= (.)+;");
+                }
                 Match stringFound = regex.Match(lineFound.Value);
                 if (stringFound.Success)
                 {
-                    result = stringFound.Value.Substring(1, stringFound.Value.Length - 3);
+                    if (quoted)
+                    {
+                        result = stringFound.Value.Substring(1, stringFound.Value.Length - 3);
+                    }
+                    else
+                    {
+                        result = stringFound.Value.Substring(2, stringFound.Value.Length - 3);
+                    }
                 }
             }
 

@@ -5,6 +5,7 @@
     var _icon = 'images/pages/home.png';
     var _description = 'The AgServer homepage. From here you can access all of the other available pages and function';
     var _showVideo = true;
+    var _order = 1;
 
     function init() {
         buildPage();
@@ -48,3 +49,7 @@
         }
     }
 }
+
+
+
+
