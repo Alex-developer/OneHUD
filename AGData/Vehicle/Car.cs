@@ -9,5 +9,9 @@ namespace AGData.Vehicle
     public class Car
     {
         public bool InCar { get; set; }
+
+        public float Speed { get; set; }
+
+        public int Gear { get; set; }
     }
 }

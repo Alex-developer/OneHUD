@@ -70,6 +70,8 @@ namespace iRacing
                 _telemetryData.Car.InCar = true;
             }
             _telemetryData.Engine.RPM = ti.RPM.Value;
+            _telemetryData.Car.Speed = ConvertSpeedToMPH(ti.Speed.Value);
+            _telemetryData.Car.Gear = ti.Gear.Value;
         }
 
         private void OnSimDisconnected(object sender, EventArgs e)
@@ -77,6 +79,12 @@ namespace iRacing
         }
         #endregion
 
+        #region Helper functions
+        private float ConvertSpeedToMPH(float Speed)
+        {
+            return Speed * (float)2.236936;
+        }
+        #endregion
 
     }
 }

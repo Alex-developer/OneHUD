@@ -87,9 +87,16 @@ namespace AssettoCorsa
         private void ProcessPhysicsData()
         {
             _telemetryData.Engine.RPM = _physicsData.Rpms;
-            var tt = 56;
+            _telemetryData.Car.Speed = ConvertSpeedToMPH(_physicsData.SpeedKmh);
+            _telemetryData.Car.Gear = _physicsData.Gear;
         }
         #endregion
 
+        #region Helper functions
+        private float ConvertSpeedToMPH(float Speed)
+        {
+            return Speed * (float)0.621371;
+        }
+        #endregion
     }
 }

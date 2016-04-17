@@ -1,4 +1,4 @@
-﻿var AGRacingCARCLASSWidget = function () {
+﻿var AGDashCARCLASSWidget = function () {
     'use strict';
 
     var _name = 'Car Class';

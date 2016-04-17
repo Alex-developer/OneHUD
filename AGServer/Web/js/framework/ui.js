@@ -5,6 +5,7 @@
     var _currentPage = null;
     var _worker = null;
     var _currentGame = null;
+    var _id = 0;
 
     function init(options, worker) {
         _options = options;
@@ -150,7 +151,7 @@
 
                     case 'telemetry':
                         if (_currentPage.update !== undefined) {
-                            _currentPage.update(message.data);
+                            _currentPage.update(message.datatype, message.data);
                         }
                         break;
 
@@ -177,6 +178,12 @@
         }
     }
 
+    function getNextId() {
+        _id++;
+
+        return 'ag_' + _id;
+    }
+
     return {
         init: function (options, worker) {
             init(options, worker);
@@ -184,6 +191,10 @@
 
         options: function () {
             return _options;
+        },
+
+        getNextId: function () {
+            return getNextId();
         }
     }
 }();

@@ -14,16 +14,17 @@ namespace ProjectCars
         private readonly string _sharedMemoryFileName = "$pcars$";
 
         private readonly SharedMemoryReader _memoryReader;
-        private readonly int _bufferSize = Marshal.SizeOf(typeof (ProjectCars.DataFormat.SharedMemory));
+        private readonly int _bufferSize = Marshal.SizeOf(typeof(ProjectCars.DataFormat.SharedMemory));
         ProjectCars.DataFormat.SharedMemory _data;
 
         private readonly CancellationTokenSource _cancel;
         private DateTime _lastTimeStamp;
-        private readonly double _pollInterval = 10.0;
+        private readonly double _pollInterval = 60.0;
         private TelemetryData _telemetryData;
 
         #region Constructor
-        public AGProjectCars() : base()
+        public AGProjectCars()
+            : base()
         {
             _name = "pCars";
             _displayName = "Project Cars";
@@ -99,6 +100,16 @@ namespace ProjectCars
                 _telemetryData.Car.InCar = false;
             }
             _telemetryData.Engine.RPM = _data.MRpm;
+            _telemetryData.Car.Speed = ConvertSpeedToMPH(_data.MSpeed);
+            _telemetryData.Car.Gear = _data.MGear;
+        }
+        #endregion
+
+
+        #region Helper functions
+        private float ConvertSpeedToMPH(float Speed)
+        {
+            return Speed * (float)2.236936;
         }
         #endregion
     }

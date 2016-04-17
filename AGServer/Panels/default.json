@@ -1,0 +1,45 @@
+﻿{
+    name: 'Default',
+    device: 'ipad3',
+    orientation: 'landscape',
+    widgets: [
+        {
+            type: 'rpm',
+            gaugestyle: 'analogue',
+            css: {
+                left: 0,
+                top: 0,
+                width: 300,
+                height: 300,
+                'font-family': 'ledfont',
+                'font-weight': 'bold',
+                color: 'white'
+            }
+        },
+        {
+            type: 'speed',
+            gaugestyle: 'analogue',
+            css: {
+                left: 310,
+                top: 0,
+                width: 300,
+                height: 300,
+                'font-family': 'ledfont',
+                'font-weight': 'bold',
+                color: 'white'
+            }
+        },
+        {
+            type: 'gear',
+            css: {
+                left: 295,
+                top: 300,
+                width: 50,
+                height: 50,
+                'font-family': 'ledfont',
+                'font-weight': 'bold',
+                color: 'black'
+            }
+        }
+    ]
+}

@@ -39,3 +39,4 @@ A library of tools, widgets, are provided. With a little Javascript knowledge yo
 Another example Dashboard
 
 http://www.uibox.in/item/63
+https://github.com/Flyer53/jsPanel

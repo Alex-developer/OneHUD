@@ -1,0 +1,184 @@
+﻿var AGDashSPEEDWidget = function () {
+    'use strict';
+
+    var _name = 'SPEED';
+    var _icon = '/images/widgets/gauge.png';
+    var _labels = ['Speed'];
+    var _description = 'Displays The Cars Speed';
+    var _tab = 'Engine';
+    var _supports = ['iRacing', 'Project Cars', 'Assetto Corsa'];
+    var _requires = ['/js/gauge/gauge.js'];
+    var _messages = ['telemetry'];
+    var _el;
+    var _gaugeElement = null;
+    var _lastSpeed = -999;
+
+    var _properties = {
+        type: 'speed',
+        gaugestyle: 'analogue',
+        align: 'left',
+        css: {
+            left: 0,
+            top: 0,
+            width: 300,
+            height: 100,
+            'font-family': 'ledfont',
+            'font-weight': 'bold',
+            color: 'white'
+        }
+    };
+
+    var _gaugeSpeed;
+
+    function init(element, properties) {
+
+        if (element !== undefined) {
+            _el = element;
+        }
+        if (properties !== undefined) {
+            _properties = properties;
+        }
+        head.load(_requires, function () {
+            buildUI();
+        });
+    }
+
+    function destroy(leaveElement) {
+        if (leaveElement === undefined) {
+            leaveElement = false;
+        }
+
+        jQuery(_gaugeElement).remove();
+        _gaugeSpeed = null;
+
+        if (!leaveElement) {
+            jQuery(_el).remove();
+        }
+    }
+
+    function buildUI() {
+        if (_properties.gaugestyle === 'digital') {
+            buildUIDigital();
+        } else {
+            buildUIAnalogue();
+        }
+    }
+
+    function buildUIDigital() {
+
+    }
+
+    function buildUIAnalogue() {
+
+        _gaugeElement = jQuery('<canvas>')
+            .attr('id', AGServerUI.getNextId())
+
+        jQuery(_el).append(_gaugeElement);
+
+        _gaugeSpeed = new Gauge({
+            renderTo: _gaugeElement.attr('id'),
+            width: 300,
+            height: 300,
+            glow: false,
+            units: 'MPH',
+            title: false,
+            minValue: 0,
+            maxValue: 220,
+            majorTicks: ['0', '20', '40', '60', '80', '100', '120', '140', '160', '180', '200', '220'],
+            minorTicks: 2,
+            strokeTicks: true,
+            highlights: [{from: 160, to: 220, color: 'rgba(200, 50, 50, .75)'}],
+            colors: {
+                plate: '#222',
+                majorTicks: '#f5f5f5',
+                minorTicks: '#ddd',
+                title: '#fff',
+                units: '#ccc',
+                numbers: '#eee',
+                needle: {
+                    start: 'rgba(200, 50, 50, .75)',
+                    end: 'rgba(200, 50, 50, .75)',
+                    circle: {
+                        outerStart: 'rgba(200, 200, 200, 1)',
+                        outerEnd: 'rgba(200, 200, 200, 1)'
+                    },
+                    shadowUp: true,
+                    shadowDown: false
+                },
+                circle: {
+                    shadow: false,
+                    outerStart: '#333',
+                    outerEnd: '#111',
+                    middleStart: '#222',
+                    middleEnd: '#111',
+                    innerStart: '#111',
+                    innerEnd: '#333'
+                },
+                valueBox: {
+                    rectStart: '#222',
+                    rectEnd: '#333',
+                    background: '#babab2',
+                    shadow: 'rgba(0, 0, 0, 1)'
+                }
+            },
+            valueBox: {
+                visible: true
+            },
+            valueText: {
+                visible: true
+            },
+            valueFormat: {
+                int: 3,
+                dec: 0
+            },
+            needle: {
+                type: 'arrow',
+                width: 2,
+                end: 72,
+                circle: {
+                    size: 7,
+                    inner: false,
+                    outer: true
+                }
+            },
+            animation: false,
+            updateValueOnAnimation: true
+        });
+
+        _gaugeSpeed.setRawValue(0);
+
+        _gaugeSpeed.draw();
+
+    }
+
+    function update(data) {
+        var speed = data.Car.Speed.toFixed(0);
+
+        if (_lastSpeed !== speed) {
+            _gaugeSpeed.setValue(speed);
+            _lastSpeed = speed;
+        }
+    }
+
+    return {
+        name: _name,
+        icon: _icon,
+        messages: _messages,
+        labels: _labels,
+        tab: _tab,
+        supports: _supports,
+
+        init: function (element, properties) {
+            return init(element, properties);
+        },
+
+        destroy: function (leaveElement) {
+            destroy(leaveElement);
+        },
+
+        update: function (data) {
+            update(data);
+        }
+    }
+}
+//# sourceURL=/js/widgets/car/speed.js

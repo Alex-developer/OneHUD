@@ -91,6 +91,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Panels\default.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -5082,6 +5085,20 @@
     <None Include="Web\fonts\foundation-icons\foundation-icons.woff">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Web\js\gauge\.gitignore" />
+    <None Include="Web\js\gauge\bower.json" />
+    <None Include="Web\js\gauge\build.bat" />
+    <None Include="Web\js\gauge\build.sh" />
+    <None Include="Web\fonts\digital-7-mono.eot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Web\fonts\digital-7-mono.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Web\js\gauge\gauge.min.js.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Web\js\gauge\README.md" />
     <None Include="Web\js\slick\.gitignore" />
     <None Include="Web\js\slick\bower.json" />
     <None Include="Web\js\slick\component.json" />
@@ -17291,6 +17308,9 @@
     <Content Include="Web\js\app.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Web\js\bigtext\bigtext.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web\js\blockui\blockUI.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -17306,10 +17326,27 @@
     <Content Include="Web\js\framework\datamanager.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Web\js\framework\file.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web\js\framework\ui.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\js\framework\datareader.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\js\gauge\compiler.jar" />
+    <Content Include="Web\js\gauge\examples\all-in-one.html" />
+    <Content Include="Web\js\gauge\examples\example-custom-resize.html" />
+    <Content Include="Web\js\gauge\examples\example-html-gauge.html" />
+    <Content Include="Web\js\gauge\examples\example-html.html" />
+    <Content Include="Web\js\gauge\examples\example-resize.html" />
+    <Content Include="Web\js\gauge\examples\example.html" />
+    <Content Include="Web\js\gauge\examples\noborder.html" />
+    <Content Include="Web\js\gauge\gauge.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\js\gauge\gauge.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\js\head\head.load.js">
@@ -17358,6 +17395,12 @@
     <Content Include="Web\js\widgets\engine\rpm.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Web\js\widgets\gear.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\js\widgets\speed.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web\videos\background.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -17366,6 +17409,7 @@
     <Folder Include="WebSource\dist\assets\img\" />
     <Folder Include="WebSource\dist\assets\scss\" />
     <Folder Include="WebSource\etc\" />
+    <Folder Include="Web\js\gauge\fonts\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

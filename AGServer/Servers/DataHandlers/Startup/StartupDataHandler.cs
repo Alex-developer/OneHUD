@@ -79,6 +79,7 @@ namespace AGServer.Servers.DataHandlers.Startup
 
         static void DirSearch(string dir, StartupDataHandlerResult result)
         {
+            string basePath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Web";
             try
             {
                 foreach (string f in Directory.GetFiles(dir))
@@ -87,8 +88,10 @@ namespace AGServer.Servers.DataHandlers.Startup
                     string widgetName = ParseVariable(widgetJS, "_name");
                     string widgetIcon = ParseVariable(widgetJS, "_icon");
                     string widgetDescription = ParseVariable(widgetJS, "_description");
+                    string widgetPath = f.Replace(basePath, "");
+                    widgetPath = widgetPath.Replace("\\", "/");
 
-                    StartupDataWidgetInfo widget = new StartupDataWidgetInfo() { Name = widgetName, Icon = widgetIcon, Description = widgetDescription };
+                    StartupDataWidgetInfo widget = new StartupDataWidgetInfo() { Name = widgetName, Icon = widgetIcon, Description = widgetDescription, Path = widgetPath };
                     result.Widgets.Add(widget);
                 }
 
