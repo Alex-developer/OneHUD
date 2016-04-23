@@ -19,7 +19,7 @@
             top: 0,
             width: 50,
             height: 50,
-            'font-family': 'ledfont',
+            'font-family': 'Led',
             'font-weight': 'bold',
             color: 'black'
         }

@@ -1,6 +1,8 @@
 ﻿var AGServerDataReader = function () {
     'use strict';
 
+    importScripts('/js/twix/twix.js');
+
     var _socket = null;
     var _config = {
         urn: '',
@@ -24,7 +26,7 @@
             _uri = 'http://' + _url + '/';
         }
 
-        if (typeof WebSocket === 'function') {
+        if (typeof WebSocket !== undefined) {
             _usingWebSockets = true;
             setupSocket();
         } else {
@@ -47,6 +49,9 @@
 
         _socket.onmessage = function (e) {
             var data = JSON.parse(e.data);
+            if (data.Data !== undefined) {
+                data = data.Data;
+            }
             if (data !== null) {
                 sendMessage('data', _config.eventName, data);
             }
@@ -82,10 +87,17 @@
                 }
             } else {
                 Twix.ajax({
-                    url: _uri + '/' + _config.urn + '/' + '?nonce=' + (new Date()).getTime(),
-                    success: function (data) {
+                    url: _uri + _config.urn + '?nonce=' + (new Date()).getTime(),
+                    type: 'POST',
+                    success: function (result) {
                         _processing = false;
-                        if (data !== null) {
+                        if (result !== null) {
+                            var data = null;
+                            if (result.Data !== undefined) {
+                                data = result.Data
+                            } else {
+                                data = result;
+                            }
                             sendMessage('data', _config.eventName, data);
                         }
                     },

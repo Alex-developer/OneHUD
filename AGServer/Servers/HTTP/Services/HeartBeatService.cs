@@ -23,6 +23,7 @@ namespace AGServer.Servers.HTTP.Services
             HeartBeatDataHandlerResult result = HeartBeatDataHandler.ProcessConnectedRequest(Telemetry, postData);
             json = new JavaScriptSerializer().Serialize(result);
             Send(json);
+            result.Dispose();
         }
 
     }

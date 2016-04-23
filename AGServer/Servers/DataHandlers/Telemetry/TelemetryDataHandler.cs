@@ -7,9 +7,10 @@ namespace AGServer.Servers.DataHandlers.Telemetry
 {
     class TelemetryDataHandler
     {
-        public static TelemetryData ProcessConnectedRequest(TelemetryData telemetry, NameValueCollection postData)
+        public static TelemetryDataHandlerResult ProcessConnectedRequest(TelemetryData telemetry, NameValueCollection postData)
         {
-            return telemetry;
+            TelemetryDataHandlerResult result = new TelemetryDataHandlerResult() { Data = telemetry};
+            return result;
         }
     }
 }

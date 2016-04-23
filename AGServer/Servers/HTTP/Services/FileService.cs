@@ -23,6 +23,7 @@ namespace AGServer.Servers.HTTP.Services
             ActionsDataHandlerResult result = ActionsDataHandler.ProcessFileRequest(Telemetry, postData);
             json = new JavaScriptSerializer().Serialize(result);
             Send(json);
+            result.Dispose();
         }
     }
 }

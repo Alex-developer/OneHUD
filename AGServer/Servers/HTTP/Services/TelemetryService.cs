@@ -19,9 +19,10 @@ namespace AGServer.Servers.HTTP.Services
         protected override void OnMessage(MessageEventArgs e)
         {
             NameValueCollection postData = HttpUtility.ParseQueryString(e.Data);
-            TelemetryData result = TelemetryDataHandler.ProcessConnectedRequest(Telemetry, postData);
+            TelemetryDataHandlerResult result = new TelemetryDataHandlerResult() { Data = Telemetry };
             json = new JavaScriptSerializer().Serialize(result);
             Send(json);
+            result.Dispose();
         }
     }
 }

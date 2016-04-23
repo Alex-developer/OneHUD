@@ -70,6 +70,7 @@
     <Compile Include="Servers\DataHandlers\Startup\StartupDataPageInfo.cs" />
     <Compile Include="Servers\DataHandlers\Startup\StartupDataWidgetInfo.cs" />
     <Compile Include="Servers\DataHandlers\Telemetry\TelemetryDataHandler.cs" />
+    <Compile Include="Servers\DataHandlers\Telemetry\TelemetryDataHandlerResult.cs" />
     <Compile Include="Servers\HTTP\HTTPServer.cs" />
     <Compile Include="Servers\HTTP\Services\BaseService.cs" />
     <Compile Include="Servers\HTTP\Services\ConnectedService.cs" />
@@ -17388,7 +17389,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\js\slick\slick\slick.scss" />
-    <Content Include="Web\js\twix\twix.js" />
+    <Content Include="Web\js\twix\twix.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web\js\widgets\carclass.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

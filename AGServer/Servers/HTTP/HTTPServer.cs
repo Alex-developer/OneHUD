@@ -11,6 +11,7 @@ using AGServer.Servers.DataHandlers.Actions;
 using AGServer.Servers.DataHandlers.Connected;
 using AGServer.Servers.DataHandlers.Startup;
 using AGServer.Servers.DataHandlers.HeartBeat;
+using AGServer.Servers.DataHandlers.Telemetry;
 using AGServer.Servers.HTTP.Services;
 using AGServer.Servers.DataHandlers;
 using WebSocketSharp.Server;
@@ -180,8 +181,12 @@ namespace AGServer.Servers.HTTP
                                 result = ConnectedDataHandler.ProcessConnectedRequest(_telemetryData, postData);
                                 break;
 
-                            case "heartbeat":
+                            case "HeartBeat":
                                 result = HeartBeatDataHandler.ProcessConnectedRequest(_telemetryData, postData);
+                                break;
+
+                            case "Telemetry":
+                                result = TelemetryDataHandler.ProcessConnectedRequest(_telemetryData, postData);
                                 break;
                         }
                         response.StatusCode = (int)HttpStatusCode.OK;
@@ -200,6 +205,8 @@ namespace AGServer.Servers.HTTP
 
                     System.IO.Stream output = response.OutputStream;
                     output.Write(content, 0, content.Length);
+
+                    result.Dispose();
                 }
             };
 
@@ -299,6 +306,8 @@ namespace AGServer.Servers.HTTP
 
                         System.IO.Stream output = response.OutputStream;
                         output.Write(content, start, byteRange);
+
+                        response = null;
                     }
                     else
                     {

@@ -23,6 +23,7 @@ namespace AGServer.Servers.HTTP.Services
             ConnectedDataHandlerResult result = ConnectedDataHandler.ProcessConnectedRequest(Telemetry, postData);
             json = new JavaScriptSerializer().Serialize(result);
             Send(json);
+            result.Dispose();
         }
     }
 }

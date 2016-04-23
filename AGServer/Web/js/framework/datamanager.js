@@ -1,7 +1,6 @@
 ﻿var AGServerDataManager = function () {
     'use strict';
 
-    importScripts('/js/twix/twix.js');
     importScripts('/js/framework/datareader.js');
     importScripts('/js/framework/datareaderconfig.js');
 
