@@ -10,7 +10,7 @@
 
     function loadDash(name) {
         if (name === undefined) {
-            name = 'defaultg';
+            name = 'default';
         }
 
         var deferred = jQuery.Deferred();

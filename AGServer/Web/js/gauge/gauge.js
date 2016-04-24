@@ -429,7 +429,7 @@ var Gauge = function (config) {
             };
             ctx = cctx;
 
-            drawPlate();
+          //  drawPlate();
             drawHighlights();
             drawMinorTicks();
             drawMajorTicks();

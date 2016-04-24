@@ -17,13 +17,22 @@
         orientation: 'landscape',
         widgets: [
             {
-                type: 'rpm',
-                gaugestyle: 'analogue',
+                type: 'image',
                 css: {
                     left: 0,
                     top: 0,
+                    width: 614,
+                    height: 324
+                }
+            },
+            {
+                type: 'rpm',
+                gaugestyle: 'analogue',
+                css: {
+                    left: 156,
+                    top: 10,
                     width: 300,
-                    height: 300,
+                    height: 235,
                     'font-family': 'ledfont',
                     'font-weight': 'bold',
                     color: 'white'
@@ -45,24 +54,26 @@
             {
                 type: 'gear',
                 css: {
-                    left: 295,
-                    top: 300,
+                    left: 285,
+                    top: 90,
                     width: 50,
                     height: 50,
-                    'font-family': 'ledfont',
+                    'font-family': 'led',
                     'font-weight': 'bold',
-                    color: 'black'
+                    color: 'white'
                 }
             }
         ]
     };
+
+    console.log(JSON.stringify(_defaultDashboard));
 
     function init() {
         var deferred = jQuery.Deferred();
         loadWidgets().done(function () {
             AGServerFile.loadDash().done(function (dash) {
                 if (dash !== null) {
-                    _dashJson = JSON.parse(dash);
+                    _dashJson = dash;
                 } else {
                     _dashJson = _defaultDashboard;
                 }

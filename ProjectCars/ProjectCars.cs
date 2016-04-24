@@ -21,6 +21,7 @@ namespace ProjectCars
         private DateTime _lastTimeStamp;
         private readonly double _pollInterval = 60.0;
         private TelemetryData _telemetryData;
+        private bool _connected = false;
 
         #region Constructor
         public AGProjectCars()
@@ -55,12 +56,15 @@ namespace ProjectCars
         #region Shared Memory Data Reader
         private async void ReadData(CancellationToken token)
         {
-            _memoryReader.Connect();
-
             await Task.Factory.StartNew((Action)(() =>
             {
                 while (!token.IsCancellationRequested)
                 {
+                    if (!_connected)
+                    {
+                        _connected = _memoryReader.Connect();
+                    }
+
                     DateTime utcNow = DateTime.UtcNow;
                     if ((utcNow - _lastTimeStamp).TotalMilliseconds >= _pollInterval)
                     {
@@ -102,6 +106,8 @@ namespace ProjectCars
             _telemetryData.Engine.RPM = _data.MRpm;
             _telemetryData.Car.Speed = ConvertSpeedToMPH(_data.MSpeed);
             _telemetryData.Car.Gear = _data.MGear;
+            _telemetryData.Car.FuelRemaining = _data.MFuelLevel * _data.MFuelCapacity;
+            _telemetryData.Car.FuelCapacity =  _data.MFuelCapacity;
         }
         #endregion
 

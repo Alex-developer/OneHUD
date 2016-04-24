@@ -23,6 +23,7 @@ namespace RaceRoom
         private DateTime _lastTimeStamp;
         private readonly double _pollInterval = 10.0;
         private TelemetryData _telemetryData;
+        private bool _connected = false;
 
         #region Constructor
         public RaceRoom() : base()
@@ -54,12 +55,14 @@ namespace RaceRoom
         #region Shared Memory Data Reader
         private async void ReadData(CancellationToken token)
         {
-            _memoryReader.Connect();
-
             await Task.Factory.StartNew((Action)(() =>
             {
                 while (!token.IsCancellationRequested)
                 {
+                    if (!_connected)
+                    {
+                        _connected = _memoryReader.Connect();
+                    }
                     DateTime utcNow = DateTime.UtcNow;
                     if ((utcNow - _lastTimeStamp).TotalMilliseconds >= _pollInterval)
                     {
@@ -88,6 +91,10 @@ namespace RaceRoom
         private void ProcessData()
         {
             _telemetryData.Engine.RPM = _data.EngineRps;
+            _telemetryData.Car.Gear = _data.Gear;
+            _telemetryData.Car.Speed = _data.CarSpeed;
+            _telemetryData.Car.FuelRemaining = _data.FuelLeft;
+            _telemetryData.Car.FuelCapacity = _data.FuelCapacity;
         }
         #endregion
 

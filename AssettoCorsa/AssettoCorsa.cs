@@ -21,7 +21,7 @@ namespace AssettoCorsa
         private readonly int _physicsBufferSize = Marshal.SizeOf(typeof(Physics));
         private Physics _physicsData;
         private readonly double _physicsPollInterval = 10.0;
-
+        private bool _connected = false;
 
         #region Constructor
         public AssettoCorsa() : base()
@@ -53,12 +53,14 @@ namespace AssettoCorsa
         #region Shared Memory Data Reader
         private async void ReadData(CancellationToken token)
         {
-            _physicsMemoryReader.Connect();
-
             await Task.Factory.StartNew((Action)(() =>
             {
                 while (!token.IsCancellationRequested)
                 {
+                    if (!_connected)
+                    {
+                        _connected = _physicsMemoryReader.Connect();
+                    }
                     DateTime utcNow = DateTime.UtcNow;
                     if ((utcNow - _lastTimeStamp).TotalMilliseconds >= _physicsPollInterval)
                     {
@@ -88,7 +90,9 @@ namespace AssettoCorsa
         {
             _telemetryData.Engine.RPM = _physicsData.Rpms;
             _telemetryData.Car.Speed = ConvertSpeedToMPH(_physicsData.SpeedKmh);
-            _telemetryData.Car.Gear = _physicsData.Gear;
+            _telemetryData.Car.Gear = _physicsData.Gear - 1;
+            _telemetryData.Car.FuelRemaining =  _physicsData.Fuel;
+            _telemetryData.Car.FuelCapacity = 100; // TODO: Fix this when reading static data
         }
         #endregion
 

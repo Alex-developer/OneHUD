@@ -84,8 +84,8 @@
             return _el;
         },
 
-        init: function (element) {
-            return init(element);
+        init: function (element, properties) {
+            return init(element, properties);
         },
 
         destroy: function () {

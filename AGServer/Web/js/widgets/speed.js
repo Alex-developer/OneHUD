@@ -77,17 +77,18 @@
 
         _gaugeSpeed = new Gauge({
             renderTo: _gaugeElement.attr('id'),
-            width: 300,
-            height: 300,
+            width: jQuery(_el).width(),
+            height: jQuery(_el).height(),
             glow: false,
             units: 'MPH',
             title: false,
             minValue: 0,
-            maxValue: 220,
-            majorTicks: ['0', '20', '40', '60', '80', '100', '120', '140', '160', '180', '200', '220'],
+            maxValue: 160,
+            majorTicks: ['0', '20', '40', '60', '80', '100', '120', '140', '160'],
             minorTicks: 2,
             strokeTicks: true,
-            highlights: [{from: 160, to: 220, color: 'rgba(200, 50, 50, .75)'}],
+            highlights: [{ from: 120, to: 160, color: 'rgba(200, 50, 50, .75)' }],
+            ticksAngle: 170,
             colors: {
                 plate: '#222',
                 majorTicks: '#f5f5f5',
@@ -120,6 +121,11 @@
                     background: '#babab2',
                     shadow: 'rgba(0, 0, 0, 1)'
                 }
+            },
+            circles: {
+                outerVisible: false,
+                middleVisible: false,
+                innerVisible: false
             },
             valueBox: {
                 visible: true
@@ -181,4 +187,4 @@
         }
     }
 }
-//# sourceURL=/js/widgets/car/speed.js
+//# sourceURL=/js/widgets/speed.js

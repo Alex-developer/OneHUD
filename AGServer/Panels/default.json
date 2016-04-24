@@ -1,44 +1,65 @@
 ﻿{
-    name: 'Default',
-    device: 'ipad3',
-    orientation: 'landscape',
-    widgets: [
+    "name": "Default",
+    "device": "ipad3",
+    "orientation": "landscape",
+    "widgets": [
         {
-            type: 'rpm',
-            gaugestyle: 'analogue',
-            css: {
-                left: 0,
-                top: 0,
-                width: 300,
-                height: 300,
-                'font-family': 'ledfont',
-                'font-weight': 'bold',
-                color: 'white'
+            "type": "image",
+            "css": {
+                "left": 0,
+                "top": 0,
+                "width": 614,
+                "height": 324
             }
         },
         {
-            type: 'speed',
-            gaugestyle: 'analogue',
-            css: {
-                left: 310,
-                top: 0,
-                width: 300,
-                height: 300,
-                'font-family': 'ledfont',
-                'font-weight': 'bold',
-                color: 'white'
+            "type": "rpm",
+            "gaugestyle": "analogue",
+            "css": {
+                "left": 167,
+                "top": 20,
+                "width": 280,
+                "height": 280,
+                "font-family": "ledfont",
+                "font-weight": "bold",
+                "color": "white"
             }
         },
         {
-            type: 'gear',
-            css: {
-                left: 295,
-                top: 300,
-                width: 50,
-                height: 50,
-                'font-family': 'ledfont',
-                'font-weight': 'bold',
-                color: 'black'
+            "type": "speed",
+            "gaugestyle": "analogue",
+            "css": {
+                "left": 30,
+                "top": 64,
+                "width": 200,
+                "height": 200,
+                "font-family": "ledfont",
+                "font-weight": "bold",
+                "color": "white"
+            }
+        },
+        {
+            "type": "gear",
+            "css": {
+                "left": 285,
+                "top": 90,
+                "width": 50,
+                "height": 50,
+                "font-family": "led",
+                "font-weight": "bold",
+                "color": "white"
+            }
+        },
+        {
+            "type": "fuel",
+            "css": {
+                "left": 386,
+                "top": 70,
+                "width": 200,
+                "height": 200,
+                "font-family": "led",
+                "font-weight": "bold",
+                "color": "black"
             }
         }
     ]

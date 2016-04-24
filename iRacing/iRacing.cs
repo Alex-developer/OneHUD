@@ -72,6 +72,16 @@ namespace iRacing
             _telemetryData.Engine.RPM = ti.RPM.Value;
             _telemetryData.Car.Speed = ConvertSpeedToMPH(ti.Speed.Value);
             _telemetryData.Car.Gear = ti.Gear.Value;
+            _telemetryData.Car.FuelRemaining = ti.FuelLevel.Value;
+            if (ti.FuelLevelPct.Value != 0)
+            {
+                _telemetryData.Car.FuelCapacity = (100 / (ti.FuelLevelPct.Value * 100)) * ti.FuelLevel.Value;
+            }
+            else
+            {
+                _telemetryData.Car.FuelCapacity = 0;
+            }
+
         }
 
         private void OnSimDisconnected(object sender, EventArgs e)

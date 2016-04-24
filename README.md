@@ -19,6 +19,8 @@ Contains numerous widgets to build dashboards
 Track Recorder, to allow track position to be shown on the dashboard
 Telemetry recoding and analysis
 
+A vide of the latest version showing the default iPhine dash running on lots of devices [https://www.youtube.com/watch?v=Fo_JXQd9oz4](https://www.youtube.com/watch?v=Fo_JXQd9oz4)
+
 A video of the Alpha track map can be found at  [https://www.youtube.com/watch?v=h2GRYcLq-vY](https://www.youtube.com/watch?v=h2GRYcLq-vY/)
 
 An early Alpha version of the dash running can be found at [https://www.youtube.com/watch?v=TkxlwAKm2Eo](https://www.youtube.com/watch?v=TkxlwAKm2Eo/)
@@ -37,6 +39,12 @@ A library of tools, widgets, are provided. With a little Javascript knowledge yo
 ![More](/Screenshots/more.png)
 
 Another example Dashboard
+
+
+
+# Credits
+
+Chris Kinsman - For the new name (OneHUD) and graphics
 
 http://www.uibox.in/item/63
 https://github.com/Flyer53/jsPanel

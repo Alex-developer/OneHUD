@@ -1,20 +1,20 @@
-﻿var AGDashRPMWidget = function () {
+﻿var AGDashFUELWidget = function () {
     'use strict';
 
-    var _name = 'RPM';
+    var _name = 'FUEL';
     var _icon = '/images/widgets/gauge.png';
-    var _labels = ['RPM', 'Rev Counter'];
-    var _description = 'Displays the engines rpm';
+    var _labels = ['Fuel'];
+    var _description = 'Displays The Cars Fuel Level';
     var _tab = 'Engine';
     var _supports = ['iRacing', 'Project Cars', 'Assetto Corsa'];
     var _requires = ['/js/gauge/gauge.js'];
     var _messages = ['telemetry'];
     var _el;
     var _gaugeElement = null;
-    var _lastRpm = 0;
+    var _lastFuel = -999;
 
     var _properties = {
-        type: 'rpm',
+        type: 'speed',
         gaugestyle: 'analogue',
         align: 'left',
         css: {
@@ -28,7 +28,7 @@
         }
     };
 
-    var _gaugeRPM;
+    var _gaugeSpeed;
 
     function init(element, properties) {
 
@@ -49,8 +49,8 @@
         }
 
         jQuery(_gaugeElement).remove();
-        _gaugeRPM = null;
-        
+        _gaugeSpeed = null;
+
         if (!leaveElement) {
             jQuery(_el).remove();
         }
@@ -75,19 +75,21 @@
 
         jQuery(_el).append(_gaugeElement);
 
-        _gaugeRPM = new Gauge({
+        _gaugeSpeed = new Gauge({
             renderTo: _gaugeElement.attr('id'),
             width: jQuery(_el).width(),
             height: jQuery(_el).height(),
             glow: false,
-            units: 'RPM',
+            units: 'Fuel',
             title: false,
             minValue: 0,
-            maxValue: 11000,
-            majorTicks: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'],
-            minorTicks: 5,
-            strokeTicks: true,
-            highlights: [{ from: 160, to: 220, color: 'rgba(200, 50, 50, .75)' }],
+            maxValue: 100,
+            majorTicks: ['0', '25', '75', '100'],
+            minorTicks: 4,
+            strokeTicks: false,
+            startAngle: 180,
+            ticksAngle: 90,
+            highlights: [],
             colors: {
                 plate: '#222',
                 majorTicks: '#f5f5f5',
@@ -104,22 +106,37 @@
                     },
                     shadowUp: true,
                     shadowDown: false
+                },
+                circle: {
+                    shadow: false,
+                    outerStart: '#333',
+                    outerEnd: '#111',
+                    middleStart: '#222',
+                    middleEnd: '#111',
+                    innerStart: '#111',
+                    innerEnd: '#333'
+                },
+                valueBox: {
+                    rectStart: '#222',
+                    rectEnd: '#333',
+                    background: '#babab2',
+                    shadow: 'rgba(0, 0, 0, 1)'
                 }
-            },
-            valueBox: {
-                visible: true
-            },
-            valueText: {
-                visible: true
-            },
-            valueFormat: {
-                int: 5,
-                dec: 0
             },
             circles: {
                 outerVisible: false,
                 middleVisible: false,
                 innerVisible: false
+            },
+            valueBox: {
+                visible: false
+            },
+            valueText: {
+                visible: false
+            },
+            valueFormat: {
+                int: 3,
+                dec: 0
             },
             needle: {
                 type: 'arrow',
@@ -131,22 +148,25 @@
                     outer: true
                 }
             },
-            animation: false
+            animation: false,
+            updateValueOnAnimation: true
         });
 
-        _gaugeRPM.setRawValue(0);
+        _gaugeSpeed.setRawValue(0);
 
-        _gaugeRPM.draw();
+        _gaugeSpeed.draw();
 
     }
 
     function update(data) {
+        var fuelRemaining = data.Car.FuelRemaining.toFixed(0);
+        var fuelCapacity = data.Car.FuelCapacity.toFixed(0);
 
-        var rpm = data.Engine.RPM.toFixed(0);
+        var fuel = (fuelRemaining / fuelCapacity) * 100;
 
-        if (_lastRpm !== rpm) {
-            _gaugeRPM.setValue(rpm);
-            _lastRpm = rpm;
+        if (_lastFuel !== fuel) {
+            _gaugeSpeed.setValue(fuel);
+            _lastFuel = fuel;
         }
     }
 
@@ -171,4 +191,4 @@
         }
     }
 }
-//# sourceURL=/js/widgets/engine/rpm.js
+//# sourceURL=/js/widgets/fuel.js
