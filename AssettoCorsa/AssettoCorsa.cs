@@ -93,6 +93,8 @@ namespace AssettoCorsa
             _telemetryData.Car.Gear = _physicsData.Gear - 1;
             _telemetryData.Car.FuelRemaining =  _physicsData.Fuel;
             _telemetryData.Car.FuelCapacity = 100; // TODO: Fix this when reading static data
+
+            _telemetryData.Timing.CurrentLapTime = 0; // TODO: Fix when Graphics data is available
         }
         #endregion
 

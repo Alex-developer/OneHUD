@@ -82,6 +82,7 @@ namespace iRacing
                 _telemetryData.Car.FuelCapacity = 0;
             }
 
+            _telemetryData.Timing.CurrentLapTime = _wrapper.GetTelemetryValue<float>("LapCurrentLapTime").Value;
         }
 
         private void OnSimDisconnected(object sender, EventArgs e)

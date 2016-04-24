@@ -141,12 +141,15 @@
     }
 
     function update(data) {
+        if (data.Car.InCar) {
+            var rpm = data.Engine.RPM.toFixed(0);
 
-        var rpm = data.Engine.RPM.toFixed(0);
-
-        if (_lastRpm !== rpm) {
-            _gaugeRPM.setValue(rpm);
-            _lastRpm = rpm;
+            if (_lastRpm !== rpm) {
+                _gaugeRPM.setValue(rpm);
+                _lastRpm = rpm;
+            }
+        } else {
+            _gaugeRPM.setValue(0);
         }
     }
 

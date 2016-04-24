@@ -159,14 +159,18 @@
     }
 
     function update(data) {
-        var fuelRemaining = data.Car.FuelRemaining.toFixed(0);
-        var fuelCapacity = data.Car.FuelCapacity.toFixed(0);
+        if (data.Car.InCar) {
+            var fuelRemaining = data.Car.FuelRemaining.toFixed(0);
+            var fuelCapacity = data.Car.FuelCapacity.toFixed(0);
 
-        var fuel = (fuelRemaining / fuelCapacity) * 100;
+            var fuel = (fuelRemaining / fuelCapacity) * 100;
 
-        if (_lastFuel !== fuel) {
-            _gaugeSpeed.setValue(fuel);
-            _lastFuel = fuel;
+            if (_lastFuel !== fuel) {
+                _gaugeSpeed.setValue(fuel);
+                _lastFuel = fuel;
+            }
+        } else {
+            _gaugeSpeed.setValue(0);
         }
     }
 

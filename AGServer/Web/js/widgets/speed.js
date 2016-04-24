@@ -158,11 +158,16 @@
     }
 
     function update(data) {
-        var speed = data.Car.Speed.toFixed(0);
+        if (data.Car.InCar) {
 
-        if (_lastSpeed !== speed) {
-            _gaugeSpeed.setValue(speed);
-            _lastSpeed = speed;
+            var speed = data.Car.Speed.toFixed(0);
+
+            if (_lastSpeed !== speed) {
+                _gaugeSpeed.setValue(speed);
+                _lastSpeed = speed;
+            }
+        } else {
+            _gaugeSpeed.setValue(0);
         }
     }
 

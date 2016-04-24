@@ -17336,6 +17336,9 @@
     <Content Include="Web\js\framework\file.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Web\js\framework\proto.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web\js\framework\ui.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -17415,6 +17418,9 @@
     </Content>
     <Content Include="Web\js\widgets\speed.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\js\widgets\timing\currentlaptime.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\videos\background.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

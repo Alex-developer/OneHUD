@@ -61,6 +61,18 @@
                 "font-weight": "bold",
                 "color": "black"
             }
+        },
+        {
+            "type": "currentlaptime",
+            "css": {
+                "left": 400,
+                "top": 285,
+                "width": 150,
+                "height": 25,
+                "font-family": "led",
+                "font-weight": "bold",
+                "color": "white"
+            }
         }
     ]
 }

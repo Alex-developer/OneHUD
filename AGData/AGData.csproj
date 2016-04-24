@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Timing\Times.cs" />
     <Compile Include="Vehicle\Car.cs" />
     <Compile Include="Vehicle\Chassis.cs" />
     <Compile Include="Vehicle\Engine.cs" />

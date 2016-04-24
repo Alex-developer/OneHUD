@@ -95,6 +95,8 @@ namespace RaceRoom
             _telemetryData.Car.Speed = _data.CarSpeed;
             _telemetryData.Car.FuelRemaining = _data.FuelLeft;
             _telemetryData.Car.FuelCapacity = _data.FuelCapacity;
+
+            _telemetryData.Timing.CurrentLapTime = _data.LapTimeCurrentSelf;
         }
         #endregion
 

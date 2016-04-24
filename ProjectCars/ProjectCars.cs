@@ -108,6 +108,8 @@ namespace ProjectCars
             _telemetryData.Car.Gear = _data.MGear;
             _telemetryData.Car.FuelRemaining = _data.MFuelLevel * _data.MFuelCapacity;
             _telemetryData.Car.FuelCapacity =  _data.MFuelCapacity;
+
+            _telemetryData.Timing.CurrentLapTime = _data.MCurrentTime;
         }
         #endregion
 

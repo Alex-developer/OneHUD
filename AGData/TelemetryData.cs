@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AGData.Vehicle;
+using AGData.Timing;
 
 namespace AGData
 {
@@ -11,6 +12,7 @@ namespace AGData
         public Engine Engine { get; set; }
         public Chassis Chassis { get; set; }
         public Car Car { get; set; }
+        public Times Timing { get; set; }  
 
         private readonly Object _lock = new Object();
 
@@ -27,6 +29,7 @@ namespace AGData
                 Engine = new Engine();
                 Chassis = new Chassis();
                 Car = new Car();
+                Timing = new Times();
             }
         }
     }
