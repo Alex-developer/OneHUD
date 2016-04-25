@@ -1,6 +1,7 @@
-# AGServer
 
-AGServer is the server and dashboard component for my sim racing telemetry app.
+![alt tag](https://github.com/Alex-developer/OneHUD/blob/master/OneHUD/assets/OneHUD-Logo.png)
+
+OneHud is the server and dashboard component for my sim racing telemetry app.
 
 The server provides data in real time for 
 
@@ -19,7 +20,7 @@ Contains numerous widgets to build dashboards
 Track Recorder, to allow track position to be shown on the dashboard
 Telemetry recoding and analysis
 
-A vide of the latest version showing the default iPhine dash running on lots of devices [https://www.youtube.com/watch?v=Fo_JXQd9oz4](https://www.youtube.com/watch?v=Fo_JXQd9oz4)
+A video of the latest version showing the default iPhine dash running on lots of devices [https://www.youtube.com/watch?v=Fo_JXQd9oz4](https://www.youtube.com/watch?v=Fo_JXQd9oz4)
 
 A video of the Alpha track map can be found at  [https://www.youtube.com/watch?v=h2GRYcLq-vY](https://www.youtube.com/watch?v=h2GRYcLq-vY/)
 
