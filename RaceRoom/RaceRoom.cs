@@ -5,8 +5,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using AGServerInterface;
-using AGData;
+using OneHUDInterface;
+using OneHUDData;
 using RaceRoom.Readers;
 using RaceRoom.DataFormat;
 

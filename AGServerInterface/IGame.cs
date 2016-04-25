@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using AGData;
+using OneHUDData;
 
-namespace AGServerInterface
+namespace OneHUDInterface
 {
     public interface IGame
     {

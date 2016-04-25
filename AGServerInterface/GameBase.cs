@@ -3,9 +3,9 @@ using System.Linq;
 using System.Diagnostics;
 using System.Reflection;
 using System.Collections.Generic;
-using AGData;
+using OneHUDData;
 
-namespace AGServerInterface
+namespace OneHUDInterface
 {
     public abstract class GameBase : IGame
     {

@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\AGServer\Plugins\</OutputPath>
+    <OutputPath>..\OneHUD\Plugins\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -47,13 +47,13 @@
     <Compile Include="Readers\SharedMemoryReader.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AGData\AGData.csproj">
+    <ProjectReference Include="..\AGData\OneHUDData.csproj">
       <Project>{9f2b6482-bdc7-468a-839f-23393a239dcd}</Project>
-      <Name>AGData</Name>
+      <Name>OneHUDData</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AGServerInterface\AGServerInterface.csproj">
+    <ProjectReference Include="..\AGServerInterface\OneHUDInterface.csproj">
       <Project>{212dda7c-2447-478d-aaed-09dc4bee3241}</Project>
-      <Name>AGServerInterface</Name>
+      <Name>OneHUDInterface</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

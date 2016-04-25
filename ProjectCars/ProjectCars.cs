@@ -2,10 +2,10 @@
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using AGServerInterface;
+using OneHUDInterface;
 using ProjectCars.DataFormat;
 using ProjectCars.Readers;
-using AGData;
+using OneHUDData;
 
 namespace ProjectCars
 {

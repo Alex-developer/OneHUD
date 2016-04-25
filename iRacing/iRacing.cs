@@ -1,8 +1,8 @@
 ﻿using System;
 
-using AGServerInterface;
+using OneHUDInterface;
 using iRacingSdkWrapper;
-using AGData;
+using OneHUDData;
 
 namespace iRacing
 {

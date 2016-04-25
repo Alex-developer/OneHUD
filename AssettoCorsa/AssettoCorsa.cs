@@ -3,10 +3,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Runtime.InteropServices;
-using AGServerInterface;
+using OneHUDInterface;
 using AssettoCorsa.Readers;
 using AssettoCorsa.DataFormat;
-using AGData;
+using OneHUDData;
 
 namespace AssettoCorsa
 {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using AGData.Vehicle;
-using AGData.Timing;
+using OneHUDData.Vehicle;
+using OneHUDData.Timing;
 
-namespace AGData
+namespace OneHUDData
 {
     public class TelemetryData
     {

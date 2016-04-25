@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace AGData.Vehicle
+namespace OneHUDData.Vehicle
 {
     public class Car
     {

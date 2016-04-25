@@ -1,4 +1,4 @@
-﻿namespace AGData.Vehicle
+﻿namespace OneHUDData.Vehicle
 {
     public class Chassis
     {
