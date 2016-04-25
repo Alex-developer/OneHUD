@@ -1,4 +1,4 @@
-﻿var AGDashCARCLASSWidget = function () {
+﻿var OneHUDCARCLASSWidget = function () {
     'use strict';
 
     var _name = 'Car Class';

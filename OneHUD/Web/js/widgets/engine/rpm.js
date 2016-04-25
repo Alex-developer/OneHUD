@@ -1,4 +1,4 @@
-﻿var AGDashRPMWidget = function () {
+﻿var OneHUDRPMWidget = function () {
     'use strict';
 
     var _name = 'RPM';
@@ -71,7 +71,7 @@
     function buildUIAnalogue() {
 
         _gaugeElement = jQuery('<canvas>')
-            .attr('id', AGServerUI.getNextId())
+            .attr('id', OneHUDUI.getNextId())
 
         jQuery(_el).append(_gaugeElement);
 

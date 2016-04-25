@@ -1,4 +1,4 @@
-﻿var AGDashIMAGEWidget = function () {
+﻿var OneHUDIMAGEWidget = function () {
     'use strict';
 
     var _name = 'Image';

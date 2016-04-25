@@ -1,4 +1,4 @@
-﻿var AGDashSPEEDWidget = function () {
+﻿var OneHUDSPEEDWidget = function () {
     'use strict';
 
     var _name = 'SPEED';
@@ -71,7 +71,7 @@
     function buildUIAnalogue() {
 
         _gaugeElement = jQuery('<canvas>')
-            .attr('id', AGServerUI.getNextId())
+            .attr('id', OneHUDUI.getNextId())
 
         jQuery(_el).append(_gaugeElement);
 

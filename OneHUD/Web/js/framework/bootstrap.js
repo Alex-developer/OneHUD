@@ -1,4 +1,4 @@
-﻿var AGServerBootstrap = function () {
+﻿var OneHUDBootstrap = function () {
     'use strict';
 
     var _worker = null;
@@ -13,8 +13,8 @@
         initDataReader();
 
         getStartupData().done(function (options) {
-            AGServerClassCache.init(options).done(function (options) {
-                AGServerUI.init(options, _worker);
+            OneHUDClassCache.init(options).done(function (options) {
+                OneHUDUI.init(options, _worker);
             });
         });
       

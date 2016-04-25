@@ -1,4 +1,4 @@
-﻿var AGRacingViewTiming = function () {
+﻿var OneHUDViewTiming = function () {
     'use strict'
 
     var _name = 'Timing';

@@ -1,4 +1,4 @@
-﻿var AGServerDataReader = function () {
+﻿var OneHUDDataReader = function () {
     'use strict';
 
     importScripts('/js/twix/twix.js');

@@ -1,4 +1,4 @@
-﻿var AGRacingViewHome = function () {
+﻿var OneHUDViewHome = function () {
     'use strict'
 
     var _name = 'Home';
@@ -12,7 +12,7 @@
     }
 
     function buildPage() {
-        var options = AGServerUI.options();
+        var options = OneHUDUI.options();
         var template = '\
         <div class="row" id="home-pages-row" data-equalizer data-equalize-on="medium">\
             <div class="home-pages">\

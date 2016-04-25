@@ -1,4 +1,4 @@
-﻿var AGServerDataManager = function () {
+﻿var OneHUDDataManager = function () {
     'use strict';
 
     importScripts('/js/framework/datareader.js');
@@ -16,9 +16,9 @@
             start = false;
         }
 
-        var config = AGServerConfig.getDataReaderConfig(dataReader);
+        var config = OneHUDConfig.getDataReaderConfig(dataReader);
         if (config !== null) {
-            _readers[dataReader] = new AGServerDataReader();
+            _readers[dataReader] = new OneHUDDataReader();
             _readers[dataReader].init(config);
 
             if (start) {
@@ -68,6 +68,6 @@
     };
 }();
 
-self.addEventListener('message', AGServerDataManager.processMessage, false);
+self.addEventListener('message', OneHUDDataManager.processMessage, false);
 
 //# sourceURL=/js/framework/datamanager.js

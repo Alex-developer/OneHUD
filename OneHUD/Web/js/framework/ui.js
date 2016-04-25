@@ -1,4 +1,4 @@
-﻿var AGServerUI = function () {
+﻿var OneHUDUI = function () {
     'use strict';
 
     var _options = null;
@@ -24,7 +24,7 @@
         var page = null;
         var hash = location.hash.substring(location.hash.indexOf('#') + 1);
         if (hash !== '') {
-            if (AGServerClassCache.pageExists(hash)) {
+            if (OneHUDClassCache.pageExists(hash)) {
                 page = hash;
             }
         }
@@ -42,9 +42,9 @@
         clearContent();
         blockUI();
         updateHeader();
-        _currentPage = AGServerClassCache.getPage(page);
-        setupBackgroundVideo();
+        _currentPage = OneHUDClassCache.getPage(page);
         _currentPage.init();
+        setupBackgroundVideo();
         unblockUI();
         
     }

@@ -1,4 +1,4 @@
-﻿var AGRacingViewAbout = function () {
+﻿var OneHUDViewAbout = function () {
     'use strict'
 
     var _name = 'About';

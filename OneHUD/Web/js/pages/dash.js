@@ -1,4 +1,4 @@
-﻿var AGRacingViewDash = function () {
+﻿var OneHUDViewDash = function () {
     'use strict'
 
     var _name = 'Dash';
@@ -71,7 +71,7 @@
     function init() {
         var deferred = jQuery.Deferred();
         loadWidgets().done(function () {
-            AGServerFile.loadDash().done(function (dash) {
+            OneHUDFile.loadDash().done(function (dash) {
                 if (dash !== null) {
                     _dashJson = dash;
                 } else {
@@ -86,7 +86,7 @@
     function loadWidgets() {
         var deferred = jQuery.Deferred();
 
-        var options = AGServerUI.options();
+        var options = OneHUDUI.options();
         var widgetsPaths = [];
         jQuery.each(options.Widgets, function (i, widgetInfo) {
             widgetsPaths.push(widgetInfo.Path);
@@ -100,6 +100,7 @@
     }
 
     function buildUI() {
+        jQuery('body').css('background-color', '#222');
         buildToolbar();
         buildDash();
     }
@@ -108,7 +109,7 @@
         _dash = [];
         jQuery.each(_dashJson.widgets, function (index, widget) {
             var widgetName = widget.type;
-            var widgetClass = 'AGDash' + widgetName.toUpperCase() + 'Widget';
+            var widgetClass = 'OneHUD' + widgetName.toUpperCase() + 'Widget';
 
          //   try {
                 var widgetController = new window[widgetClass]();
@@ -122,7 +123,7 @@
 
                 var element = jQuery('<div>').css(widget.css)
                     .addClass('widget agselectable')
-                    .attr('id', AGServerUI.getNextId())
+                    .attr('id', OneHUDUI.getNextId())
                 jQuery('#content').append(element);
                 element.data('type', widgetController.name);
 

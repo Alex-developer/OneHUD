@@ -1,4 +1,4 @@
-﻿var AGDashCURRENTLAPTIMEWidget = function () {
+﻿var OneHUDCURRENTLAPTIMEWidget = function () {
     'use strict';
 
     var _name = 'Current';
@@ -39,7 +39,7 @@
     }
 
     function buildUI() {
-        _elId = AGServerUI.getNextId();
+        _elId = OneHUDUI.getNextId();
         var element = jQuery('<span>').css({ 'pointer-events': 'none' }).html('--:--:--').attr('id', _elId).width(_properties.width).height(_properties.height);
 
         jQuery(_el).append(element);

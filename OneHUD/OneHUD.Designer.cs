@@ -143,15 +143,15 @@
             this.lblIPAddressLabel.TabIndex = 0;
             this.lblIPAddressLabel.Text = "IP Address";
             // 
-            // AGServer
+            // OneHUD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(510, 253);
             this.Controls.Add(this.groupBoxHTTPServer);
             this.Controls.Add(this.statusStrip);
-            this.Name = "AGServer";
-            this.Text = "AG Server";
+            this.Name = "OneHUD";
+            this.Text = "OneHUD";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AGServer_FormClosed);
             this.Load += new System.EventHandler(this.AGServer_Load);
             this.statusStrip.ResumeLayout(false);

@@ -1,4 +1,4 @@
-﻿var AGServerClassCache = function () {
+﻿var OneHUDClassCache = function () {
     'use strict';
 
     var _pageNames = [];
@@ -14,7 +14,7 @@
         head.load(_pageNames, function () {
 
             jQuery.each(options.Pages, function (index, page) {
-                var pageClass = 'AGRacingView' + page.Name;
+                var pageClass = 'OneHUDView' + page.Name;
                 _pages[page.Name] = new window[pageClass];
             });
 

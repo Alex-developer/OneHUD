@@ -1,4 +1,4 @@
-﻿var AGDashGEARWidget = function () {
+﻿var OneHUDGEARWidget = function () {
     'use strict';
 
     var _name = 'Gear';

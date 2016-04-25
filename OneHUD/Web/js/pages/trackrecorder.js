@@ -1,4 +1,4 @@
-﻿var AGRacingViewRecorder = function () {
+﻿var OneHUDViewRecorder = function () {
     'use strict'
 
     var _name = 'Recorder';

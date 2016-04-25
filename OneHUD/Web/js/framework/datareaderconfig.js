@@ -1,4 +1,4 @@
-﻿var AGServerConfig = function () {
+﻿var OneHUDConfig = function () {
     'use strict';
 
     var _dataReaders = {

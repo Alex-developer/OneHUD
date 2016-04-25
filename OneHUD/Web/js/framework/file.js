@@ -1,4 +1,4 @@
-﻿var AGServerFile = function () {
+﻿var OneHUDFile = function () {
     'use strict';
 
     var _uri = null;
