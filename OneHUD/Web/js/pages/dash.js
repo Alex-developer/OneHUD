@@ -143,6 +143,7 @@
             <i class="fi-save large"></i>\
         ';
 
+        template = '';
         var html = Mustache.to_html(template);
         jQuery('#page-icons').html(html);
     }

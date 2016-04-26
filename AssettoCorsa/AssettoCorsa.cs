@@ -95,6 +95,8 @@ namespace AssettoCorsa
             _telemetryData.Car.FuelCapacity = 100; // TODO: Fix this when reading static data
 
             _telemetryData.Timing.CurrentLapTime = 0; // TODO: Fix when Graphics data is available
+
+            _telemetryData.Engine.WaterTemp = 0; // NOT SUPPORTED
         }
         #endregion
 

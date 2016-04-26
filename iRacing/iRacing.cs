@@ -83,6 +83,8 @@ namespace iRacing
             }
 
             _telemetryData.Timing.CurrentLapTime = _wrapper.GetTelemetryValue<float>("LapCurrentLapTime").Value;
+
+            _telemetryData.Engine.WaterTemp = ti.WaterTemp.Value;
         }
 
         private void OnSimDisconnected(object sender, EventArgs e)

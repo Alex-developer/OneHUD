@@ -1,12 +1,12 @@
-﻿var OneHUDFUELWidget = function () {
+﻿var OneHUDWATERTEMPWidget = function () {
     'use strict';
 
-    var _name = 'FUEL';
+    var _name = 'WATERTEMP';
     var _icon = '/images/widgets/gauge.png';
     var _labels = ['Fuel'];
-    var _description = 'Displays The Cars Fuel Level';
+    var _description = 'Displays The Engines Water Temperature';
     var _tab = 'Engine';
-    var _supports = ['iRacing', 'Project Cars', 'Assetto Corsa', 'RaceRoom Experience'];
+    var _supports = ['iRacing', 'Project Cars', 'RaceRoom Experience'];
     var _requires = ['/js/gauge/gauge.js'];
     var _messages = ['telemetry'];
     var _el;
@@ -14,7 +14,7 @@
     var _lastFuel = -999;
 
     var _properties = {
-        type: 'speed',
+        type: 'watertemp',
         gaugestyle: 'analogue',
         align: 'left',
         css: {
@@ -83,8 +83,8 @@
             units: 'Fuel',
             title: false,
             minValue: 0,
-            maxValue: 100,
-            majorTicks: ['0', '25', '75', '100'],
+            maxValue: 120,
+            majorTicks: ['0', '25', '75', '100', '125'],
             minorTicks: 4,
             strokeTicks: false,
             startAngle: 180,

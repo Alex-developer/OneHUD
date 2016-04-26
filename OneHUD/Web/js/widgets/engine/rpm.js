@@ -6,7 +6,7 @@
     var _labels = ['RPM', 'Rev Counter'];
     var _description = 'Displays the engines rpm';
     var _tab = 'Engine';
-    var _supports = ['iRacing', 'Project Cars', 'Assetto Corsa'];
+    var _supports = ['iRacing', 'Project Cars', 'Assetto Corsa', 'RaceRoom Experience'];
     var _requires = ['/js/gauge/gauge.js'];
     var _messages = ['telemetry'];
     var _el;

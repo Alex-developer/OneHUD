@@ -96,6 +96,8 @@ namespace RaceRoom
             _telemetryData.Car.FuelRemaining = _data.FuelLeft;
             _telemetryData.Car.FuelCapacity = _data.FuelCapacity;
 
+            _telemetryData.Engine.WaterTemp = _data.EngineWaterTemp;
+
             _telemetryData.Timing.CurrentLapTime = _data.LapTimeCurrentSelf;
         }
         #endregion

@@ -109,6 +109,8 @@ namespace ProjectCars
             _telemetryData.Car.FuelRemaining = _data.MFuelLevel * _data.MFuelCapacity;
             _telemetryData.Car.FuelCapacity =  _data.MFuelCapacity;
 
+            _telemetryData.Engine.WaterTemp = _data.MWaterTempCelsius;
+
             _telemetryData.Timing.CurrentLapTime = _data.MCurrentTime;
         }
         #endregion

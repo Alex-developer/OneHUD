@@ -24,10 +24,14 @@
         var deferred = jQuery.Deferred();
 
         jQuery.ajax({
-            url: _uri + '/Startup',
-            cache: false
-        }).done(function (result) {
-            var options = JSON.parse(result);
+            url: _uri + 'Startup',
+            cache: false,
+            method: 'POST',
+            data: {
+                width: jQuery(window).width(),
+                height: jQuery(window).height()
+            }
+        }).done(function (options) {
             deferred.resolve(options);
         });
 

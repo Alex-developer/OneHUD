@@ -188,6 +188,9 @@ namespace OneHUD.Servers.HTTP
                             case "Telemetry":
                                 result = TelemetryDataHandler.ProcessConnectedRequest(_telemetryData, postData);
                                 break;
+                            case "Startup":
+                                result = StartupDataHandler.ProcessStartupRequest(_telemetryData, _plugins, postData);
+                                break;
                         }
                         response.StatusCode = (int)HttpStatusCode.OK;
                     }

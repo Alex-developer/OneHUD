@@ -6,7 +6,7 @@
     var _labels = ['Speed'];
     var _description = 'Displays The Cars Speed';
     var _tab = 'Engine';
-    var _supports = ['iRacing', 'Project Cars', 'Assetto Corsa'];
+    var _supports = ['iRacing', 'Project Cars', 'Assetto Corsa', 'RaceRoom Experience'];
     var _requires = ['/js/gauge/gauge.js'];
     var _messages = ['telemetry'];
     var _el;
@@ -88,7 +88,7 @@
             minorTicks: 2,
             strokeTicks: true,
             highlights: [{ from: 120, to: 160, color: 'rgba(200, 50, 50, .75)' }],
-            ticksAngle: 170,
+            ticksAngle: 165,
             colors: {
                 plate: '#222',
                 majorTicks: '#f5f5f5',

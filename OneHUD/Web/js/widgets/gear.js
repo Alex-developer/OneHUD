@@ -5,7 +5,7 @@
     var _icon = '/images/widgets/gear.png';
     var _labels = ['Gear'];
     var _tab = 'Car';
-    var _supports = ['iRacing', 'Project Cars', 'Assetto Corsa'];
+    var _supports = ['iRacing', 'Project Cars', 'Assetto Corsa', 'RaceRoom Experience'];
 
     var _initialised = false;
     var _el = null;
