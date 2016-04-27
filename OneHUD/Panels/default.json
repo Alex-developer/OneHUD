@@ -75,14 +75,42 @@
             }
         },
         {
+            "type": "label",
+            "text":  "Current Lap Time",
+            "css": {
+                "left": 510,
+                "top": 70,
+                "width": 100,
+                "height": 30,
+                "font-family": "LatoWeb",
+                "font-weight": "normal",
+                "font-style": "normal",
+                "color": "white"
+            }
+        },
+        {
             "type": "currentlaptime",
             "css": {
                 "left": 510,
                 "top": 100,
-                "width": 150,
+                "width":250,
                 "height": 25,
                 "font-family": "led",
                 "font-weight": "bold",
+                "color": "white"
+            }
+        },
+        {
+            "type": "label",
+            "text":  "Best Lap Time",
+            "css": {
+                "left": 510,
+                "top": 150,
+                "width": 200,
+                "height": 25,
+                "font-family": "LatoWeb",
+                "font-weight": "normal",
+                "font-style": "normal",
                 "color": "white"
             }
         }

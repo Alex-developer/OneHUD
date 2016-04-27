@@ -47,5 +47,9 @@ Another example Dashboard
 
 Chris Kinsman - For the new name (OneHUD) and graphics
 
+
+# Research
 http://www.uibox.in/item/63
 https://github.com/Flyer53/jsPanel
+
+http://www.flaticon.com/packs/car-dashboard-signals
