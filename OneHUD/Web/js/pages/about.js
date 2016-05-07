@@ -3,6 +3,7 @@
 
     var _name = 'About';
     var _icon = 'images/pages/about.png';
+    var _menuIcon = 'images/pages/about-menu.png';
     var _description = 'The AGServer help page. Got a problem? check this page for debug information and where to get help';
     var _showVideo = true;
     var _order = 5;

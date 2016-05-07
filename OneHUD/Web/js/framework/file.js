@@ -21,7 +21,9 @@
             method: 'POST',
             data: {
                 action: 'LoadDash',
-                name: name
+                name: name,
+                screenx: jQuery(window).width(),
+                screeny: jQuery(window).height()
             }
         }).done(function (result) {
             var dash = null;

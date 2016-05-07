@@ -1,7 +1,7 @@
 ﻿{
     "name": "Default",
     "devicename": "default 667 x 375",
-    "devicesubname":  "Default fallback",
+    "devicesubname":  "iPhone 6",
     "devicex": 667,
     "devicey": 375,
     "orientation": "landscape",

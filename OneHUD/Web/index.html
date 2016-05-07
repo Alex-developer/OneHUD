@@ -61,47 +61,82 @@ audio, canvas, progress, video {
         padding: 0 5px;
     }
 
+    .off-canvas-content {
+        background: none !important;
+    }
+
+    .mr5 {
+        margin-right: 5px;
+    }
+
+    #page-menu {
+        margin-top: 10px;
+    }
+
+    .button.expanded {
+        display: inline-block;
+        width: 96%;
+    }
+
+.gridlines {
+    display: none;
+    position:absolute;
+    background-color:#333;
+    z-index: -1000;
+}
 </style>
-  <body>
 
-        <div class="top-bar">
-            <div class="top-bar-left">
-                <ul class="dropdown menu" data-dropdown-menu>
-                    <li class="menu-text"><a href="#" data-action="loadpage" data-page="Home">OneHUD</a></li>
-                    <li>
-                        <a href="#">Pages</a>
-                        <ul class="menu vertical" id="page-menu">
-                            <li><a href="#">One</a></li>
-                            <li><a href="#">Two</a></li>
-                            <li><a href="#">Three</a></li>
-                        </ul>
-                    </li>
-                    <li>&nbsp;&nbsp;&nbsp;&nbsp;Connected To:&nbsp;</li>
-                    <li id="connected-game">Waiting</li>
+
+<body>
+    <div class="off-canvas-wrapper">
+        <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+            <div class="off-canvas position-left" id="offCanvas" data-off-canvas>
+
+
+                <div class="title-bar">
+                    <div class="title-bar-left">
+                        <button class="menu-icon" type="button"></button>
+                        <span class="title-bar-title">Options</span>
+                    </div>
+                    <div class="title-bar-right">
+                        <button class="close-button" aria-label="Close menu" type="button" data-close>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Menu -->
+                <ul id="page-menu">
+                    <li><a href="#">One</a></li>
+                    <li><a href="#">Two</a></li>
+                    <li><a href="#">Three</a></li>
                 </ul>
+
             </div>
-            <div id="page-icons" class="top-bar-right">
+
+            <div class="off-canvas-content" data-off-canvas-content>
+                <button type="button" class="button" data-toggle="offCanvas">Open Menu</button>
+                    <div id="content">
+                
+                    </div>
+                
             </div>
         </div>
-    
-        <div id="content">
-    
-        </div>
-    </body>
-    
+    </div>
 
-      <script src="js/head/head.load.js"></script>
-      <script src="js/mustache/mustache.min.js"></script>
-      <script src="js/framework/proto.js"></script>
-      <script src="js/framework/bootstrap.js"></script>
-      <script src="js/framework/classcache.js"></script>
-      <script src="js/framework/ui.js"></script>
-      <script src="js/framework/file.js"></script>
 
-      <script src="js/app.js"></script>
-      <script src="js/slick/slick/slick.min.js"></script>
-      <script src="js/blockui/blockUI.min.js"></script>
-      <script src="js/bigtext/bigtext.js"></script>
+    <script src="js/head/head.load.js"></script>
+    <script src="js/mustache/mustache.min.js"></script>
+    <script src="js/framework/proto.js"></script>
+    <script src="js/framework/bootstrap.js"></script>
+    <script src="js/framework/classcache.js"></script>
+    <script src="js/framework/ui.js"></script>
+    <script src="js/framework/file.js"></script>
 
-  </body>
+    <script src="js/app.js"></script>
+    <script src="js/slick/slick/slick.min.js"></script>
+    <script src="js/blockui/blockUI.min.js"></script>
+    <script src="js/bigtext/bigtext.js"></script>
+    <script src="js/touchswipe/touchswipe.js"></script>
+</body>
 </html>

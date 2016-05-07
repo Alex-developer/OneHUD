@@ -3,6 +3,8 @@
 
     var _name = 'Dash';
     var _icon = 'images/pages/dash.png';
+    var _menuIcon = 'images/pages/dash-menu.png';
+    var _editorMenuIcon = 'images/pages/editor-menu.png';
     var _description = 'The AGServer dashboard. This is the interesting bit where you can create and use your own custom dashboards using the built in editor';
     var _showVideo = false;
     var _order = 2;
@@ -10,6 +12,7 @@
     var _dashJson = {};
     var _dash = [];
     var _dashLoaded = false;
+    var _editing = false;
 
     var _defaultDashboard = {
         name: 'Default',
@@ -78,6 +81,7 @@
                     _dashJson = _defaultDashboard;
                 }
                 buildUI();
+                deferred.resolve();
             });
         });
         return deferred.promise();
@@ -162,6 +166,27 @@
         }
     }
 
+    function customMenu(el) {
+        var image = jQuery('<img>', { 'src': _editorMenuIcon, 'width': '40px' });
+        var menuLink = jQuery('<a>', { 'href': '#', 'class': 'button hollow expanded clearfix', 'id': 'starteditor' }).append(image);
+        jQuery(el).append(menuLink);
+
+        jQuery('#starteditor').on('click', function (e) {
+
+            head.load('/js/pages/editor.js', function () {
+
+                if (!_editing) {
+                    OneHUDDashEditor.start();
+                    _editing = true;
+                } else {
+                    OneHUDDashEditor.stop();
+                    _editing = false;
+                }
+                jQuery('#offCanvas').foundation('close');
+            });
+        });
+    }
+
     return {
         showVideo: _showVideo,
 
@@ -171,6 +196,10 @@
 
         update: function (type, data) {
             update(type, data);
+        },
+
+        customMenu: function (el) {
+            customMenu(el);
         }
     }
 }

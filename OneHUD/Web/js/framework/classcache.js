@@ -33,6 +33,10 @@
             return _pages[page];
         },
 
+        getPages: function () {
+            return _pages;
+        },
+
         pageExists: function (page) {
             if (_pages[page] !== undefined) {
                 return true;

@@ -62,24 +62,79 @@ audio, canvas, progress, video {
         padding: 0 5px;
     }
 
+    .off-canvas-content {
+        background: none !important;
+    }
+
+    .mr5 {
+        margin-right: 5px;
+    }
+
+    #page-menu {
+        margin-top: 10px;
+    }
+
+    .button.expanded {
+        display: inline-block;
+        width: 96%;
+    }
+
+.gridlines {
+    display: none;
+    position:absolute;
+    background-color:#333;
+    z-index: -1000;
+}
 </style>
-  <body>
 
-    {{!-- Pages you create in the src/pages/ folder are inserted here when the flattened page is created. --}}
-    {{> body}}
 
-      <script src="{{root}}js/head/head.load.js"></script>
-      <script src="{{root}}js/mustache/mustache.min.js"></script>
-      <script src="{{root}}js/framework/proto.js"></script>
-      <script src="{{root}}js/framework/bootstrap.js"></script>
-      <script src="{{root}}js/framework/classcache.js"></script>
-      <script src="{{root}}js/framework/ui.js"></script>
-      <script src="{{root}}js/framework/file.js"></script>
+<body>
+    <div class="off-canvas-wrapper">
+        <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+            <div class="off-canvas position-left" id="offCanvas" data-off-canvas>
 
-      <script src="{{root}}js/app.js"></script>
-      <script src="{{root}}js/slick/slick/slick.min.js"></script>
-      <script src="{{root}}js/blockui/blockUI.min.js"></script>
-      <script src="{{root}}js/bigtext/bigtext.js"></script>
 
-  </body>
+                <div class="title-bar">
+                    <div class="title-bar-left">
+                        <button class="menu-icon" type="button"></button>
+                        <span class="title-bar-title">Options</span>
+                    </div>
+                    <div class="title-bar-right">
+                        <button class="close-button" aria-label="Close menu" type="button" data-close>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Menu -->
+                <ul id="page-menu">
+                    <li><a href="#">One</a></li>
+                    <li><a href="#">Two</a></li>
+                    <li><a href="#">Three</a></li>
+                </ul>
+
+            </div>
+
+            <div class="off-canvas-content" data-off-canvas-content>
+                <button type="button" class="button" data-toggle="offCanvas">Open Menu</button>
+                {{> body}}
+            </div>
+        </div>
+    </div>
+
+
+    <script src="{{root}}js/head/head.load.js"></script>
+    <script src="{{root}}js/mustache/mustache.min.js"></script>
+    <script src="{{root}}js/framework/proto.js"></script>
+    <script src="{{root}}js/framework/bootstrap.js"></script>
+    <script src="{{root}}js/framework/classcache.js"></script>
+    <script src="{{root}}js/framework/ui.js"></script>
+    <script src="{{root}}js/framework/file.js"></script>
+
+    <script src="{{root}}js/app.js"></script>
+    <script src="{{root}}js/slick/slick/slick.min.js"></script>
+    <script src="{{root}}js/blockui/blockUI.min.js"></script>
+    <script src="{{root}}js/bigtext/bigtext.js"></script>
+    <script src="{{root}}js/touchswipe/touchswipe.js"></script>
+</body>
 </html>

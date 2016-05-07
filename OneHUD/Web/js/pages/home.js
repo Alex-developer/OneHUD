@@ -3,6 +3,7 @@
 
     var _name = 'Home';
     var _icon = 'images/pages/home.png';
+    var _menuIcon = 'images/pages/home-menu.png';
     var _description = 'The AgServer homepage. From here you can access all of the other available pages and function';
     var _showVideo = true;
     var _order = 1;

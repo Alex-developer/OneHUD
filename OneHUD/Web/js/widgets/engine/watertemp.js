@@ -80,7 +80,7 @@
             width: jQuery(_el).width(),
             height: jQuery(_el).height(),
             glow: false,
-            units: 'Fuel',
+            units: 'Water Temp.',
             title: false,
             minValue: 0,
             maxValue: 120,

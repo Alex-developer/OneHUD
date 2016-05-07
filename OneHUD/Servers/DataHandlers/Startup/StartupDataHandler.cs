@@ -47,6 +47,8 @@ namespace AGServer.Servers.DataHandlers.Startup
 
                 string pageName = ParseVariable(pageText, "_name");
                 string pageIcon = ParseVariable(pageText, "_icon");
+                string menuIcon = ParseVariable(pageText, "_menuIcon");
+                
                 string pageDescription = ParseVariable(pageText, "_description");
                 string order = ParseVariable(pageText, "_order", false);
                 int pageOrder = 1;
@@ -61,6 +63,7 @@ namespace AGServer.Servers.DataHandlers.Startup
                     StartupDataPageInfo pageInfo = new StartupDataPageInfo();
                     pageInfo.Name = pageName;
                     pageInfo.Icon = pageIcon;
+                    pageInfo.Menuicon = menuIcon;
                     pageInfo.Description = pageDescription;
                     pageInfo.Order = pageOrder;
                     pageInfo.FileName = "js/pages/" + Path.GetFileName(pageJsonFiles[i]);

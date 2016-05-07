@@ -1,9 +1,9 @@
 ﻿{
     "name": "Default",
-    "devicename": "default 667 x 375",
-    "devicesubname":  "Default fallback",
-    "devicex": 667,
-    "devicey": 375,
+    "devicename": "default 2048 x 1536",
+    "devicesubname":  "Galaxy Tab S2",
+    "devicex": 2048,
+    "devicey": 1536,
     "orientation": "landscape",
     "widgets": [
         {
@@ -24,7 +24,7 @@
             "css": {
                 "left": 0,
                 "top": 45,
-                "width": 614,
+                "width": 2000,
                 "height": 324
             }
         },

@@ -7,12 +7,39 @@
     var _currentGame = null;
     var _id = 0;
 
+    function SetOffCanvasHeight() {
+        var height = jQuery(window).height();
+        var contentHeight = jQuery('.off-canvas-content').height();
+        if (contentHeight > height) { height = contentHeight; }
+
+        jQuery('.off-canvas-wrapper').height(height);
+        jQuery('.off-canvas-wrapper-inner').height(height);
+        jQuery('.off-canvas').height(height);
+        jQuery('#content').height(height);
+    }
+
     function init(options, worker) {
         _options = options;
         _worker = worker;
 
         _worker.addEventListener('message', function (e) {
             dataEvent(e);
+        });
+
+        jQuery(window)
+            .load(function () {
+                SetOffCanvasHeight();
+            })
+            .resize(function () {
+                SetOffCanvasHeight();
+            });
+
+        jQuery(window).swipe({
+            swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
+                if (direction === 'right') {
+                    jQuery('#offCanvas').foundation('open');
+                }
+            }
         });
 
         setupMenu();
@@ -41,11 +68,23 @@
 
         clearContent();
         blockUI();
-        updateHeader();
         _currentPage = OneHUDClassCache.getPage(page);
-        _currentPage.init();
-        setupBackgroundVideo();
-        unblockUI();
+        var deferred = _currentPage.init();
+        if (deferred === undefined) {
+            updateHeader();
+            setupBackgroundVideo();
+            SetOffCanvasHeight();
+            jQuery('#offCanvas').foundation('close');
+            unblockUI();
+        } else {
+            deferred.done(function (result) {
+                updateHeader();
+                setupBackgroundVideo();
+                SetOffCanvasHeight();
+                jQuery('#offCanvas').foundation('close');
+                unblockUI();
+            });
+        }
         
     }
 
@@ -56,15 +95,31 @@
             text = _currentGame.GameLongName;
         }
         jQuery('#connected-game').html(text);
+
+        if (_currentPage.update !== undefined) {
+            _currentPage.update('builtin', text);
+        }
+
     }
 
     function setupMenu() {
         jQuery('#page-menu').html('');
         jQuery.each(_options.Pages, function (index, page) {
-            var menuLink = jQuery('<a>', { 'href': '#', 'data-action': 'loadpage', 'data-page': page.Name }).text(page.Name);
-            var menuLi = jQuery('<li>', { class: 'spinner' }).append(menuLink);
-            jQuery('#page-menu').append(menuLi);
+            var image = jQuery('<img>', { 'src': page.Menuicon, 'width': '40px' });
+            var menuLink = jQuery('<a>', { 'href': '#', 'data-action': 'loadpage', 'data-page': page.Name, 'class': 'button hollow float-left mr5' }).append(image);
+            jQuery('#page-menu').append(menuLink);
         });
+
+        var pages = OneHUDClassCache.getPages();
+
+        for (var page in pages) {
+            if (pages.hasOwnProperty(page)) {
+                if (pages[page].customMenu !== undefined) {
+                    pages[page].customMenu('#page-menu');
+                }
+            }
+        }
+
     }
 
     function setupBackgroundVideo() {
@@ -164,10 +219,11 @@
 
     function handleHeartBeat(message) {
         if (message.data.Game !== null) {
-            if (_currentGame == null || (_currentGame.GameShortName !== message.data.Game)) {
+            if (_currentGame === null || (_currentGame.GameShortName !== message.data.Game)) {
                 _currentGame = getGameConfig(message.data.Game);
                 pageLoader(getBrowserHashPage());
                 startDataReader();
+
             }
         } else {
             if (_currentGame !== null) {

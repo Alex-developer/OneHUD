@@ -1,16 +1,16 @@
 ﻿{
     "name": "Default",
-    "devicename": "default 667 x 375",
-    "devicesubname":  "Default fallback",
-    "devicex": 667,
-    "devicey": 375,
+    "devicename": "default 1024 x 640",
+    "devicesubname":  "Generic",
+    "devicex": 1024,
+    "devicey": 640,
     "orientation": "landscape",
     "widgets": [
         {
             "type": "status",
             "css": {
                 "left": 0,
-                "top": 350,
+                "top": 540,
                 "width": 200,
                 "height": 25,
                 "font-family": "LatoWeb",
@@ -24,7 +24,7 @@
             "css": {
                 "left": 0,
                 "top": 45,
-                "width": 614,
+                "width": 1000,
                 "height": 324
             }
         },
@@ -32,10 +32,10 @@
             "type": "rpm",
             "gaugestyle": "analogue",
             "css": {
-                "left": 131,
-                "top": 38,
-                "width": 310,
-                "height": 310,
+                "left": 198,
+                "top": 27,
+                "width": 535,
+                "height": 535,
                 "font-family": "ledfont",
                 "font-weight": "bold",
                 "color": "white"
@@ -45,10 +45,10 @@
             "type": "speed",
             "gaugestyle": "analogue",
             "css": {
-                "left": 14,
-                "top": 94,
-                "width": 200,
-                "height": 200,
+                "left": 19,
+                "top": 121,
+                "width": 335,
+                "height": 335,
                 "font-family": "ledfont",
                 "font-weight": "bold",
                 "color": "white"
@@ -57,10 +57,10 @@
         {
             "type": "gear",
             "css": {
-                "left": 265,
-                "top": 125,
-                "width": 50,
-                "height": 50,
+                "left": 425,
+                "top": 165,
+                "width": 100,
+                "height": 100,
                 "font-family": "led",
                 "font-weight": "bold",
                 "color": "white"
@@ -69,10 +69,10 @@
         {
             "type": "fuel",
             "css": {
-                "left": 408,
-                "top": 225,
-                "width": 100,
-                "height": 100,
+                "left": 647,
+                "top": 320,
+                "width": 200,
+                "height": 200,
                 "font-family": "led",
                 "font-weight": "bold",
                 "color": "black"
@@ -81,10 +81,10 @@
         {
             "type": "watertemp",
             "css": {
-                "left": 408,
-                "top": 63,
-                "width": 100,
-                "height": 100,
+                "left": 647,
+                "top": 62,
+                "width": 200,
+                "height": 200,
                 "font-family": "led",
                 "font-weight": "bold",
                 "color": "black"
@@ -94,10 +94,10 @@
             "type": "label",
             "text":  "Current Lap Time",
             "css": {
-                "left": 510,
-                "top": 70,
-                "width": 100,
-                "height": 30,
+                "left": 390,
+                "top": 540,
+                "width": 300,
+                "height": 50,
                 "font-family": "LatoWeb",
                 "font-weight": "normal",
                 "font-style": "normal",
@@ -107,10 +107,10 @@
         {
             "type": "currentlaptime",
             "css": {
-                "left": 510,
-                "top": 100,
-                "width":250,
-                "height": 25,
+                "left": 620,
+                "top": 540,
+                "width":300,
+                "height": 50,
                 "font-family": "led",
                 "font-weight": "bold",
                 "color": "white"
@@ -120,10 +120,10 @@
             "type": "label",
             "text":  "Best Lap Time",
             "css": {
-                "left": 510,
-                "top": 150,
-                "width": 200,
-                "height": 25,
+                "left": 414,
+                "top": 582,
+                "width": 300,
+                "height": 50,
                 "font-family": "LatoWeb",
                 "font-weight": "normal",
                 "font-style": "normal",

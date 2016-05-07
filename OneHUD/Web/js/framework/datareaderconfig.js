@@ -10,7 +10,7 @@
         },
         telemetry: {
             urn: 'Telemetry',
-            frequency: 50,
+            frequency: 20,
             eventName: 'telemetry',
             persistant: false
         },
