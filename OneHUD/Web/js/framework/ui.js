@@ -68,12 +68,14 @@
 
         clearContent();
         blockUI();
+        pageLostFocus();
         _currentPage = OneHUDClassCache.getPage(page);
         var deferred = _currentPage.init();
         if (deferred === undefined) {
             updateHeader();
             setupBackgroundVideo();
             SetOffCanvasHeight();
+            pageGotFocus();
             jQuery('#offCanvas').foundation('close');
             unblockUI();
         } else {
@@ -81,11 +83,28 @@
                 updateHeader();
                 setupBackgroundVideo();
                 SetOffCanvasHeight();
+                pageGotFocus();
                 jQuery('#offCanvas').foundation('close');
                 unblockUI();
             });
         }
         
+    }
+
+    function pageGotFocus() {
+        if (_currentPage !== null) {
+            if (_currentPage.gotFocus !== undefined) {
+                _currentPage.gotFocus('#page-custom-menu');
+            }
+        }
+    }
+
+    function pageLostFocus() {
+        if (_currentPage !== null) {
+            if (_currentPage.lostFocus !== undefined) {
+                _currentPage.lostFocus('#page-custom-menu');
+            }
+        }
     }
 
     function updateHeader() {
@@ -109,17 +128,6 @@
             var menuLink = jQuery('<a>', { 'href': '#', 'data-action': 'loadpage', 'data-page': page.Name, 'class': 'button hollow float-left mr5' }).append(image);
             jQuery('#page-menu').append(menuLink);
         });
-
-        var pages = OneHUDClassCache.getPages();
-
-        for (var page in pages) {
-            if (pages.hasOwnProperty(page)) {
-                if (pages[page].customMenu !== undefined) {
-                    pages[page].customMenu('#page-menu');
-                }
-            }
-        }
-
     }
 
     function setupBackgroundVideo() {
@@ -251,6 +259,10 @@
 
         getNextId: function () {
             return getNextId();
+        },
+
+        getCurrentPage: function () {
+            return _currentPage;
         }
     }
 }();

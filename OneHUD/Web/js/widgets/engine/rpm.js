@@ -68,6 +68,11 @@
 
     }
 
+    function resize() {
+        destroy(true);
+        buildUIAnalogue();
+    }
+
     function buildUIAnalogue() {
 
         _gaugeElement = jQuery('<canvas>')
@@ -161,6 +166,10 @@
         tab: _tab,
         supports: _supports,
 
+        element: function () {
+            return _el;
+        },
+
         init: function (element, properties) {
             return init(element, properties);
         },
@@ -171,6 +180,10 @@
 
         update: function (data) {
             update(data);
+        },
+
+        resize: function () {
+            resize();
         }
     }
 }

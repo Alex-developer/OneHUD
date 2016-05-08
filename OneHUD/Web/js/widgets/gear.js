@@ -71,6 +71,9 @@
         }
     }
 
+    function resize() {
+        _gearElement.bigText();
+    }
 
     return {
         name: _name,
@@ -94,6 +97,10 @@
 
         update: function (data) {
             update(data);
+        },
+
+        resize: function () {
+            resize();
         }
 
     }

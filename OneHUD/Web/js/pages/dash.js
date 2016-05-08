@@ -5,6 +5,9 @@
     var _icon = 'images/pages/dash.png';
     var _menuIcon = 'images/pages/dash-menu.png';
     var _editorMenuIcon = 'images/pages/editor-menu.png';
+    var _openIcon = 'images/pages/open.png';
+    var _saveIcon = 'images/pages/save.png';
+    var _cancelIcon = 'images/pages/cancel.png';
     var _description = 'The AGServer dashboard. This is the interesting bit where you can create and use your own custom dashboards using the built in editor';
     var _showVideo = false;
     var _order = 2;
@@ -166,12 +169,13 @@
         }
     }
 
-    function customMenu(el) {
+    function gotFocus(el) {
+        var instance = this;
         var image = jQuery('<img>', { 'src': _editorMenuIcon, 'width': '40px' });
-        var menuLink = jQuery('<a>', { 'href': '#', 'class': 'button hollow expanded clearfix', 'id': 'starteditor' }).append(image);
+        var menuLink = jQuery('<a>', { 'href': '#', 'class': 'button hollow expanded clearfix', 'id': 'editor-start' }).append(image);
         jQuery(el).append(menuLink);
 
-        jQuery('#starteditor').on('click', function (e) {
+        jQuery('#editor-start').on('click', function (e) {
 
             head.load('/js/pages/editor.js', function () {
 
@@ -185,6 +189,25 @@
                 jQuery('#offCanvas').foundation('close');
             });
         });
+
+        image = jQuery('<img>', { 'src': _openIcon, 'width': '40px' });
+        menuLink = jQuery('<a>', { 'href': '#', 'class': 'button hollow float-left mr5', 'id': 'editor-load-dash' }).append(image);
+        jQuery(el).append(menuLink);
+
+        image = jQuery('<img>', { 'src': _saveIcon, 'width': '40px' });
+        menuLink = jQuery('<a>', { 'href': '#', 'class': 'button hollow float-left mr5 disabled', 'id': 'editor-save-dash' }).append(image);
+        jQuery(el).append(menuLink);
+
+        image = jQuery('<img>', { 'src': _cancelIcon, 'width': '40px' });
+        menuLink = jQuery('<a>', { 'href': '#', 'class': 'button hollow float-left mr5 disabled', 'id': 'editor-cancel' }).append(image);
+        jQuery(el).append(menuLink);
+    }
+
+    function lostFocus(el) {
+        jQuery('#editor-start').remove();
+        jQuery('#editor-load-dash').remove();
+        jQuery('#editor-save-dash').remove();
+        jQuery('#editor-cancel').remove();
     }
 
     return {
@@ -198,8 +221,16 @@
             update(type, data);
         },
 
-        customMenu: function (el) {
-            customMenu(el);
+        gotFocus: function (el) {
+            gotFocus(el);
+        },
+
+        lostFocus: function (el) {
+            lostFocus(el);
+        },
+
+        getDash: function () {
+            return _dash;
         }
     }
 }

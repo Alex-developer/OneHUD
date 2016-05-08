@@ -10,6 +10,7 @@
       <link rel="stylesheet" href="js/slick/slick/slick.css">
       <link rel="stylesheet" href="js/slick/slick/slick-theme.css">
       <link rel="stylesheet" href="fonts/foundation-icons/foundation-icons.css">
+      <link rel="stylesheet" href="js/jquery-ui/jquery-ui.min.css">
   </head>
 <style>
 
@@ -78,12 +79,31 @@ audio, canvas, progress, video {
         width: 96%;
     }
 
+    .toggle-menu {
+        position: absolute;
+    }
+
 .gridlines {
     display: none;
     position:absolute;
     background-color:#333;
     z-index: -1000;
 }
+
+.off-canvas-content, #offCanvas {
+    overflow: hidden;
+}
+
+
+.widget {
+
+}
+
+    .widget.border {
+        border: 1px solid #333;
+        background: #000;
+        opacity: 0.7;
+    }
 </style>
 
 
@@ -106,16 +126,15 @@ audio, canvas, progress, video {
                 </div>
 
                 <!-- Menu -->
-                <ul id="page-menu">
-                    <li><a href="#">One</a></li>
-                    <li><a href="#">Two</a></li>
-                    <li><a href="#">Three</a></li>
-                </ul>
+                <div id="page-menu">
+                </div>
+                <div id="page-custom-menu">
+                </div>
 
             </div>
 
             <div class="off-canvas-content" data-off-canvas-content>
-                <button type="button" class="button" data-toggle="offCanvas">Open Menu</button>
+                <button type="button" class="button toggle-menu" data-toggle="offCanvas">Open Menu</button>
                     <div id="content">
                 
                     </div>
@@ -138,5 +157,6 @@ audio, canvas, progress, video {
     <script src="js/blockui/blockUI.min.js"></script>
     <script src="js/bigtext/bigtext.js"></script>
     <script src="js/touchswipe/touchswipe.js"></script>
+    <script src="js/jquery-ui/jquery-ui.min.js"></script>
 </body>
 </html>
