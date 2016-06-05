@@ -1,7 +1,7 @@
 ﻿var OneHUDWATERTEMPWidget = function () {
     'use strict';
 
-    var _name = 'WATERTEMP';
+    var _name = 'Water Temp';
     var _icon = '/images/widgets/gauge.png';
     var _labels = ['Fuel'];
     var _description = 'Displays The Engines Water Temperature';
@@ -186,6 +186,7 @@
         labels: _labels,
         tab: _tab,
         supports: _supports,
+        properties: _properties,
 
         element: function () {
             return _el;

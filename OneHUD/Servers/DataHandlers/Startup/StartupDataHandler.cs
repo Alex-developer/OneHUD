@@ -91,10 +91,13 @@ namespace AGServer.Servers.DataHandlers.Startup
                     string widgetName = ParseVariable(widgetJS, "_name");
                     string widgetIcon = ParseVariable(widgetJS, "_icon");
                     string widgetDescription = ParseVariable(widgetJS, "_description");
+                    string widgetTab = ParseVariable(widgetJS, "_tab");
+                    string className = GetClassName(widgetJS);
+                    
                     string widgetPath = f.Replace(basePath, "");
                     widgetPath = widgetPath.Replace("\\", "/");
 
-                    StartupDataWidgetInfo widget = new StartupDataWidgetInfo() { Name = widgetName, Icon = widgetIcon, Description = widgetDescription, Path = widgetPath };
+                    StartupDataWidgetInfo widget = new StartupDataWidgetInfo() { Name = widgetName, Icon = widgetIcon, Description = widgetDescription, Path = widgetPath, Tab = widgetTab, ClassName = className };
                     result.Widgets.Add(widget);
                 }
 
@@ -108,6 +111,21 @@ namespace AGServer.Servers.DataHandlers.Startup
                 Console.WriteLine(ex.Message);
             }
         }
+
+        private static string GetClassName(string text)
+        {
+            string result = "";
+
+            Regex regex = new Regex(@"var[\w\s](.+)[\w\s]=[\w\s]function");
+            Match lineFound = regex.Match(text);
+            if (lineFound.Success)
+            {
+                result = lineFound.Groups[1].Value;
+            }
+
+            return result;
+        }
+
 
         private static string ParseVariable(string text, string varName, bool quoted = true)
         {

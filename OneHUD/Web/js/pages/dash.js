@@ -119,28 +119,43 @@
             var widgetClass = 'OneHUD' + widgetName.toUpperCase() + 'Widget';
 
          //   try {
-                var widgetController = new window[widgetClass]();
-
-                if (widget.css === undefined) {
-                    widget.css = {};
-                }
-
-                widget.css['position'] = 'absolute';
-                widget.css['zindex'] = 100;
-
-                var element = jQuery('<div>').css(widget.css)
-                    .addClass('widget agselectable')
-                    .attr('id', OneHUDUI.getNextId())
-                jQuery('#content').append(element);
-                element.data('type', widgetController.name);
-
-                widgetController.init(element, widget);
-                _dash.push(widgetController);
+                addWidget(widgetClass, widget);
          //   } catch (error) {
          //       console.log(error);
          //   }
         });
         _dashLoaded = true;
+    }
+
+    function addWidget(widgetClass, properties) {
+        var widgetController = createWidget(widgetClass, properties);
+        _dash.push(widgetController);
+        return widgetController;
+    }
+
+    function createWidget(widgetClass, properties) {
+        var widgetController = new window[widgetClass]();
+
+        if (properties === undefined) {
+            properties = widgetController.properties;
+        }
+
+        if (properties.css === undefined) {
+            properties.css = {};
+        }
+
+        properties.css['position'] = 'absolute';
+        properties.css['zindex'] = 100;
+
+        var element = jQuery('<div>').css(properties.css)
+            .addClass('widget agselectable')
+            .attr('id', OneHUDUI.getNextId())
+        jQuery('#content').append(element);
+        element.data('type', widgetController.name);
+
+        widgetController.init(element, properties);
+
+        return widgetController;
     }
 
     function buildToolbar() {
@@ -231,6 +246,14 @@
 
         getDash: function () {
             return _dash;
+        },
+
+        addWidget: function (widgetClass, properties) {
+            return addWidget(widgetClass, properties);
+        },
+
+        createWidget: function(widgetClass, properties) {
+            return createWidget(widgetClass, properties);
         }
     }
 }

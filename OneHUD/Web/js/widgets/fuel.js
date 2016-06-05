@@ -1,7 +1,7 @@
 ﻿var OneHUDFUELWidget = function () {
     'use strict';
 
-    var _name = 'FUEL';
+    var _name = 'Fuel';
     var _icon = '/images/widgets/gauge.png';
     var _labels = ['Fuel'];
     var _description = 'Displays The Cars Fuel Level';
@@ -186,6 +186,7 @@
         labels: _labels,
         tab: _tab,
         supports: _supports,
+        properties: _properties,
 
         element: function () {
             return _el;

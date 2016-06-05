@@ -12,5 +12,7 @@ namespace AGServer.Servers.DataHandlers.Startup
         public string Path { get; set; }
         public string Description { get; set; }
         public string Icon { get; set; }
+        public string Tab { get; set; }
+        public string ClassName { get; set; }
     }
 }

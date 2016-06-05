@@ -1,7 +1,7 @@
 ﻿var OneHUDLABELWidget = function () {
     'use strict';
 
-    var _name = 'Image';
+    var _name = 'Label';
     var _icon = '/images/widgets/label.png';
 
     var _initialised = false;
@@ -56,6 +56,7 @@
         messages: _messages,
         tab: _tab,
         supports: _supports,
+        properties: _properties,
 
         element: function () {
             return _el;

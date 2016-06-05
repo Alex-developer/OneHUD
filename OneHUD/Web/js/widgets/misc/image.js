@@ -9,6 +9,7 @@
     var _elImage = null;
     var _tab = 'Misc';
     var _supports = 'all';
+    var _propertypage = 'image';
 
     var _properties = {
         type: 'image',
@@ -46,6 +47,8 @@
         messages: _messages,
         tab: _tab,
         supports: _supports,
+        properties: _properties,
+        propertypage: _propertypage,
 
         element: function () {
             return _el;

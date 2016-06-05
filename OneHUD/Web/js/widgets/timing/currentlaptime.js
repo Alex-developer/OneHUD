@@ -68,6 +68,7 @@
         labels: _labels,
         tab: _tab,
         supports: _supports,
+        properties: _properties,
 
         element: function () {
             return _el;

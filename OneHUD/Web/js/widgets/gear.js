@@ -21,7 +21,7 @@
             height: 50,
             'font-family': 'Led',
             'font-weight': 'bold',
-            color: 'black'
+            color: 'white'
         }
     };
     var _messages = ['telemetry'];
@@ -82,6 +82,7 @@
         labels: _labels,
         tab: _tab,
         supports: _supports,
+        properties: _properties,
 
         element: function () {
             return _el;

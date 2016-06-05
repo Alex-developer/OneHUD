@@ -1,7 +1,7 @@
 ﻿var OneHUDSPEEDWidget = function () {
     'use strict';
 
-    var _name = 'SPEED';
+    var _name = 'Speed';
     var _icon = '/images/widgets/gauge.png';
     var _labels = ['Speed'];
     var _description = 'Displays The Cars Speed';
@@ -183,6 +183,7 @@
         labels: _labels,
         tab: _tab,
         supports: _supports,
+        properties: _properties,
 
         element: function () {
             return _el;

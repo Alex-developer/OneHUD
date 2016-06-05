@@ -7,11 +7,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OneHUD</title>
-    <link rel="stylesheet" href="{{root}}css/app.css">
       <link rel="stylesheet" href="{{root}}js/slick/slick/slick.css">
       <link rel="stylesheet" href="{{root}}js/slick/slick/slick-theme.css">
       <link rel="stylesheet" href="{{root}}fonts/foundation-icons/foundation-icons.css">
       <link rel="stylesheet" href="{{root}}js/jquery-ui/jquery-ui.min.css">
+      <link rel="stylesheet" href="{{root}}js/jspanel3/source/jquery.jspanel.css">
+      <link rel="stylesheet" href="{{root}}css/app.css">
   </head>
 <style>
 
@@ -105,6 +106,77 @@ audio, canvas, progress, video {
         background: #000;
         opacity: 0.7;
     }
+
+    .selected {
+        border: 1px solid #800000 !important;
+    }
+
+
+
+
+#widget-tabs .tab {
+    width: 32px;
+    height: 32px;
+}
+
+.tab-Car, .tab-Engine, .tab-Environment, .tab-Misc, .tab-Timing{
+	background: url(images/pages/editor-sprites.png) no-repeat;
+}
+
+.tab-Car{
+	background-position: -201px 0;
+	width: 32px;
+	height: 32px;
+}
+
+.tab-Engine{
+	background-position: -151px 0;
+	width: 32px;
+	height: 32px;
+}
+
+.tab-Environment{
+	background-position: -101px 0;
+	width: 32px;
+	height: 32px;
+}
+
+.tab-Misc{
+	background-position: -51px 0;
+	width: 32px;
+	height: 32px;
+}
+
+.tab-Timing{
+	background-position: 0 0;
+	width: 32px;
+	height: 32px;
+}
+
+.jsPanel .jsPanel-content, .tabs-content  {
+    background-color: #222222;
+    color: white;
+}
+
+    .jsPanel .tabs-content.vertical {
+        border: none;
+    }
+
+    .jsPanel .tabs-panel a:hover, .jsPanel .tabs-panel a:focus, .jsPanel .tabs-panel a {
+        color: white;
+    }
+
+.widget-tabs-tab-panel {
+    display: none;
+}
+
+    .widget-tabs-tab-panel-widget {
+        width: 40px;
+    }
+
+#widget-tabs {
+    font-size: 32px;
+}
 </style>
 
 
@@ -156,5 +228,6 @@ audio, canvas, progress, video {
     <script src="{{root}}js/bigtext/bigtext.js"></script>
     <script src="{{root}}js/touchswipe/touchswipe.js"></script>
     <script src="{{root}}js/jquery-ui/jquery-ui.min.js"></script>
+    <script src="{{root}}js/jspanel3/source/jquery.jspanel-compiled.js"></script>
 </body>
 </html>
