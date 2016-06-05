@@ -1,5 +1,5 @@
 
-![alt tag](https://github.com/Alex-developer/OneHUD/blob/master/OneHUD/assets/OneHUD-Logo.png)
+![alt tag](https://github.com/Alex-developer/OneHUD/blob/master/OneHUD/assets/OneHUD Logo.png)
 
 OneHud is the server and dashboard component for my sim racing telemetry app.
 
