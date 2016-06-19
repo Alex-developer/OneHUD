@@ -36,7 +36,7 @@
 @include foundation-sticky;
 @include foundation-reveal;
 @include foundation-switch;
-@include foundation-table;
+//@include foundation-table;
 @include foundation-tabs;
 @include foundation-thumbnail;
 @include foundation-title-bar;
@@ -47,4 +47,4 @@
 // @include foundation-flex-classes;
 
 @include motion-ui-transitions;
-@include motion-ui-animations;
+@include motion-ui-animations; 

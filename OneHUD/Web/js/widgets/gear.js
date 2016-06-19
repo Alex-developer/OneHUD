@@ -6,6 +6,7 @@
     var _labels = ['Gear'];
     var _tab = 'Car';
     var _supports = ['iRacing', 'Project Cars', 'Assetto Corsa', 'RaceRoom Experience'];
+    var _propertypage = 'text';
 
     var _initialised = false;
     var _el = null;
@@ -83,6 +84,7 @@
         tab: _tab,
         supports: _supports,
         properties: _properties,
+        propertypage: _propertypage,
 
         element: function () {
             return _el;

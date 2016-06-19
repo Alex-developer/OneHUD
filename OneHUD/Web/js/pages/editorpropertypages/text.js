@@ -1,4 +1,4 @@
-﻿var OneHUDPropertyPageIMAGE = function () {
+﻿var OneHUDPropertyPageTEXT = function () {
     'use strict';
 
     var _propertiesWindow = null;
@@ -25,12 +25,13 @@
         _propertiesWindow.content.append(html);
 
         var theMeta = {
-            left: { group: 'Position', name: 'left', type: 'number', options: { min: 0, max: 20000, step: 1 } },
-            top: { group: 'Position', name: 'top', type: 'number', options: { min: 0, max: 20000, step: 1 } },
-            width: { group: 'Position', name: 'width', type: 'number', options: { min: 0, max: 20000, step: 1 } },
-            height: { group: 'Position', name: 'height', type: 'number', options: { min: 0, max: 20000, step: 1 } },
-            filename: { group: 'File', name: 'Filename', description: 'The image file name' },
-            filename1: { group: 'File', name: 'Filename1', description: 'The image file name' }
+            left: { group: 'Position', name: 'Left', type: 'number', options: { min: 0, max: 20000, step: 1 } },
+            top: { group: 'Position', name: 'Top', type: 'number', options: { min: 0, max: 20000, step: 1 } },
+            width: { group: 'Position', name: 'Width', type: 'number', options: { min: 0, max: 20000, step: 1 } },
+            height: { group: 'Position', name: 'Height', type: 'number', options: { min: 0, max: 20000, step: 1 } },
+            font: { group: 'Font', name: 'Font', description: 'The font name' },
+            fontautosize: { group: 'Font', name: 'Auto Size',type: 'boolean', description: 'Auto size the font' },
+            fontsize: { group: 'Font', name: 'Font Size', description: 'The font size name' }
         };
 
         var theObj = {
@@ -38,8 +39,9 @@
             top: 250,
             width: 600,
             height: 400,
-            filename: 'image.png',
-            filename1: 'ff'
+            font: 'LED',
+            fontautosize: true,
+            fontsize: '10'
         };
 
         jQuery('#' + _propertyGridId).jqPropertyGrid(theObj, theMeta);

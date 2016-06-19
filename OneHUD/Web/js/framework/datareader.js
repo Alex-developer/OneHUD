@@ -84,6 +84,8 @@
                     _socket.send('.');
                 } else {
                     _processing = false;
+                    sendMessage('error', _config.eventName, '');
+                    debugger;
                 }
             } else {
                 Twix.ajax({

@@ -192,7 +192,13 @@
 
         jQuery('#editor-start').on('click', function (e) {
 
-            head.load('/js/pages/editor.js', function () {
+            var editorScripts = [
+                '/js/pages/editor.js',
+                '/js/jqPropertyGrid/jqPropertyGrid.js'//,
+               // '/js/jqPropertyGrid/jqPropertyGrid.css'
+            ];
+
+            head.load(editorScripts, function () {
 
                 if (!_editing) {
                     OneHUDDashEditor.start();

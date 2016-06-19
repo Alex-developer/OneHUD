@@ -5125,6 +5125,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Web\js\gauge\README.md" />
+    <None Include="Web\js\jqPropertyGrid\.editorconfig" />
+    <None Include="Web\js\jqPropertyGrid\.gitignore" />
+    <None Include="Web\js\jqPropertyGrid\.jscsrc" />
+    <None Include="Web\js\jqPropertyGrid\.jshintrc" />
+    <None Include="Web\js\jqPropertyGrid\LICENSE" />
+    <None Include="Web\js\jqPropertyGrid\package.json" />
+    <None Include="Web\js\jqPropertyGrid\README.md" />
     <None Include="Web\js\jspanel3\.gitattributes" />
     <None Include="Web\js\jspanel3\.travis.yml" />
     <None Include="Web\js\jspanel3\bower.json" />
@@ -17553,6 +17560,15 @@
     <Content Include="Web\js\head\head.load.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Web\js\jqPropertyGrid\example\example.png" />
+    <Content Include="Web\js\jqPropertyGrid\example\index.html" />
+    <Content Include="Web\js\jqPropertyGrid\Gruntfile.js" />
+    <Content Include="Web\js\jqPropertyGrid\jqPropertyGrid.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\js\jqPropertyGrid\jqPropertyGrid.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web\js\jquery-ui\external\jquery\jquery.js" />
     <Content Include="Web\js\jquery-ui\images\ui-icons_444444_256x240.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -17648,6 +17664,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\js\pages\editor.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\js\pages\editorpropertypages\text.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\js\pages\editorpropertypages\image.js">

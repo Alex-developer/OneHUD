@@ -107,14 +107,7 @@
         });
 
         _propertiesWindow = $.jsPanel({
-            'headerTitle': 'Properties',
-            toolbarHeader: [
-                {
-                    item: "<i class='fi-x small style='cursor:pointer;'>",
-                    event: "click",
-                    callback: function (event) { event.data.content.append("<p>You clicked on copy ...</p>"); }
-                }
-            ]
+            'headerTitle': 'Properties'
         });
     }
 
