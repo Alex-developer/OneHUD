@@ -28,7 +28,7 @@
         }
     };
 
-    var _gaugeRPM;
+    var _gaugeRPM = null;
 
     function init(element, properties) {
 
@@ -146,15 +146,17 @@
     }
 
     function update(data) {
-        if (data.Car.InCar) {
-            var rpm = data.Engine.RPM.toFixed(0);
+        if (_gaugeRPM !== null) {
+            if (data.Car.InCar) {
+                var rpm = data.Engine.RPM.toFixed(0);
 
-            if (_lastRpm !== rpm) {
-                _gaugeRPM.setValue(rpm);
-                _lastRpm = rpm;
+                if (_lastRpm !== rpm) {
+                    _gaugeRPM.setValue(rpm);
+                    _lastRpm = rpm;
+                }
+            } else {
+                _gaugeRPM.setValue(0);
             }
-        } else {
-            _gaugeRPM.setValue(0);
         }
     }
 

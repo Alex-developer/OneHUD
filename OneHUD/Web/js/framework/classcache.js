@@ -5,6 +5,7 @@
     var _pages = [];
 
     function init(options) {
+        _pageNames = [];
         var deferred = jQuery.Deferred();
 
         jQuery.each(options.Pages, function (index, page) {

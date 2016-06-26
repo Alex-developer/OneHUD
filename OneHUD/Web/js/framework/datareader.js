@@ -35,6 +35,8 @@
     }
 
     function setupSocket() {
+        _socket = null; // Memory leak??
+
         _socket = new WebSocket('ws://' + _url + '/' + _config.urn);
 
         _socket.onopen = function (e) {
@@ -60,11 +62,14 @@
     }
 
     function start() {
-        _timer = setInterval(readData, _config.frequency);
+        if (_timer === null) {
+            _timer = setInterval(readData, _config.frequency);
+        }
     }
 
     function stop() {
         clearInterval(_timer);
+        _timer = null;
     }
 
     function destroy() {
@@ -85,7 +90,9 @@
                 } else {
                     _processing = false;
                     sendMessage('error', _config.eventName, '');
-                    debugger;
+                    if (_socket.readyState === 3) {
+                        setupSocket();
+                    }
                 }
             } else {
                 Twix.ajax({
@@ -135,6 +142,10 @@
 
         destroy: function () {
 
+        },
+
+        persistant: function () {
+            return _config.persistant;
         }
     }
 };

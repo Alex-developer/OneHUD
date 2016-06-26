@@ -6,6 +6,7 @@
     var _worker = null;
     var _currentGame = null;
     var _id = 0;
+    var _connected = false;
 
     function SetOffCanvasHeight() {
         var height = jQuery(window).height();
@@ -18,14 +19,49 @@
         jQuery('#content').height(height);
     }
 
-    function init(options, worker) {
-        _options = options;
-        _worker = worker;
+    function run() {
+        blockUI();
+        initDataReader();
+        addGlobalEvents()
+    }
 
-        _worker.addEventListener('message', function (e) {
-            dataEvent(e);
+    function init() {
+        var deferred = jQuery.Deferred();
+        getStartupData().done(function (options) {
+            OneHUDClassCache.init(options).done(function (options) {
+                _options = options;
+                setupMenu();
+                addHandlers();
+                pageLoader(getBrowserHashPage());
+                deferred.resolve();
+            });
+        });
+        return deferred.promise();
+    }
+
+    function initDataReader() {
+        _worker = new Worker('/js/framework/datamanager.js');
+    }
+
+    function getStartupData() {
+        var deferred = jQuery.Deferred();
+
+        jQuery.ajax({
+            url: getURI() + 'Startup',
+            cache: false,
+            method: 'POST',
+            data: {
+                width: jQuery(window).width(),
+                height: jQuery(window).height()
+            }
+        }).done(function (options) {
+            deferred.resolve(options);
         });
 
+        return deferred.promise();
+    }
+
+    function addGlobalEvents() {
         jQuery(window)
             .load(function () {
                 SetOffCanvasHeight();
@@ -42,9 +78,9 @@
             }
         });
 
-        setupMenu();
-        addHandlers();
-        pageLoader(getBrowserHashPage());
+        _worker.addEventListener('message', function (e) {
+            dataEvent(e);
+        });
     }
 
     function getBrowserHashPage() {
@@ -67,7 +103,6 @@
         location.hash = page;
 
         clearContent();
-        blockUI();
         pageLostFocus();
         _currentPage = OneHUDClassCache.getPage(page);
         var deferred = _currentPage.init();
@@ -77,7 +112,7 @@
             SetOffCanvasHeight();
             pageGotFocus();
             jQuery('#offCanvas').foundation('close');
-            unblockUI();
+            startDataReader();
         } else {
             deferred.done(function (result) {
                 updateHeader();
@@ -85,7 +120,7 @@
                 SetOffCanvasHeight();
                 pageGotFocus();
                 jQuery('#offCanvas').foundation('close');
-                unblockUI();
+                startDataReader();
             });
         }
         
@@ -151,7 +186,12 @@
     }
 
     function blockUI() {
-        jQuery.blockUI({ message: '<h1><img src="busy.gif" /> Just a moment...</h1>' });
+        jQuery.blockUI({
+            css: {
+                width: '40%'
+            },
+            message: '<h2><img src="images/busy.gif" /> Waiting for OneHUD Server</h2>'
+        });
     }
 
     function unblockUI() {
@@ -159,7 +199,8 @@
     }
 
     function addHandlers() {
-        jQuery(document).on('click','a[data-action]',function (event) {
+        jQuery(document).off('click', 'a[data-action]');
+        jQuery(document).on('click', 'a[data-action]', function (event) {
             var action = jQuery(this).data('action');
 
             switch (action) {
@@ -217,28 +258,53 @@
                             _currentPage.update(message.datatype, message.data);
                         }
                         break;
+                }
+                break;
 
-                    case 'error':
+            case 'error':
+                switch (message.datatype) {
+                    case 'heartbeat':
+                        handleHeartBeat(message);
                         break;
                 }
+
                 break;
         }
     }
 
     function handleHeartBeat(message) {
-        if (message.data.Game !== null) {
-            if (_currentGame === null || (_currentGame.GameShortName !== message.data.Game)) {
-                _currentGame = getGameConfig(message.data.Game);
-                pageLoader(getBrowserHashPage());
-                startDataReader();
-
-            }
-        } else {
-            if (_currentGame !== null) {
-                _currentGame = null;
-                stopDataReader();
-                pageLoader(getBrowserHashPage());
-            }
+        console.log('heartbeat');
+        switch (message.action) {
+            case 'data':
+                if (!_connected) {
+                    _connected = true;
+                    init().done(function () {
+                        if (message.data.Game !== null) {
+                            if (_currentGame === null || (_currentGame.GameShortName !== message.data.Game)) {
+                                _currentGame = getGameConfig(message.data.Game);
+                                pageLoader(getBrowserHashPage());
+                            }
+                        } else {
+                            if (_currentGame !== null) {
+                                _currentGame = null;
+                                stopDataReader();
+                                pageLoader(getBrowserHashPage());
+                            }
+                        }
+                        console.log('started');
+                        unblockUI();
+                    });
+                }
+                break;
+            case 'error':
+                if (_connected) {
+                    _connected = false;
+                    _currentGame = null;
+                    stopDataReader();
+                    console.log('stopped');
+                    blockUI();
+                }
+                break;
         }
     }
 
@@ -248,9 +314,22 @@
         return 'ag_' + _id;
     }
 
+    function getURI() {
+        var uri = '';
+
+        if (location.port !== '') {
+            uri = location.protocol + '//' + location.host.replace(':' + location.port, '') + ':' + location.port;
+        } else {
+            uri = location.protocol + '//' + location.host + '/';
+        }
+
+        return uri;
+    }
+
     return {
-        init: function (options, worker) {
-            init(options, worker);
+
+        run: function() {
+            run();
         },
 
         options: function () {
@@ -263,6 +342,10 @@
 
         getCurrentPage: function () {
             return _currentPage;
+        },
+
+        getURI: function () {
+            return getURI();
         }
     }
 }();

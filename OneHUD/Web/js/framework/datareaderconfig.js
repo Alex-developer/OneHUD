@@ -4,7 +4,7 @@
     var _dataReaders = {
         heartbeat: {
             urn: 'HeartBeat',
-            frequency: 500,
+            frequency: 1000,
             eventName: 'heartbeat',
             persistant: true
         },

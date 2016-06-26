@@ -28,7 +28,7 @@
         }
     };
 
-    var _gaugeSpeed;
+    var _gaugeSpeed = null;
 
     function init(element, properties) {
 
@@ -163,16 +163,18 @@
     }
 
     function update(data) {
-        if (data.Car.InCar) {
+        if (_gaugeSpeed !== null) {
+            if (data.Car.InCar) {
 
-            var speed = data.Car.Speed.toFixed(0);
+                var speed = data.Car.Speed.toFixed(0);
 
-            if (_lastSpeed !== speed) {
-                _gaugeSpeed.setValue(speed);
-                _lastSpeed = speed;
+                if (_lastSpeed !== speed) {
+                    _gaugeSpeed.setValue(speed);
+                    _lastSpeed = speed;
+                }
+            } else {
+                _gaugeSpeed.setValue(0);
             }
-        } else {
-            _gaugeSpeed.setValue(0);
         }
     }
 

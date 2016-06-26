@@ -28,7 +28,7 @@
         }
     };
 
-    var _gaugeSpeed;
+    var _gaugeFuel = null;
 
     function init(element, properties) {
 
@@ -80,7 +80,7 @@
 
         jQuery(_el).append(_gaugeElement);
 
-        _gaugeSpeed = new Gauge({
+        _gaugeFuel = new Gauge({
             renderTo: _gaugeElement.attr('id'),
             width: jQuery(_el).width(),
             height: jQuery(_el).height(),
@@ -157,25 +157,27 @@
             updateValueOnAnimation: true
         });
 
-        _gaugeSpeed.setRawValue(0);
+        _gaugeFuel.setRawValue(0);
 
-        _gaugeSpeed.draw();
+        _gaugeFuel.draw();
 
     }
 
     function update(data) {
-        if (data.Car.InCar) {
-            var fuelRemaining = data.Car.FuelRemaining.toFixed(0);
-            var fuelCapacity = data.Car.FuelCapacity.toFixed(0);
+        if (_gaugeFuel !== null) {
+            if (data.Car.InCar) {
+                var fuelRemaining = data.Car.FuelRemaining.toFixed(0);
+                var fuelCapacity = data.Car.FuelCapacity.toFixed(0);
 
-            var fuel = (fuelRemaining / fuelCapacity) * 100;
+                var fuel = (fuelRemaining / fuelCapacity) * 100;
 
-            if (_lastFuel !== fuel) {
-                _gaugeSpeed.setValue(fuel);
-                _lastFuel = fuel;
+                if (_lastFuel !== fuel) {
+                    _gaugeFuel.setValue(fuel);
+                    _lastFuel = fuel;
+                }
+            } else {
+                _gaugeFuel.setValue(0);
             }
-        } else {
-            _gaugeSpeed.setValue(0);
         }
     }
 
