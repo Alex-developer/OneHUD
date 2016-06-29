@@ -21,7 +21,7 @@
 
     function run() {
         blockUI();
-        initDataReader();
+        createDataReader();
         addGlobalEvents()
     }
 
@@ -39,8 +39,9 @@
         return deferred.promise();
     }
 
-    function initDataReader() {
+    function createDataReader() {
         _worker = new Worker('/js/framework/datamanager.js');
+        initDataReader();
     }
 
     function getStartupData() {
@@ -234,6 +235,10 @@
         }
     }
 
+    function initDataReader() {
+        messageDataReader('init');
+    }
+
     function startDataReader(config) {
         messageDataReader('start', config);
     }
@@ -247,10 +252,30 @@
         var message = JSON.parse(e.data);
 
         switch (message.action) {
+            case 'serverconnected':
+                init().then(function () {
+                    unblockUI();
+                });
+                break;
+
+            case 'serverdisconnected':
+                blockUI();
+                break;
+
+            case 'gameconnected':
+                _currentGame = getGameConfig(message.data.Game);
+                pageLoader(getBrowserHashPage());
+                startDataReader();
+                break;
+
+            case 'gamedisconnected':
+                _currentGame = null;
+                stopDataReader();
+                break;
+
             case 'data':
                 switch (message.datatype) {
                     case 'heartbeat':
-                        handleHeartBeat(message);
                         break;
 
                     case 'telemetry':
@@ -264,46 +289,9 @@
             case 'error':
                 switch (message.datatype) {
                     case 'heartbeat':
-                        handleHeartBeat(message);
                         break;
                 }
 
-                break;
-        }
-    }
-
-    function handleHeartBeat(message) {
-        console.log('heartbeat');
-        switch (message.action) {
-            case 'data':
-                if (!_connected) {
-                    _connected = true;
-                    init().done(function () {
-                        if (message.data.Game !== null) {
-                            if (_currentGame === null || (_currentGame.GameShortName !== message.data.Game)) {
-                                _currentGame = getGameConfig(message.data.Game);
-                                pageLoader(getBrowserHashPage());
-                            }
-                        } else {
-                            if (_currentGame !== null) {
-                                _currentGame = null;
-                                stopDataReader();
-                                pageLoader(getBrowserHashPage());
-                            }
-                        }
-                        console.log('started');
-                        unblockUI();
-                    });
-                }
-                break;
-            case 'error':
-                if (_connected) {
-                    _connected = false;
-                    _currentGame = null;
-                    stopDataReader();
-                    console.log('stopped');
-                    blockUI();
-                }
                 break;
         }
     }
