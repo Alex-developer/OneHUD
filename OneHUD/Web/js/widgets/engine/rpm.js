@@ -48,9 +48,10 @@
             leaveElement = false;
         }
 
-        jQuery(_gaugeElement).remove();
+        jQuery(_gaugeRPM).remove();
         _gaugeRPM = null;
-        
+        jQuery(_gaugeElement).remove();
+
         if (!leaveElement) {
             jQuery(_el).remove();
         }

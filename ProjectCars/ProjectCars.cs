@@ -21,6 +21,7 @@ namespace ProjectCars
         private DateTime _lastTimeStamp;
         private readonly double _pollInterval = 60.0;
         private TelemetryData _telemetryData;
+        private TimingData _timingData;
         private bool _connected = false;
 
         #region Constructor
@@ -39,9 +40,10 @@ namespace ProjectCars
 
 
         #region Public Methods
-        public override bool Start(TelemetryData telemetryData)
+        public override bool Start(TelemetryData telemetryData, TimingData timingData)
         {
             _telemetryData = telemetryData;
+            _timingData = timingData;
             ReadData(_cancel.Token);
             return true;
         }
@@ -103,18 +105,36 @@ namespace ProjectCars
             {
                 _telemetryData.Car.InCar = false;
             }
-            _telemetryData.Engine.RPM = _data.MRpm;
-            _telemetryData.Car.Speed = ConvertSpeedToMPH(_data.MSpeed);
-            _telemetryData.Car.Gear = _data.MGear;
-            _telemetryData.Car.FuelRemaining = _data.MFuelLevel * _data.MFuelCapacity;
-            _telemetryData.Car.FuelCapacity =  _data.MFuelCapacity;
 
-            _telemetryData.Engine.WaterTemp = _data.MWaterTempCelsius;
+            if (_timingData.RaceInfo.TrackLongName == null)
+            {
+                if (_data.MTrackLocation.Value != "")
+                {
+                    _timingData.RaceInfo.TrackLongName = _data.MTrackLocation.Value + " " + _data.MTrackVariation.Value;
+                    _timingData.RaceInfo.TrackShortName = _data.MTrackLocation.Value;
+                    _timingData.RaceInfo.TrackName = _data.MTrackLocation.ToString() + " " + _data.MTrackVariation.Value;
+                    _timingData.RaceInfo.TrackVariation = _data.MTrackVariation.Value;
+                    _timingData.RaceInfo.TrackLength = (int)_data.MTrackLength;
 
-            _telemetryData.Timing.CurrentLapTime = _data.MCurrentTime;
+                    _timingData.RaceInfo.TrackTemperature = _data.MTrackTemperature;
+                    _timingData.RaceInfo.AmbientTemperature = _data.MAmbientTemperature;
+                }
+            }
+
+            if (_telemetryData.Car.InCar)
+            {
+                _telemetryData.Engine.RPM = _data.MRpm;
+                _telemetryData.Car.Speed = ConvertSpeedToMPH(_data.MSpeed);
+                _telemetryData.Car.Gear = _data.MGear;
+                _telemetryData.Car.FuelRemaining = _data.MFuelLevel * _data.MFuelCapacity;
+                _telemetryData.Car.FuelCapacity = _data.MFuelCapacity;
+
+                _telemetryData.Engine.WaterTemp = _data.MWaterTempCelsius;
+
+                _telemetryData.Timing.CurrentLapTime = _data.MCurrentTime;
+            }
         }
         #endregion
-
 
         #region Helper functions
         private float ConvertSpeedToMPH(float Speed)

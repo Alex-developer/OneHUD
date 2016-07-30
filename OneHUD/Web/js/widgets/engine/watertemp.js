@@ -48,8 +48,9 @@
             leaveElement = false;
         }
 
+        jQuery(_gaugeWaterTemp).remove();
+        _gaugeWaterTemp = null;
         jQuery(_gaugeElement).remove();
-        _gaugeSpeed = null;
 
         if (!leaveElement) {
             jQuery(_el).remove();

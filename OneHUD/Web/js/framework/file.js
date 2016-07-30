@@ -1,12 +1,7 @@
 ﻿var OneHUDFile = function () {
     'use strict';
 
-    var _uri = null;
-    if (location.port !== '') {
-        _uri = location.protocol + '//' + location.host.replace(':' + location.port, '') + ':' + location.port;
-    } else {
-        _uri = location.protocol + '//' + location.host + '/';
-    }
+    var _uri = OneHUDUI.getURI();
 
     function loadDash(name) {
         if (name === undefined) {

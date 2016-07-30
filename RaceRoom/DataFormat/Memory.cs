@@ -5,17 +5,29 @@ using System.ComponentModel;
 
 namespace RaceRoom.DataFormat
 {
-    enum Session
+
+    public enum Session
     {
         Unavailable = -1,
         Practice = 0,
         Qualify = 1,
-        Race = 2,
+        Race = 2
     };
 
-    enum SessionPhase
+    public enum SessionType
     {
+        None = -1,
+        Practice = 0,
+        Qualify = 1,
+        Race = 2
+    }
+
+    public enum SessionPhase
+    {
+        //loding?            
         Unavailable = -1,
+        //Not sure what 0 is            
+        Pits = 0,
         // Currently in garage
         Garage = 1,
         // Gridwalk or track walkthrough
@@ -27,46 +39,80 @@ namespace RaceRoom.DataFormat
         // Race is ongoing
         Green = 5,
         // End of session
-        Checkered = 6,
+        Checkered = 6
     };
 
-    enum Control
+    public enum Control
     {
         Unavailable = -1,
+
         // Controlled by the actual player
         Player = 0,
+
         // Controlled by AI
         AI = 1,
+
         // Controlled by a network entity of some sort
         Remote = 2,
+
         // Controlled by a replay or ghost
         Replay = 3,
     };
 
-    enum PitWindow
+    public enum PitWindow
     {
         Unavailable = -1,
-                // Pit stops are not enabled for this session
+
+        // Pit stops are not enabled for this session
         Disabled = 0,
-                // Pit stops are enabled, but you're not allowed to perform one right now
+
+        // Pit stops are enabled, but you're not allowed to perform one right now
         Closed = 1,
-                // Allowed to perform a pit stop now
+
+        // Allowed to perform a pit stop now
         Open = 2,
-                // Currently performing the pit stop changes (changing driver, etc.)
+
+        // Currently performing the pit stop changes (changing driver, etc.)
         Stopped = 3,
-                // After the current mandatory pitstop have been completed
+
+        // After the current mandatory pitstop have been completed
         Completed = 4,
     };
 
-    enum TireType
+    public enum TireType
     {
         Unavailable = -1,
         Option = 0,
         Prime = 1,
     };
 
+    public enum PitstopStatus
+    {
+        Unavailable = -1,
+        UnServed = 0,
+        Served = 1
+    }
+
+    public enum FinishStatus
+    {
+        // N/A
+        UNAVAILABLE = -1,
+        // Still on track, not finished
+        NONE = 0,
+        // Finished session normally
+        FINISHED = 1,
+        // Did not finish
+        DNF = 2,
+        // Did not qualify
+        DNQ = 3,
+        // Did not start
+        DNS = 4,
+        // Disqualified
+        DQ = 5,
+    }
+
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    internal struct Vector3<T>
+    public struct Vector3<T>
     {
         public T X;
         public T Y;
@@ -74,7 +120,7 @@ namespace RaceRoom.DataFormat
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    internal struct Orientation<T>
+    public struct Orientation<T>
     {
         public T Pitch;
         public T Yaw;
@@ -82,13 +128,13 @@ namespace RaceRoom.DataFormat
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    internal struct UserInput
+    public struct UserInput
     {
         public Single _1, _2, _3, _4, _5, _6;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    internal struct TireTemperature
+    public struct TireTemperature
     {
         public Single FrontLeft_Left;
         public Single FrontLeft_Center;
@@ -108,7 +154,7 @@ namespace RaceRoom.DataFormat
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    internal struct PlayerData
+    public struct PlayerData
     {
         // Virtual physics time
         // Unit: Ticks (1 tick = 1/400th of a second)
@@ -153,7 +199,7 @@ namespace RaceRoom.DataFormat
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    internal struct Flags
+    public struct Flags
     {
         // Whether yellow flag is currently active
         // -1 = no data
@@ -177,7 +223,7 @@ namespace RaceRoom.DataFormat
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    internal struct CarDamage
+    public struct CarDamage
     {
         // Range: 0.0 - 1.0
         // Note: -1.0 = N/A
@@ -202,7 +248,7 @@ namespace RaceRoom.DataFormat
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    internal struct TirePressure
+    public struct TirePressure
     {
         public Single FrontLeft;
         public Single FrontRight;
@@ -211,7 +257,7 @@ namespace RaceRoom.DataFormat
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    internal struct BrakeTemperatures
+    public struct BrakeTemperatures
     {
         public Single FrontLeft;
         public Single FrontRight;
@@ -220,7 +266,7 @@ namespace RaceRoom.DataFormat
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    internal struct CutTrackPenalties
+    public struct CutTrackPenalties
     {
         public Int32 DriveThrough;
         public Int32 StopAndGo;
@@ -230,7 +276,7 @@ namespace RaceRoom.DataFormat
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    internal struct Sectors<T>
+    public struct Sectors<T>
     {
         public T Sector1;
         public T Sector2;
@@ -238,7 +284,94 @@ namespace RaceRoom.DataFormat
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    internal struct Shared
+    public struct TyreDirt
+    {
+        // ...
+        public Single FrontLeft;
+
+        // ...
+        public Single FrontRight;
+
+        // ...
+        public Single RearLeft;
+
+        // ...
+        public Single RearRight;
+    }
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct WheelSpeed
+    {
+        // ...
+        public Single FrontLeft;
+
+        // ...
+        public Single FrontRight;
+
+        // ...
+        public Single RearLeft;
+
+        // ...
+        public Single RearRight;
+    }
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct TrackInfo
+    {
+        // ...
+        public Int32 TrackId;
+
+        // ...
+        public Int32 LayoutId;
+
+        // ...
+        public Single Length;
+    }
+
+    [Serializable]
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct DriverInfo
+    {
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+        public Byte[] Name;
+        public Int32 CarNumber;
+        public Int32 ClassId;
+        public Int32 ModelId;
+        public Int32 TeamId;
+        public Int32 LiveryId;
+        public Int32 ManufacturerId;
+        public Int32 SlotId;
+        public Int32 ClassPerformanceIndex;
+    }
+
+    [Serializable]
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct DriverData
+    {
+        public DriverInfo DriverInfo;
+        public FinishStatus FinishStatus;
+        public Int32 Place;
+        public Single LapDistance;
+        public Vector3<Single> Position;
+        public Int32 TrackSector;
+        public Int32 CompletedLaps;
+        public Int32 CurrentLapValid;
+        public Single LapTimeCurrentSelf;
+        public Sectors<Single> SectorTimeCurrentSelf;
+        public Sectors<Single> SectorTimePreviousSelf;
+        public Sectors<Single> SectorTimeBestSelf;
+        public Single TimeDeltaFront;
+        public Single TimeDeltaBehind;
+        public PitstopStatus PitstopStatus;
+        public Int32 InPitlane;
+        public Int32 NumPitstops;
+        public CutTrackPenalties Penalties;
+        public Single CarSpeed;
+        public Int32 TireType;
+    }
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct Shared
     {
         [ObsoleteAttribute("Not set anymore", false)]
         public UserInput UserInput;
@@ -460,5 +593,28 @@ namespace RaceRoom.DataFormat
 
         // The current state of various parts of the player's car
         public CarDamage CarDamage;
+
+        // Slot ID for the currently active car
+        public Int32 SlotId;
+
+        // Amount of dirt built up per tyre
+        // Range: 0.0 - 1.0
+        public TyreDirt TyreDirt;
+
+        // -1 = no data
+        //  0 = not active
+        //  1 = active
+        public Int32 pit_limiter;
+
+        // Wheel speed
+        // Unit: Radians per second (rad/s)
+        public WheelSpeed WheelSpeed;
+
+        // Info about track and layout
+        public TrackInfo TrackInfo;
+
+        // Contains name and vehicle info for all drivers in place order
+        [MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = 128)]
+        public DriverData[] AllDriversData;
     }
 }

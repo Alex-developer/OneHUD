@@ -34,10 +34,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneHUDData", "..\AGData\One
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F370B43C-251C-4207-B1A8-DACEAE441FBE}"
 	ProjectSection(SolutionItems) = preProject
+		notes.txt = notes.txt
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "websocket-sharp", "..\..\websocket-sharp\websocket-sharp\websocket-sharp.csproj", "{B357BAC7-529E-4D81-A0D2-71041B19C8DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Yaml Samples", "Yaml Samples", "{ED0134DC-B89E-4691-9FE3-98A09FED77AA}"
+	ProjectSection(SolutionItems) = preProject
+		yaml1.txt = yaml1.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -138,5 +144,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ED0134DC-B89E-4691-9FE3-98A09FED77AA} = {F370B43C-251C-4207-B1A8-DACEAE441FBE}
 	EndGlobalSection
 EndGlobal

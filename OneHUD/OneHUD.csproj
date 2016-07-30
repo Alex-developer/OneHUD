@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\OneHUD.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -71,13 +72,17 @@
     <Compile Include="Servers\DataHandlers\Startup\StartupDataWidgetInfo.cs" />
     <Compile Include="Servers\DataHandlers\Telemetry\TelemetryDataHandler.cs" />
     <Compile Include="Servers\DataHandlers\Telemetry\TelemetryDataHandlerResult.cs" />
+    <Compile Include="Servers\DataHandlers\Timing\TimingDataHandlerResult.cs" />
+    <Compile Include="Servers\DataHandlers\Timing\TimingDataHandler.cs" />
     <Compile Include="Servers\HTTP\HTTPServer.cs" />
     <Compile Include="Servers\HTTP\Services\BaseService.cs" />
+    <Compile Include="Servers\HTTP\Services\BaseTimingService.cs" />
     <Compile Include="Servers\HTTP\Services\ConnectedService.cs" />
     <Compile Include="Servers\HTTP\Services\FileService.cs" />
     <Compile Include="Servers\HTTP\Services\HeartBeatService.cs" />
     <Compile Include="Servers\HTTP\Services\TelemetryService.cs" />
     <Compile Include="Servers\HTTP\Services\TestService.cs" />
+    <Compile Include="Servers\HTTP\Services\TimingService.cs" />
     <Compile Include="Servers\Utils\NetHelpers.cs" />
     <Compile Include="Servers\Utils\Port.cs" />
     <EmbeddedResource Include="OneHUD.resx">
@@ -93,6 +98,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Panels\default.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -107,6 +113,9 @@
     </None>
     <None Include="Panels\Defaults\default-667x375.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Plugins\R3E-GameData.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -5244,6 +5253,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Plugins\iRSDKSharp.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Plugins\Newtonsoft.Json.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Plugins\ProjectCars.dll">
@@ -17737,6 +17749,9 @@
     </Content>
     <Content Include="Web\js\widgets\speed.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\js\widgets\timing\timingscreen.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\js\widgets\timing\currentlaptime.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

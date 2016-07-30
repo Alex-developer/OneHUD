@@ -52,7 +52,7 @@ namespace OneHUDInterface
             }
         }
 
-        public virtual bool Start(TelemetryData telemetryData)
+        public virtual bool Start(TelemetryData telemetryData, TimingData timingData)
         {
             return true;
         }

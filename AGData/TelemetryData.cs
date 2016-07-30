@@ -3,6 +3,7 @@ using System.Linq;
 using OneHUDData.Vehicle;
 using OneHUDData.Timing;
 
+
 namespace OneHUDData
 {
     public class TelemetryData
@@ -12,7 +13,8 @@ namespace OneHUDData
         public Engine Engine { get; set; }
         public Chassis Chassis { get; set; }
         public Car Car { get; set; }
-        public Times Timing { get; set; }  
+        public Times Timing { get; set; }
+
 
         private readonly Object _lock = new Object();
 
@@ -33,4 +35,26 @@ namespace OneHUDData
             }
         }
     }
+
+    public enum SessionType
+    {
+        Invalid = 0,
+        Practice,
+        Test,
+        Qualify,
+        Race,
+        TimeAttack
+    }
+
+    public enum SessionState
+    {
+        Invalid = 0,
+        GetIncar,
+        Warmup,
+        ParadeLap,
+        Racing,
+        Checkered,
+        CoolDown
+    }
+
 }

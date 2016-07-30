@@ -15,7 +15,7 @@ namespace OneHUDInterface
 
         string Version { get; }
 
-        bool Start(TelemetryData telemetryData);
+        bool Start(TelemetryData telemetryData, TimingData timingData);
 
         bool Stop();
     }

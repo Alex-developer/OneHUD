@@ -39,6 +39,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sessions\Class.cs" />
+    <Compile Include="Sessions\Driver\Driver.cs" />
+    <Compile Include="Sessions\Driver\DriverCar.cs" />
+    <Compile Include="Sessions\Lap.cs" />
+    <Compile Include="Sessions\RaceInfo.cs" />
+    <Compile Include="Sessions\Sector.cs" />
+    <Compile Include="TimingData.cs" />
     <Compile Include="Timing\Times.cs" />
     <Compile Include="Vehicle\Car.cs" />
     <Compile Include="Vehicle\Chassis.cs" />
@@ -46,9 +53,7 @@
     <Compile Include="TelemetryData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Player\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

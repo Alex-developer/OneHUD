@@ -30,6 +30,7 @@ var OneHUDDataManager = function () {
     */
     function init() {
         createDataReader('heartbeat', true);
+        createDataReader('timing');
         createDataReader('telemetry');
     }
 

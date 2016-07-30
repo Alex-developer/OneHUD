@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.IO;
+using Newtonsoft.Json;
 using OneHUDInterface;
 using OneHUDData;
 using RaceRoom.Readers;
@@ -23,11 +25,20 @@ namespace RaceRoom
         private DateTime _lastTimeStamp;
         private readonly double _pollInterval = 10.0;
         private TelemetryData _telemetryData;
+        private TimingData _timingData;
         private bool _connected = false;
+        private GameData _gameData;
 
         #region Constructor
         public RaceRoom() : base()
         {
+            _gameData = new GameData();
+
+            var path = AppDomain.CurrentDomain.BaseDirectory;
+            var jsonString = File.ReadAllText(path + @"Plugins\\R3E-GameData.json");
+            _gameData = JsonConvert.DeserializeObject<GameData>(jsonString);
+
+
             _name = "R3E";
             _displayName = "RaceRoom Experience";
             _processNames.Add("RRRE");
@@ -36,11 +47,38 @@ namespace RaceRoom
         }
         #endregion
 
+        #region GameData Methods
+        public Car GetCarData(int id)
+        {
+            return _gameData != null && id != -1 ? _gameData.Cars.Where(c => c.Id == id).FirstOrDefault() : new Car() { Name = "" };
+        }
+
+        public Class GetCarClass(int id)
+        {
+            return _gameData != null && id != -1 ? _gameData.Classes.Where(c => c.Id == id).FirstOrDefault() : new Class() { Name = "" };
+        }
+
+        public Track GetTrackData(int id)
+        {
+            return _gameData != null && id != -1 ? _gameData.Tracks.Where(t => t.Id == id).FirstOrDefault() : new Track() { Name = "", Layouts = new Layout[] { } };
+        }
+
+        public Team GetTeamData(int id)
+        {
+            return _gameData != null && id != -1 ? _gameData.Teams.Where(t => t.Id == id).FirstOrDefault() : new Team() { Name = "" };
+        }
+
+        public Layout GetLayoutData(int id)
+        {
+            return _gameData != null && id != -1 ? _gameData.Layouts.Where(t => t.Id == id).FirstOrDefault() : new Layout() { Name = "" };
+        }
+        #endregion
 
         #region Public Methods
-        public override bool Start(TelemetryData telemetryData)
+        public override bool Start(TelemetryData telemetryData, TimingData timingData)
         {
             _telemetryData = telemetryData;
+            _timingData = timingData;
             ReadData(_cancel.Token);
             return true;
         }
@@ -90,6 +128,18 @@ namespace RaceRoom
         #region Process Shared memory data
         private void ProcessData()
         {
+
+            int trackid = _data.TrackInfo.TrackId;
+            int layoutid = _data.TrackInfo.LayoutId;
+
+            _timingData.RaceInfo.TrackLongName = GetTrackData(trackid).Name;
+            _timingData.RaceInfo.TrackShortName = GetTrackData(trackid).Name;
+            _timingData.RaceInfo.TrackVariation = GetLayoutData(layoutid).Name;
+            _timingData.RaceInfo.TrackName = _timingData.RaceInfo.TrackLongName + " " + _timingData.RaceInfo.TrackVariation;
+            _timingData.RaceInfo.TrackLength = 0;
+            _timingData.RaceInfo.TrackTemperature = 0; // Not supported
+            _timingData.RaceInfo.AmbientTemperature = 0; // Not Supported
+
             _telemetryData.Engine.RPM = _data.EngineRps;
             _telemetryData.Car.Gear = _data.Gear;
             _telemetryData.Car.Speed = _data.CarSpeed;

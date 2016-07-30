@@ -48,8 +48,9 @@
             leaveElement = false;
         }
 
+        jQuery(_gaugeFuel).remove();
+        _gaugeFuel = null;
         jQuery(_gaugeElement).remove();
-        _gaugeSpeed = null;
 
         if (!leaveElement) {
             jQuery(_el).remove();
@@ -69,6 +70,7 @@
     }
 
     function resize() {
+        debugger;
         destroy(true);
         buildUIAnalogue();
     }

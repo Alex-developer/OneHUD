@@ -13,8 +13,11 @@ namespace AssettoCorsa
     public class AssettoCorsa : GameBase, IGame
     {
         private TelemetryData _telemetryData;
-        private readonly CancellationTokenSource _cancel;
-        private DateTime _lastTimeStamp;
+        private TimingData _timingData;
+        private readonly CancellationTokenSource _physicsCancel;
+        private readonly CancellationTokenSource _staticCancel; 
+        private DateTime _physicsLastTimeStamp;
+        private DateTime _staticLastTimeStamp;
 
         private string _physicsFileName = "Local\\acpmf_physics";
         private readonly SharedMemoryReader _physicsMemoryReader;
@@ -22,6 +25,13 @@ namespace AssettoCorsa
         private Physics _physicsData;
         private readonly double _physicsPollInterval = 10.0;
         private bool _connected = false;
+
+        private string _staticFileName = "Local\\acpmf_static";
+        private readonly SharedMemoryReader _staticMemoryReader;
+        private readonly int _staticBufferSize = Marshal.SizeOf(typeof(StaticInfo));
+        private StaticInfo _staticData;
+        private readonly double _staticPollInterval = 1000.0;
+        private bool _staticConnected = false;
 
         #region Constructor
         public AssettoCorsa() : base()
@@ -31,27 +41,31 @@ namespace AssettoCorsa
             _processNames.Add("acs");
 
             _physicsMemoryReader = new SharedMemoryReader(_physicsFileName, _physicsBufferSize);
-            _cancel = new CancellationTokenSource();
+            _physicsCancel = new CancellationTokenSource();
+            _staticMemoryReader = new SharedMemoryReader(_staticFileName, _staticBufferSize);
+            _staticCancel = new CancellationTokenSource();
         }
         #endregion
 
         #region Public Methods
-        public override bool Start(TelemetryData telemetryData)
+        public override bool Start(TelemetryData telemetryData, TimingData timingData)
         {
             _telemetryData = telemetryData;
-            ReadData(_cancel.Token);
+            _timingData = timingData;
+            ReadPhysicsData(_physicsCancel.Token);
+            ReadStaticData(_staticCancel.Token);
             return true;
         }
 
         public override bool Stop()
         {
-            _cancel.Cancel();
+            _physicsCancel.Cancel();
             return true;
         }
         #endregion
 
         #region Shared Memory Data Reader
-        private async void ReadData(CancellationToken token)
+        private async void ReadPhysicsData(CancellationToken token)
         {
             await Task.Factory.StartNew((Action)(() =>
             {
@@ -62,9 +76,9 @@ namespace AssettoCorsa
                         _connected = _physicsMemoryReader.Connect();
                     }
                     DateTime utcNow = DateTime.UtcNow;
-                    if ((utcNow - _lastTimeStamp).TotalMilliseconds >= _physicsPollInterval)
+                    if ((utcNow - _physicsLastTimeStamp).TotalMilliseconds >= _physicsPollInterval)
                     {
-                        _lastTimeStamp = utcNow;
+                        _physicsLastTimeStamp = utcNow;
                         byte[] buffer = _physicsMemoryReader.Read();
 
                         GCHandle gCHandle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
@@ -83,6 +97,39 @@ namespace AssettoCorsa
                 }
             }));
         }
+
+        private async void ReadStaticData(CancellationToken token)
+        {
+            await Task.Factory.StartNew((Action)(() =>
+            {
+                while (!token.IsCancellationRequested)
+                {
+                    if (!_staticConnected)
+                    {
+                        _staticConnected = _staticMemoryReader.Connect();
+                    }
+                    DateTime utcNow = DateTime.UtcNow;
+                    if ((utcNow - _staticLastTimeStamp).TotalMilliseconds >= _staticPollInterval)
+                    {
+                        _staticLastTimeStamp = utcNow;
+                        byte[] buffer = _staticMemoryReader.Read();
+
+                        GCHandle gCHandle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+                        try
+                        {
+                            _staticData = (StaticInfo)Marshal.PtrToStructure(gCHandle.AddrOfPinnedObject(), typeof(StaticInfo));
+                            ProcessStaticData();
+                        }
+                        finally
+                        {
+                            gCHandle.Free();
+                        }
+
+                    }
+                    Thread.Sleep((int)_staticPollInterval);
+                }
+            }));
+        }
         #endregion
 
         #region Process Shared memory data
@@ -97,6 +144,18 @@ namespace AssettoCorsa
             _telemetryData.Timing.CurrentLapTime = 0; // TODO: Fix when Graphics data is available
 
             _telemetryData.Engine.WaterTemp = 0; // NOT SUPPORTED
+        }
+
+        private void ProcessStaticData()
+        {
+            _telemetryData.Car.FuelCapacity = _staticData.MaxFuel;
+            _timingData.RaceInfo.TrackLongName = _staticData.Track;
+            _timingData.RaceInfo.TrackShortName = _staticData.Track;
+            _timingData.RaceInfo.TrackName = _staticData.Track;
+            _timingData.RaceInfo.TrackVariation = "";
+
+            _timingData.RaceInfo.TrackTemperature = 0; // Not supported
+            _timingData.RaceInfo.AmbientTemperature = 0; // Not Supported
         }
         #endregion
 

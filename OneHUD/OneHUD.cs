@@ -20,6 +20,7 @@ namespace OneHUD
         private ProcessMonitor _processMonitor;
         private IGame _game = null;
         private TelemetryData _telemetryData;
+        private TimingData _timingData;
         private Thread _gameReaderThread;
         private Thread _httpServerThread;
 
@@ -39,6 +40,7 @@ namespace OneHUD
         public void Startup()
         {
             _telemetryData = new TelemetryData();
+            _timingData = new TimingData();
 
             _plugins = new Dictionary<string, IGame>();
             ICollection<IGame> plugins = PluginLoader<IGame>.LoadPlugins("Plugins");
@@ -83,7 +85,7 @@ namespace OneHUD
 
         private void GameReaderThread()
         {
-            _game.Start(_telemetryData);
+            _game.Start(_telemetryData, _timingData);
         }
 
         private void StopGameReaderThread()
@@ -136,7 +138,7 @@ namespace OneHUD
             UpdateHTTPServerInfo();
             if (NetHelpers.CheckPortIsFree(_ipAddress, _httpServerPort))
             {
-                _httpServerThread = new Thread(() => HTTPServerThread(_telemetryData, _ipAddress, _httpServerPort, _httpServerPath, _plugins));
+                _httpServerThread = new Thread(() => HTTPServerThread(_telemetryData, _timingData, _ipAddress, _httpServerPort, _httpServerPath, _plugins));
                 _httpServerThread.Start();
                 UpdateHTTPServerInfo();
             }
@@ -162,9 +164,9 @@ namespace OneHUD
             }
         }
 
-        private void HTTPServerThread(TelemetryData telemetryData, IPAddress ipAddress, int port, string httpServerPath, Dictionary<string, IGame> plugins)
+        private void HTTPServerThread(TelemetryData telemetryData, TimingData timingData, IPAddress ipAddress, int port, string httpServerPath, Dictionary<string, IGame> plugins)
         {
-            _httpServer = new HTTPServer(httpServerPath, port, telemetryData, ipAddress, plugins);
+            _httpServer = new HTTPServer(httpServerPath, port, telemetryData, timingData, ipAddress, plugins);
             _httpServer.Start();
             while (true)
             {

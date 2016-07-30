@@ -14,9 +14,11 @@ using AGServer.Servers.DataHandlers.HeartBeat;
 using AGServer.Servers.DataHandlers.Telemetry;
 using AGServer.Servers.HTTP.Services;
 using AGServer.Servers.DataHandlers;
+using OneHUD.Servers.DataHandlers.Timing;
 using WebSocketSharp.Server;
 using OneHUDInterface;
 using OneHUDData;
+using OneHUDData.Timing;
 
 namespace OneHUD.Servers.HTTP
 {
@@ -115,13 +117,15 @@ namespace OneHUD.Servers.HTTP
         private readonly int _port;
         private readonly IPAddress _ipAddress;
         private readonly TelemetryData _telemetryData;
+        private readonly TimingData _timingData;
         private string _httpServerPath;
         private Dictionary<string, IGame> _plugins;
         private WebSocketSharp.Server.HttpServer _webSocketServer;
 
-        public HTTPServer(string path, int port, TelemetryData gameState, IPAddress ipAddress, Dictionary<string, IGame> plugins)
+        public HTTPServer(string path, int port, TelemetryData gameState, TimingData timingData, IPAddress ipAddress, Dictionary<string, IGame> plugins)
         {
             _telemetryData = gameState;
+            _timingData = timingData;
             _rootDirectory = path;
             _port = port;
             _ipAddress = ipAddress;
@@ -147,6 +151,7 @@ namespace OneHUD.Servers.HTTP
            // _webSocketServer.AddWebSocketService<FileService>("/File", () => new FileService(_telemetryData));
             _webSocketServer.AddWebSocketService<TelemetryService>("/Telemetry", () => new TelemetryService(_telemetryData));
             _webSocketServer.AddWebSocketService<HeartBeatService>("/HeartBeat", () => new HeartBeatService(_telemetryData));
+            _webSocketServer.AddWebSocketService<TimingService>("/Timing", () => new TimingService(_timingData));
  
             _webSocketServer.Start();
 
@@ -187,6 +192,10 @@ namespace OneHUD.Servers.HTTP
 
                             case "Telemetry":
                                 result = TelemetryDataHandler.ProcessConnectedRequest(_telemetryData, postData);
+                                break;
+
+                            case "Timing":
+                                result = TimingDataHandler.ProcessConnectedRequest(_timingData, postData);
                                 break;
                             case "Startup":
                                 result = StartupDataHandler.ProcessStartupRequest(_telemetryData, _plugins, postData);

@@ -191,7 +191,7 @@
             css: {
                 width: '40%'
             },
-            message: '<h2><img src="images/busy.gif" /> Waiting for OneHUD Server</h2>'
+            message: '<h3><img src="images/busy.gif" /> Waiting for OneHUD Server</h3>'
         });
     }
 
@@ -279,6 +279,7 @@
                         break;
 
                     case 'telemetry':
+                    case 'timing':
                         if (_currentPage.update !== undefined) {
                             _currentPage.update(message.datatype, message.data);
                         }

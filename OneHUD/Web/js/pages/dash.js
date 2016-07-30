@@ -126,6 +126,22 @@
         });
         _dashLoaded = true;
     }
+    
+    function clearDash() {
+        if (_dashLoaded) {
+            jQuery.each(_dash, function (index, widget) {
+                if (widget.destroy !== undefined) {
+                    widget.destroy(false);
+                }
+                if (widget.element !== undefined) {
+                    var el = widget.element();
+                    jQuery(el).remove();
+                }
+            });
+            _dashLoaded = false;
+            _dash = [];
+        }
+    }
 
     function addWidget(widgetClass, properties) {
         var widgetController = createWidget(widgetClass, properties);
@@ -222,6 +238,12 @@
         image = jQuery('<img>', { 'src': _cancelIcon, 'width': '40px' });
         menuLink = jQuery('<a>', { 'href': '#', 'class': 'button hollow float-left mr5 disabled', 'id': 'editor-cancel' }).append(image);
         jQuery(el).append(menuLink);
+        jQuery('#editor-cancel').on('click', function () {
+            jQuery('#offCanvas').foundation('close');
+            OneHUDDashEditor.stop();
+            clearDash();
+            buildDash();
+        });
     }
 
     function lostFocus(el) {
@@ -263,3 +285,4 @@
         }
     }
 }
+//# sourceURL=/js/pages/dash.js

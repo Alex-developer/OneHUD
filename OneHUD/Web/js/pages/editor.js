@@ -265,3 +265,4 @@
         }
     }
 }();
+//# sourceURL=/js/pages/editor.js

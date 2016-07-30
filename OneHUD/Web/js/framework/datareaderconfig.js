@@ -14,7 +14,7 @@
             eventName: 'telemetry',
             persistant: false
         },
-        timingdata: {
+        timing: {
             urn: 'Timing',
             frequency: 500,
             eventName: 'timing',
