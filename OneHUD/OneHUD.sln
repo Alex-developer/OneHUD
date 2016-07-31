@@ -42,6 +42,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "websocket-sharp", "..\..\we
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Yaml Samples", "Yaml Samples", "{ED0134DC-B89E-4691-9FE3-98A09FED77AA}"
 	ProjectSection(SolutionItems) = preProject
+		Team yaml.txt = Team yaml.txt
 		yaml1.txt = yaml1.txt
 	EndProjectSection
 EndProject

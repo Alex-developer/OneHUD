@@ -18,8 +18,8 @@ namespace OneHUDData.Sessions
         private int _sessionId; // iRacing only
         private int _subSessionId; // iRacing only
 
-        private float _ambientTemperature;
-        private float _trackTemperature;
+        private double _ambientTemperature;
+        private double _trackTemperature;
 
         private List<Driver> _drivers;
 
@@ -38,7 +38,7 @@ namespace OneHUDData.Sessions
         #endregion
 
         #region Weather Info Getters/Setters
-        public float TrackTemperature
+        public double TrackTemperature
         {
             get
             {
@@ -50,7 +50,7 @@ namespace OneHUDData.Sessions
             }
         }
 
-        public float AmbientTemperature
+        public double AmbientTemperature
         {
             get
             {

@@ -36,25 +36,4 @@ namespace OneHUDData
         }
     }
 
-    public enum SessionType
-    {
-        Invalid = 0,
-        Practice,
-        Test,
-        Qualify,
-        Race,
-        TimeAttack
-    }
-
-    public enum SessionState
-    {
-        Invalid = 0,
-        GetIncar,
-        Warmup,
-        ParadeLap,
-        Racing,
-        Checkered,
-        CoolDown
-    }
-
 }

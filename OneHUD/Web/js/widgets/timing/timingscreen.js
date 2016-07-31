@@ -42,30 +42,37 @@
     function buildUI(drivers) {
         _elId = OneHUDUI.getNextId();
 
-        var html = '<div class="row">';
-        html += '<div class="small-1 large-1 columns">Pos</div>';
+        var html = '<div class="row timingheader expanded">';
         html += '<div class="small-3 large-3 columns">Driver</div>';
-        html += '<div class="small-2 large-2 columns">Lap</div>';
-        html += '<div class="small-2 large-2 columns">Time</div>';
-        html += '<div class="small-2 large-2 columns">Best</div>';
-        html += '<div class="small-2 large-2 columns">Gap</div>';
+        html += '<div class="small-1 large-1 columns">Prac</div>';
+        html += '<div class="small-1 large-1 columns">Time</div>';
+        html += '<div class="small-1 large-1 columns">Qual</div>';
+        html += '<div class="small-1 large-1 columns">Time</div>';
+        html += '<div class="small-1 large-1 columns">Race</div>';
+        html += '<div class="small-1 large-1 columns">Time</div>';
+        html += '<div class="small-3 large-3 columns"></div>';
         html += '</div>';
 
         for (var i = 0; i < drivers.length; i++) {
-            html += '<div class="row">';
-            html += '<div class="small-1 large-1 columns pos' + i + '">' + (i + 1) + '</div>';
-            html += '<div class="small-3 large-3 columns driver' + i + '"></div>';
-            html += '<div class="small-2 large-2 columns laps' + i + '"></div>';
-            html += '<div class="small-2 large-2 columns laptime' + i + '"></div>';
-            html += '<div class="small-2 large-2 columns best' + i + '"></div>';
-            html += '<div class="small-2 large-2 columns gap' + i + '"></div>';
-            html += '</div>';
+            if (drivers[i].DriverType === 0) {
+                html += '<div class="row timingrow expanded">';
+                html += '<div class="small-3 large-3 columns driver' + i + '"></div>';
+                html += '<div class="small-1 large-1 columns pracpos' + i + ' pos"></div>';
+                html += '<div class="small-1 large-1 columns practime' + i + ' time"></div>';
+                html += '<div class="small-1 large-1 columns qualpos' + i + ' pos"></div>';
+                html += '<div class="small-1 large-1 columns qualtime' + i + ' time"></div>';
+                html += '<div class="small-1 large-1 columns racepos' + i + ' pos"></div>';
+                html += '<div class="small-1 large-1 columns racetime' + i + ' time"></div>';
+                html += '<div class="small-3 large-3 columns"></div>';
+                html += '</div>';
+            }
         };
 
         jQuery(_timingEl).remove();
-        _timingEl = jQuery('<div>').html(html).attr('id', _elId);
+        _timingEl = jQuery('<div class="timingpage">').html(html).attr('id', _elId);
         jQuery(_el).css('overflow-y', 'scroll').css('overflow-x', 'hidden');
         jQuery(_el).append(_timingEl);
+        jQuery('body').css('background-color', '#222');
     }
 
     function update(data) {
@@ -75,6 +82,49 @@
             _lastDriverCount = drivers.length;
         }
 
+        var position;
+        for (var i = 0; i < drivers.length; i++) {
+            if (drivers[i].DriverType === 0) {
+                position = i + 1;
+                for (var j = 0; j < drivers.length; j++) {
+                    if (drivers[j].Position === position) {
+                        jQuery('#' + _elId + ' .driver' + i).html(drivers[j].Name);
+                        jQuery('#' + _elId + ' .racepos' + i).html(drivers[j].Position);
+                        if (drivers[j].LapsDown === 0) {
+                            if (position === 1) {
+//                                jQuery('#' + _elId + ' .racetime' + i).html(data.RaceInfo.SessionTime.toMMSS(true));
+                                jQuery('#' + _elId + ' .racetime' + i).html("--:--");
+                            } else {
+                                jQuery('#' + _elId + ' .racetime' + i).html(drivers[j].DeltaTime.toMMSS(true));
+                            }
+                        } else {
+                            jQuery('#' + _elId + ' .racetime' + i).html("-" + drivers[j].LapsDown + "L");
+                        }
+                        jQuery('#' + _elId + ' .qualpos' + i).html(drivers[j].QualifyPosition);
+                        jQuery('#' + _elId + ' .qualtime' + i).html(drivers[j].QualifyFastestLap.toMMSS(true));
+                        jQuery('#' + _elId + ' .pracpos' + i).html(drivers[j].PracticePosition);
+                        jQuery('#' + _elId + ' .practime' + i).html(drivers[j].PracticeFastestLap.toMMSS(true));
+                        drivers[j].Updated = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        position--;
+        for (var i = 0; i < drivers.length; i++) {
+            if (drivers[i].DriverType === 0) {
+                if (drivers[i].Updated === undefined) {
+                    jQuery('#' + _elId + ' .driver' + position).html(drivers[i].Name);
+                    jQuery('#' + _elId + ' .qualpos' + position).html(drivers[i].QualifyPosition);
+                    jQuery('#' + _elId + ' .qualtime' + position).html(drivers[i].QualifyFastestLap.toMMSS(true));
+                    jQuery('#' + _elId + ' .pracpos' + position).html(drivers[i].PracticePosition);
+                    jQuery('#' + _elId + ' .practime' + position).html(drivers[i].PracticeFastestLap.toMMSS(true));
+                    position++;
+                }
+            }
+        }
+/*
         var lastDriver = null;
         for (var i = 0; i < drivers.length; i++) {
             var position = i + 1;
@@ -98,6 +148,7 @@
                 }
             }
         }
+        */
     }
 
     return {

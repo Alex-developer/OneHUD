@@ -171,6 +171,7 @@ namespace iRacing
             ParseWeekendInformation(si);
             ParseTrackStatus(si);
             ParseSectors(si);
+            ParseAllDriverSessionData(si);
         }
 
         /// <summary>
@@ -184,8 +185,8 @@ namespace iRacing
             _timingData.RaceInfo.SessionId = ParseInt(weekendInfo["SessionID"].GetValue());
             _timingData.RaceInfo.SessionId = ParseInt(weekendInfo["SubSessionID"].GetValue());
 
-            _timingData.RaceInfo.AmbientTemperature = ParseFloat(weekendInfo["TrackAirTemp"].GetValue());
-            _timingData.RaceInfo.TrackTemperature = ParseFloat(weekendInfo["TrackSurfaceTemp"].GetValue());
+            _timingData.RaceInfo.AmbientTemperature = ParseTemp(weekendInfo["TrackAirTemp"].GetValue());
+            _timingData.RaceInfo.TrackTemperature = ParseTemp(weekendInfo["TrackSurfaceTemp"].GetValue());
 
             _timingData.RaceInfo.TrackName = weekendInfo["TrackName"].GetValue();
             _timingData.RaceInfo.TrackLongName = weekendInfo["TrackDisplayName"].GetValue();
@@ -193,10 +194,8 @@ namespace iRacing
             _timingData.RaceInfo.TrackVariation = weekendInfo["TrackConfigName"].GetValue();
 
             string trackLengthString = weekendInfo["TrackLength"].GetValue();
-            trackLengthString = trackLengthString.Replace(" km", "");
-            float length;
-            float.TryParse(trackLengthString, out length);
-            _timingData.RaceInfo.TrackLength = (int)(length * 1000);
+            _timingData.RaceInfo.TrackLength = (int)(ParseTrackLength(trackLengthString) * 1000);
+            var tt = 56;
         }
 
         /// <summary>
@@ -238,7 +237,37 @@ namespace iRacing
         /// <param name="si">The SessionInfo.</param>
         private void ParseAllDriverSessionData(SessionInfo si)
         {
+            UpdateDrivers(si);
 
+            for (int i = 0; i < 5; i++)
+            {
+                YamlQuery session = si["SessionInfo"]["Sessions"]["SessionNum", i];
+                SessionType sessionType = GetSessionType(session["SessionType"].GetValue());
+
+                string sessionLaps = session["SessionLaps"].GetValue();
+
+                if (sessionLaps != null)
+                {
+                    for (int j = 0; j < 70; j++)
+                    {
+                        YamlQuery positionData = session["ResultsPositions"]["Position", j + 1];
+                        string car = positionData["CarIdx"].GetValue();
+                        if (car == null)
+                        {
+                            break;
+                        }
+                        int carIndex = ParseInt(car, 0);
+                        Driver driver = _timingData.RaceInfo.Drivers.Find(d => d.Id == carIndex);
+                        string fastestLap = positionData["FastestTime"].GetValue();
+                        if (fastestLap != null)
+                        {
+                            driver.SetLapTime(sessionType, ParseFloat(fastestLap, 0), j + 1);
+                        }
+                    }
+                }
+
+            }
+            var tt = 56;
         }
 
         /// <summary>
@@ -247,76 +276,80 @@ namespace iRacing
         /// <param name="si">The SessionInfo.</param>
         private void UpdateDrivers(SessionInfo si)
         {
+            int paceCarPosition = ParseInt(si["DriverInfo"]["PaceCarIdx"].GetValue(), -99);
+
             for (int id = 0; id < 70; id++)
             {
-                YamlQuery driverInfo = si["DriverInfo"]["Drivers"]["CarIdx", id];
-                string driverIdString = driverInfo["UserID"].GetValue();
+                if (id != paceCarPosition)
+                {
+                    YamlQuery driverInfo = si["DriverInfo"]["Drivers"]["CarIdx", id];
+                    string driverIdString = driverInfo["UserID"].GetValue();
 
-                if (driverIdString != null) {
-
-                    Driver driver = _timingData.RaceInfo.Drivers.Find(d => d.Id == driverIdString);
-                    if (driver == null)
+                    if (driverIdString != null)
                     {
-                        driver = new Driver();
-                        _timingData.RaceInfo.Drivers.Add(driver);
-                    }
 
-                    if (driver.Id != driverIdString)
-                    {
-                        string name = driverInfo["UserName"].GetValue();
-                        int isSpectating = ParseInt(driverInfo["IsSpectator"].GetValue(), 0);
-                        DriverType type = DriverType.Driver;
-                        if (isSpectating == 1)
+                        Driver driver = _timingData.RaceInfo.Drivers.Find(d => d.Id == id);
+                        if (driver == null)
                         {
-                            type = DriverType.Spectator;
+                            driver = new Driver();
+                            _timingData.RaceInfo.Drivers.Add(driver);
                         }
-                        driver.DriverType = type;
-                        driver.Id = driverIdString;
-                        driver.Name = name;
-                    }
 
-                    YamlQuery driverSessionInfo = si["SessionInfo"]["Sessions"]["SessionNum", _currentSessionNumber]["ResultsPositions"]["CarIdx", id];
-                    string position = driverSessionInfo["Position"].GetValue();
-                    if (position != null)
-                    {
-                        driver.Position = ParseInt(position, 0);
-                    }
-                    string lap = driverSessionInfo["LapsComplete"].GetValue();
-                    if (lap != null)
-                    {
-                        driver.Lap = ParseInt(lap, -1);
-                    }
-                    string lapsDown = driverSessionInfo["Lap"].GetValue();
-                    if (lapsDown != null)
-                    {
-                        driver.LapsDown = ParseInt(lapsDown, -1);
-                    }
-                    string deltaTime = driverSessionInfo["Time"].GetValue();
-                    if (deltaTime != null)
-                    {
-                        driver.DeltaTime = ParseFloat(deltaTime, -1);
-                    }
-                    string fastestLap = driverSessionInfo["FastestLap"].GetValue();
-                    if (fastestLap != null)
-                    {
-                        driver.FastestLap = ParseInt(fastestLap, -1);
-                    }
-                    string fastestLapTime = driverSessionInfo["FastestTime"].GetValue();
-                    if (fastestLapTime != null)
-                    {
-                        driver.FastestLapTime = ParseFloat(fastestLapTime, 0);
-                    }
-                    string lastLapTime = driverSessionInfo["LastTime"].GetValue();
-                    if (lastLapTime != null)
-                    {
-                        driver.LastLapTime = ParseFloat(lastLapTime, 0);
-                    }
-                    var gg = 56;
-                    //_currentSessionNumber
+                        if (driver.Id != id)
+                        {
+                            string name = driverInfo["TeamName"].GetValue();
+                            int isSpectating = ParseInt(driverInfo["IsSpectator"].GetValue(), 0);
+                            DriverType type = DriverType.Driver;
+                            if (isSpectating == 1)
+                            {
+                                type = DriverType.Spectator;
+                            }
+                            driver.DriverType = type;
+                            driver.Id = id;
+                            driver.Name = name;
+                        }
+
+                        YamlQuery driverSessionInfo = si["SessionInfo"]["Sessions"]["SessionNum", _currentSessionNumber]["ResultsPositions"]["CarIdx", id];
+                        string position = driverSessionInfo["Position"].GetValue();
+                        if (position != null)
+                        {
+                            driver.Position = ParseInt(position, 0);
+                        }
+                        string lap = driverSessionInfo["LapsComplete"].GetValue();
+                        if (lap != null)
+                        {
+                            driver.Lap = ParseInt(lap, -1);
+                        }
+                        string lapsDown = driverSessionInfo["Lap"].GetValue();
+                        if (lapsDown != null)
+                        {
+                            driver.LapsDown = ParseInt(lapsDown, -1);
+                        }
+                        string deltaTime = driverSessionInfo["Time"].GetValue();
+                        if (deltaTime != null)
+                        {
+                            driver.DeltaTime = ParseFloat(deltaTime, -1);
+                        }
+                        string fastestLap = driverSessionInfo["FastestLap"].GetValue();
+                        if (fastestLap != null)
+                        {
+                            driver.FastestLap = ParseInt(fastestLap, -1);
+                        }
+                        string fastestLapTime = driverSessionInfo["FastestTime"].GetValue();
+                        if (fastestLapTime != null)
+                        {
+                            driver.FastestLapTime = ParseFloat(fastestLapTime, 0);
+                        }
+                        string lastLapTime = driverSessionInfo["LastTime"].GetValue();
+                        if (lastLapTime != null)
+                        {
+                            driver.LastLapTime = ParseFloat(lastLapTime, 0);
+                        }
+                        var gg = 56;
+                        //_currentSessionNumber
 
 
-                } else {
-                    break;
+                    }
                 }
             }
         }
@@ -352,6 +385,66 @@ namespace iRacing
             if (float.TryParse(value, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign | NumberStyles.AllowTrailingWhite,
                 CultureInfo.InvariantCulture, out val)) return val;
             return @default;
+        }
+
+        public SessionType GetSessionType(string sessionType)
+        {
+            SessionType type = SessionType.Invalid;
+
+            switch (sessionType)
+            {
+                case "Invalid":
+                    type = SessionType.Invalid;
+                    break;
+
+                case "Offline Testing":
+                    type = SessionType.OfflinePractice;
+                    break;
+
+                case "Lone Practice":
+                case "Practice":
+                    type = SessionType.Practice;
+                    break;
+
+                case "Lone Qualify":
+                case "Open Qualify":
+                    type = SessionType.Qualifying;
+                    break;
+
+                case "Race":
+                    type = SessionType.Race;
+                    break;
+            }
+
+            return type;
+        }
+
+        public double ParseTrackLength(string value)
+        {
+            double length = 0;
+
+            var indexOfKm = value.IndexOf("km");
+            if (indexOfKm > 0) value = value.Substring(0, indexOfKm);
+
+            if (double.TryParse(value, NumberStyles.AllowDecimalPoint | NumberStyles.AllowTrailingWhite, CultureInfo.InvariantCulture, out length))
+            {
+                return length;
+            }
+            return 0;
+        }
+
+        public double ParseTemp(string value)
+        {
+            double temp = 0;
+
+            var indexOfC = value.IndexOf(" C");
+            if (indexOfC > 0) value = value.Substring(0, indexOfC);
+
+            if (double.TryParse(value, NumberStyles.AllowDecimalPoint | NumberStyles.AllowTrailingWhite, CultureInfo.InvariantCulture, out temp))
+            {
+                return temp;
+            }
+            return 0;
         }
         #endregion
 

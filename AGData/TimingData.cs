@@ -24,4 +24,12 @@ namespace OneHUDData
         }
 
     }
+
+    public enum SessionType {
+        Invalid,
+        OfflinePractice,
+        Practice,
+        Qualifying,
+        Race
+    }
 }

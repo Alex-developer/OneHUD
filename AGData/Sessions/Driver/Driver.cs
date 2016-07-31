@@ -9,7 +9,7 @@ namespace OneHUDData.Sessions.Drivers
     public class Driver
     {
         private DriverCar _driverCar;
-        private string id;
+        private int _id = -1;
         private string _name;
         private DriverType _driverType;
         private int _position;
@@ -20,6 +20,16 @@ namespace OneHUDData.Sessions.Drivers
         private float _deltaTime;
         private int _lap;
 
+        private float _practiceFastestLap;
+        private int _practicePosition;
+
+        private float _qualifyFastestLap;
+        private int _qualifyPosition;
+
+        private float _raceFastestLap;
+        private int _racePosition;
+
+
         #region Constructor
         public Driver()
         {
@@ -29,6 +39,78 @@ namespace OneHUDData.Sessions.Drivers
 
         #region Getters and Setters
         #region Position and Timing
+        public int RacePosition
+        {
+            get
+            {
+                return _racePosition;
+            }
+            set
+            {
+                _racePosition = value;
+            }
+        }
+
+        public float RaceFastestLap
+        {
+            get
+            {
+                return _raceFastestLap;
+            }
+            set
+            {
+                _raceFastestLap = value;
+            }
+        }
+
+        public int QualifyPosition
+        {
+            get
+            {
+                return _qualifyPosition;
+            }
+            set
+            {
+                _qualifyPosition = value;
+            }
+        }
+
+        public float QualifyFastestLap
+        {
+            get
+            {
+                return _qualifyFastestLap;
+            }
+            set
+            {
+                _qualifyFastestLap = value;
+            }
+        }
+
+        public int PracticePosition
+        {
+            get
+            {
+                return _practicePosition;
+            }
+            set
+            {
+                _practicePosition = value;
+            }
+        }
+
+        public float PracticeFastestLap
+        {
+            get
+            {
+                return _practiceFastestLap;
+            }
+            set
+            {
+                _practiceFastestLap = value;
+            }
+        }
+
         public int Lap
         {
             get
@@ -140,15 +222,15 @@ namespace OneHUDData.Sessions.Drivers
             }
         }
 
-        public string Id
+        public int Id
         {
             get
             {
-                return this.id;
+                return _id;
             }
             set
             {
-                this.id = value;
+                _id = value;
             }
         }
 
@@ -168,6 +250,36 @@ namespace OneHUDData.Sessions.Drivers
         }
         #endregion
         #endregion
+
+        #region Timing Methods        
+        /// <summary>
+        /// Sets the lap time for a specified session
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="time">The time.</param>
+        /// <param name="position">The position.</param>
+        public void SetLapTime(SessionType type, float time, int position)
+        {
+            switch (type)
+            {
+                case SessionType.Practice:
+                    _practiceFastestLap = time;
+                    _practicePosition = position;
+                    break;
+
+                case SessionType.Qualifying:
+                    _qualifyFastestLap = time;
+                    _qualifyPosition = position;
+                    break;
+
+                case SessionType.Race:
+                    _raceFastestLap = time;
+                    _racePosition = position;
+                    break;
+            }
+        }
+        #endregion
+
     }
 
     public enum DriverType

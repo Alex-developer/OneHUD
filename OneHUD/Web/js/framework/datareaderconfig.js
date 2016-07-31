@@ -16,7 +16,7 @@
         },
         timing: {
             urn: 'Timing',
-            frequency: 500,
+            frequency: 1000,
             eventName: 'timing',
             persistant: false
         }

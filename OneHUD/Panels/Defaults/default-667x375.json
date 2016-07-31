@@ -118,12 +118,25 @@
         },
         {
             "type": "label",
-            "text":  "Best Lap Time",
+            "text": "Best Lap Time",
             "css": {
                 "left": 510,
                 "top": 150,
                 "width": 200,
                 "height": 25,
+                "font-family": "LatoWeb",
+                "font-weight": "normal",
+                "font-style": "normal",
+                "color": "white"
+            }
+        },
+        {
+            "type": "top5",
+            "css": {
+                "left": 851,
+                "top": 65,
+                "width": 290,
+                "height": 295,
                 "font-family": "LatoWeb",
                 "font-weight": "normal",
                 "font-style": "normal",
