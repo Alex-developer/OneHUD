@@ -89,21 +89,28 @@
                 for (var j = 0; j < drivers.length; j++) {
                     if (drivers[j].Position === position) {
                         jQuery('#' + _elId + ' .driver' + i).html(drivers[j].Name);
-                        jQuery('#' + _elId + ' .racepos' + i).html(drivers[j].Position);
-                        if (drivers[j].LapsDown === 0) {
-                            if (position === 1) {
-//                                jQuery('#' + _elId + ' .racetime' + i).html(data.RaceInfo.SessionTime.toMMSS(true));
-                                jQuery('#' + _elId + ' .racetime' + i).html("--:--");
+                        if (data.RaceInfo.SessionType === OneHUDDataProtocol.SessionType.Race) {
+                            jQuery('#' + _elId + ' .racepos' + i).html(drivers[j].Position);
+                            if (drivers[j].LapsDown === 0) {
+                                if (position === 1) {
+                                    //                                jQuery('#' + _elId + ' .racetime' + i).html(data.RaceInfo.SessionTime.toMMSS(true));
+                                    jQuery('#' + _elId + ' .racetime' + i).html("--:--");
+                                } else {
+                                    jQuery('#' + _elId + ' .racetime' + i).html(getSessionTime(drivers[j].DeltaTime));
+                                }
                             } else {
-                                jQuery('#' + _elId + ' .racetime' + i).html(drivers[j].DeltaTime.toMMSS(true));
+                                jQuery('#' + _elId + ' .racetime' + i).html("-" + drivers[j].LapsDown + "L");
                             }
                         } else {
-                            jQuery('#' + _elId + ' .racetime' + i).html("-" + drivers[j].LapsDown + "L");
+                            jQuery('#' + _elId + ' .racetime' + i).html("");
+                            jQuery('#' + _elId + ' .racepos' + i).html("");
                         }
-                        jQuery('#' + _elId + ' .qualpos' + i).html(drivers[j].QualifyPosition);
-                        jQuery('#' + _elId + ' .qualtime' + i).html(drivers[j].QualifyFastestLap.toMMSS(true));
-                        jQuery('#' + _elId + ' .pracpos' + i).html(drivers[j].PracticePosition);
-                        jQuery('#' + _elId + ' .practime' + i).html(drivers[j].PracticeFastestLap.toMMSS(true));
+                        if (data.RaceInfo.SessionType === OneHUDDataProtocol.SessionType.Race || data.RaceInfo.SessionType === OneHUDDataProtocol.SessionType.Qualifying) {
+                            jQuery('#' + _elId + ' .qualpos' + i).html(getDriverPos(drivers[j].QualifyPosition));
+                            jQuery('#' + _elId + ' .qualtime' + i).html(getSessionTime(drivers[j].QualifyFastestLap));
+                        }
+                        jQuery('#' + _elId + ' .pracpos' + i).html(getDriverPos(drivers[j].PracticePosition));
+                        jQuery('#' + _elId + ' .practime' + i).html(getSessionTime(drivers[j].PracticeFastestLap));
                         drivers[j].Updated = true;
                         break;
                     }
@@ -111,44 +118,47 @@
             }
         }
 
-        position--;
+        for (var i = 0; i < drivers.length; i++) {
+            if (jQuery('#' + _elId + ' .driver' + i).html() === '') {
+                position = i;
+                break;
+            }
+        }
+
         for (var i = 0; i < drivers.length; i++) {
             if (drivers[i].DriverType === 0) {
                 if (drivers[i].Updated === undefined) {
                     jQuery('#' + _elId + ' .driver' + position).html(drivers[i].Name);
-                    jQuery('#' + _elId + ' .qualpos' + position).html(drivers[i].QualifyPosition);
-                    jQuery('#' + _elId + ' .qualtime' + position).html(drivers[i].QualifyFastestLap.toMMSS(true));
-                    jQuery('#' + _elId + ' .pracpos' + position).html(drivers[i].PracticePosition);
-                    jQuery('#' + _elId + ' .practime' + position).html(drivers[i].PracticeFastestLap.toMMSS(true));
+                    if (data.RaceInfo.SessionType === OneHUDDataProtocol.SessionType.Race || data.RaceInfo.SessionType === OneHUDDataProtocol.SessionType.Qualifying) {
+                        jQuery('#' + _elId + ' .qualpos' + position).html(getDriverPos(drivers[i].QualifyPosition));
+                        jQuery('#' + _elId + ' .qualtime' + position).html(getSessionTime(drivers[i].QualifyFastestLap));
+                    }
+                    jQuery('#' + _elId + ' .pracpos' + position).html(getDriverPos(drivers[i].PracticePosition));
+                    jQuery('#' + _elId + ' .practime' + position).html(getSessionTime(drivers[i].PracticeFastestLap));
                     position++;
                 }
             }
         }
-/*
-        var lastDriver = null;
-        for (var i = 0; i < drivers.length; i++) {
-            var position = i + 1;
-            for (var j = 0; j < drivers.length; j++) {
-                if (drivers[j].Position === position) {
+    }
 
-                    jQuery('#' + _elId + ' .driver' + i).html(drivers[j].Name);
-                    jQuery('#' + _elId + ' .laps' + i).html(drivers[j].Lap);
-                    if (drivers[j].LapsDown === 0) {
-                        if (position === 1) {
-                            jQuery('#' + _elId + ' .laptime' + i).html(data.RaceInfo.SessionTime.toHHMMSS(true));
-                        } else {
-                            jQuery('#' + _elId + ' .laptime' + i).html(drivers[j].DeltaTime);
-                        }
-                    } else {
-                        jQuery('#' + _elId + ' .laptime' + i).html("-" + drivers[j].LapsDown + "L");
-                    }
-                    jQuery('#' + _elId + ' .best' + i).html(drivers[j].FastestLapTime);
-                    lastDriver = j;
-                    break;
-                }
-            }
+    function getDriverPos(pos) {
+        var driverPos = '&nbsp;';
+
+        if (pos !== 0) {
+            driverPos = pos;
         }
-        */
+
+        return driverPos;
+    }
+
+    function getSessionTime(time) {
+        var sessionTime = '&nbsp';
+
+        if (time !== 0) {
+            sessionTime = time.toMMSS(true);
+        }
+
+        return sessionTime;
     }
 
     return {

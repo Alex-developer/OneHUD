@@ -142,6 +142,19 @@
                 "font-style": "normal",
                 "color": "white"
             }
+        },
+        { 
+           "type": "sessionname",
+            "css": {
+                "left": 0,
+                "top": 0,
+                "width": 150,
+                "height": 30,
+                "font-family": "LatoWeb",
+                "font-weight": "normal",
+                "font-style": "normal",
+                "color": "white"
+            }
         }
     ]
 }

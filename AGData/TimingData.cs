@@ -26,7 +26,7 @@ namespace OneHUDData
     }
 
     public enum SessionType {
-        Invalid,
+        Invalid = 0,
         OfflinePractice,
         Practice,
         Qualifying,

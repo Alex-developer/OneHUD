@@ -18,6 +18,8 @@ namespace OneHUDData.Sessions
         private int _sessionId; // iRacing only
         private int _subSessionId; // iRacing only
 
+        private SessionType _sessionType;
+
         private double _ambientTemperature;
         private double _trackTemperature;
 
@@ -64,6 +66,18 @@ namespace OneHUDData.Sessions
         #endregion
 
         #region Session Getters/Setters
+        public SessionType SessionType
+        {
+            get
+            {
+                return _sessionType;
+            }
+            set
+            {
+                _sessionType = value;
+            }
+        }
+
         public double SessionTime
         {
             get

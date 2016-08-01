@@ -16,6 +16,7 @@ namespace iRacing
         private TelemetryData _telemetryData;
         private TimingData _timingData;
         private TelemetryInfo _ti;
+        private SessionInfo _si;
 
         private int? _currentSessionNumber = null;
         private bool _forceSessionUpdate = true;
@@ -86,13 +87,19 @@ namespace iRacing
                 return;
             }
 
+            // Cache the Session Info
+            _si = e.SessionInfo;
+
+            // Grab the Session Type
+            _timingData.RaceInfo.SessionType = GetSessionType(_si["SessionInfo"]["Sessions"]["SessionNum",_currentSessionNumber]["SessionType"].GetValue());
+
             /*
              * If the current session data is empty then do an initial parse of the session data. Since this
              * data never changes between praccy / qualy / race there is no point parsing it more than once.
             */
             if (_timingData.RaceInfo.TrackName == null)
             {
-                InitialSessionParse(e.SessionInfo);
+                InitialSessionParse(_si);
                 _forceSessionUpdate = false;
             }
             
@@ -101,10 +108,10 @@ namespace iRacing
             */
             if (_forceSessionUpdate)
             {
-                ParseTrackStatus(e.SessionInfo);
+                ParseTrackStatus(_si);
             }
 
-            UpdateDrivers(e.SessionInfo);
+            UpdateDrivers(_si);
         }
 
         /// <summary>
