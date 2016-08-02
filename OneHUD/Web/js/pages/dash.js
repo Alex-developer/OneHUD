@@ -153,7 +153,7 @@
         var widgetController = new window[widgetClass]();
 
         if (properties === undefined) {
-            properties = widgetController.properties;
+            properties = widgetController.properties();
         }
 
         if (properties.css === undefined) {
@@ -247,6 +247,10 @@
     }
 
     function lostFocus(el) {
+        if (_editing) {
+            OneHUDDashEditor.stop();
+            _editing = false;
+        }
         jQuery('#editor-start').remove();
         jQuery('#editor-load-dash').remove();
         jQuery('#editor-save-dash').remove();

@@ -143,13 +143,11 @@
                     path = 'js/pages/editorpropertypages/' + _selected.instance.propertypage + '.js';
                 }
                 head.load(path, function (a,b) {
-                    window[className].init(_propertiesWindow);
+                    window[className].init(_propertiesWindow, _selected.instance.properties());
                 });
             } else {
-                window[className].init(_propertiesWindow);
+                window[className].init(_propertiesWindow, _selected.instance.properties());
             }
-            
-
         });
     }
 
@@ -244,8 +242,15 @@
         jQuery.each(_dash, function (pos, widget) {
             if (widget.element !== undefined) {
                 var el = widget.element();
-                jQuery(el).draggable('destroy');
-                jQuery(el).resizable('destroy');
+
+                var draggable = jQuery(el).draggable("instance");
+                if (draggable !== undefined) {
+                    jQuery(el).draggable('destroy');
+                }
+                var resizeable = jQuery(el).draggable("instance");
+                if (resizeable !== undefined) {
+                    jQuery(el).resizable('destroy');
+                }
                 jQuery(el).removeClass('border');
             }
             if (widget.stopEditing !== undefined) {

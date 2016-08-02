@@ -16,8 +16,8 @@
     var _properties = {
         type: 'sessionname',
         css: {
-            left: 0,
-            top: 0,
+            left: 3,
+            top: 575,
             width: 50,
             height: 50,
             'font-family': 'Led',
@@ -29,6 +29,11 @@
 
     function init(element, properties) {
         _el = element;
+
+        if (properties !== undefined) {
+            _properties = properties;
+        }
+
         buildUI();
     }
 
@@ -44,7 +49,7 @@
             .css({
                 'pointer-events': 'none'
             })
-            .text('');
+            .html('&nbsp;');
 
         jQuery(_el).append(_textElement);
         _textElement.bigText();
@@ -72,8 +77,15 @@
         labels: _labels,
         tab: _tab,
         supports: _supports,
-        properties: _properties,
         propertypage: _propertypage,
+
+        properties: function (properties) {
+
+            if (properties !== undefined) {
+                _properties = properties;
+            }
+            return _properties;
+        },
 
         element: function () {
             return _el;

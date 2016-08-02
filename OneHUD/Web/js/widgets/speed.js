@@ -186,7 +186,14 @@
         labels: _labels,
         tab: _tab,
         supports: _supports,
-        properties: _properties,
+
+        properties: function (properties) {
+
+            if (properties !== undefined) {
+                _properties = properties;
+            }
+            return _properties;
+        },
 
         element: function () {
             return _el;

@@ -147,7 +147,7 @@
            "type": "sessionname",
             "css": {
                 "left": 0,
-                "top": 0,
+                "top": 575,
                 "width": 150,
                 "height": 30,
                 "font-family": "LatoWeb",

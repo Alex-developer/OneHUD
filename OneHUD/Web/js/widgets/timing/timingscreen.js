@@ -33,6 +33,7 @@
         if (properties !== undefined) {
             _properties = properties;
         }
+        jQuery('body').css('background-color', '#222');
     }
 
     function destroy() {
@@ -72,7 +73,6 @@
         _timingEl = jQuery('<div class="timingpage">').html(html).attr('id', _elId);
         jQuery(_el).css('overflow-y', 'scroll').css('overflow-x', 'hidden');
         jQuery(_el).append(_timingEl);
-        jQuery('body').css('background-color', '#222');
     }
 
     function update(data) {
@@ -168,7 +168,14 @@
         labels: _labels,
         tab: _tab,
         supports: _supports,
-        properties: _properties,
+
+        properties: function (properties) {
+
+            if (properties !== undefined) {
+                _properties = properties;
+            }
+            return _properties;
+        },
 
         element: function () {
             return _el;

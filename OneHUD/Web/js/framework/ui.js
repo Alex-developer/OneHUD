@@ -71,14 +71,14 @@
                 SetOffCanvasHeight();
             });
 
-        jQuery(window).swipe({
+     /*   jQuery(window).swipe({
             swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
                 if (direction === 'right') {
                     jQuery('#offCanvas').foundation('open');
                 }
             }
         });
-
+        */
         _worker.addEventListener('message', function (e) {
             dataEvent(e);
         });
@@ -184,6 +184,7 @@
     function clearContent() {
         jQuery('#content').html('');
         jQuery('#page-icons').html('');
+        jQuery('.gridlines').remove();
     }
 
     function blockUI() {
