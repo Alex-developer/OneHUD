@@ -92,7 +92,7 @@
             </div>';
         var html = Mustache.to_html(tabTemplate, mustacheFormattedData);
 
-        _toolbarWindow = $.jsPanel({
+        _toolbarWindow = jQuery.jsPanel({
             'headerTitle': 'Widgets',
             content: html
         }).foundation();
@@ -106,8 +106,10 @@
             startWidget(widget);
         });
 
-        _propertiesWindow = $.jsPanel({
-            'headerTitle': 'Properties'
+        _propertiesWindow = jQuery.jsPanel({
+            'theme' : 'default',
+            'headerTitle': 'Properties',
+            contentSize: { width: 430, height: 200 }
         });
     }
 
@@ -133,22 +135,26 @@
                 }
             });
 
-            var className = 'OneHUDPropertyPageNOPROPERTIES';
-            if (_selected.instance.propertypage !== undefined) {
-                className = 'OneHUDPropertyPage' + _selected.instance.propertypage.toUpperCase();
-            }
-            if (window[className] === undefined) {
-                var path = 'js/pages/editorpropertypages/noproperties.js';
-                if (_selected.instance.propertypage !== undefined) {
-                    path = 'js/pages/editorpropertypages/' + _selected.instance.propertypage + '.js';
-                }
-                head.load(path, function (a,b) {
-                    window[className].init(_propertiesWindow, _selected.instance.properties());
-                });
-            } else {
-                window[className].init(_propertiesWindow, _selected.instance.properties());
-            }
+            setupPropertiesWindows();
         });
+    }
+
+    function setupPropertiesWindows() {
+        var className = 'OneHUDPropertyPageNOPROPERTIES';
+        if (_selected.instance.propertypage !== undefined) {
+            className = 'OneHUDPropertyPage' + _selected.instance.propertypage.toUpperCase();
+        }
+        if (window[className] === undefined) {
+            var path = 'js/pages/editorpropertypages/noproperties.js';
+            if (_selected.instance.propertypage !== undefined) {
+                path = 'js/pages/editorpropertypages/' + _selected.instance.propertypage + '.js';
+            }
+            head.load(path, function (a, b) {
+                window[className].init(_propertiesWindow, _selected);
+            });
+        } else {
+            window[className].init(_propertiesWindow, _selected);
+        }
     }
 
     function clearSelectedWidget() {
@@ -217,7 +223,12 @@
     function startWidget(widget) {
         if (widget.element !== undefined) {
             var el = widget.element();
-            jQuery(el).draggable();
+            jQuery(el).draggable({
+                stop: function (event, ui) {
+                    updateWidgetPosition(widget);
+                    setupPropertiesWindows();
+                }
+            });
             jQuery(el).resizable({
                 resize: function (event, ui) {
                     if (widget.resize !== undefined) {
@@ -225,6 +236,8 @@
                     }
                 },
                 stop: function (event, ui) {
+                    updateWidgetPosition(widget);
+                    setupPropertiesWindows();
                 }
             });
             jQuery(el).addClass('border');
@@ -234,6 +247,15 @@
         if (widget.startEditing !== undefined) {
             widget.startEditing();
         }
+    }
+
+    function updateWidgetPosition(widget) {
+        var el = widget.element();
+        var position = jQuery(el).position();
+        widget.properties().css.left = position.left;
+        widget.properties().css.top = position.top;
+        widget.properties().css.width = jQuery(el).width();
+        widget.properties().css.height = jQuery(el).height();
     }
 
     function stopWidgets() {

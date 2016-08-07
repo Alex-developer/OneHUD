@@ -210,8 +210,8 @@
 
             var editorScripts = [
                 '/js/pages/editor.js',
-                '/js/jqPropertyGrid/jqPropertyGrid.js'//,
-               // '/js/jqPropertyGrid/jqPropertyGrid.css'
+                '/js/agProp/agProp.js',
+                '/js/agProp/agProp.css'
             ];
 
             head.load(editorScripts, function () {

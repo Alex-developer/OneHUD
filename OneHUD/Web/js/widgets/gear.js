@@ -22,6 +22,7 @@
             height: 50,
             'font-family': 'Led',
             'font-weight': 'bold',
+            'text-align' : 'left',
             color: 'white'
         }
     };

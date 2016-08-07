@@ -42,7 +42,7 @@
             filename1: 'ff'
         };
 
-        jQuery('#' + _propertyGridId).jqPropertyGrid(theObj, theMeta);
+        jQuery('#' + _propertyGridId).agProp(theObj, theMeta);
 
     }
 

@@ -3,6 +3,7 @@
 
     var _propertiesWindow = null;
     var _propertyGridId = null;
+    var _widget = null;
     var _fonts = [
         { text: 'LED', value: 'Led' },
         { text: 'Georgia', value: 'Georgia' },
@@ -26,8 +27,9 @@
         _propertiesWindow.content.empty();
     }
 
-    function setupPropertiesWindow(data) {
+    function setupPropertiesWindow(widget) {
 
+        _widget = widget;
         _propertyGridId = OneHUDUI.getNextId();
 
         var template = '\
@@ -41,30 +43,41 @@
             top: { group: 'Position', name: 'Top', type: 'number', options: { min: 0, max: 20000, step: 1 } },
             width: { group: 'Position', name: 'Width', type: 'number', options: { min: 0, max: 20000, step: 1 } },
             height: { group: 'Position', name: 'Height', type: 'number', options: { min: 0, max: 20000, step: 1 } },
-            alignment: { group: 'Position', name: 'Alignment', type: 'options', options: _alignment },
-            font: { group: 'Font', name: 'Font', type: 'options', options: _fonts },
+            'text-align': { group: 'Position', name: 'Alignment', type: 'options', options: _alignment },
+            'font-family': { group: 'Font', name: 'Font', type: 'options', options: _fonts },
             fontautosize: { group: 'Font', name: 'Auto Size',type: 'boolean', description: 'Auto size the font' },
             fontsize: { group: 'Font', name: 'Font Size', description: 'The font size name' }
         };
 
         var propertyData = {
-            left: 100,
-            top: 250,
-            width: 600,
-            height: 400,
-            alignment: 'left',
-            font: 'LED',
-            fontautosize: true,
-            fontsize: '10'
+            rows: {
+                left: 100,
+                top: 250,
+                width: 600,
+                height: 400,
+                alignment: 'left',
+                'font-family': 'LED',
+                fontautosize: true,
+                fontsize: '10',
+                'text-align': 'left'
+            }
         };
 
-        propertyData.left = data.css.left;
-        propertyData.top = data.css.top;
-        propertyData.width = data.css.width;
-        propertyData.height = data.css.height;
+        propertyData.left = _widget.instance.properties().css.left;
+        propertyData.top = _widget.instance.properties().css.top;
+        propertyData.width = _widget.instance.properties().css.width;
+        propertyData.height = _widget.instance.properties().css.height;
 
-        jQuery('#' + _propertyGridId).jqPropertyGrid(propertyData, propertyFields);
+        jQuery('#' + _propertyGridId).agProp(propertyData, propertyFields, propertyUpdated);
 
+    }
+
+    function propertyUpdated(grid, name, value) {
+        if (typeof _widget.instance.properties().css[name] === 'number') {
+            value = parseFloat(value);
+        }
+        _widget.instance.properties().css[name] = value;
+        _widget.instance.element().css(_widget.instance.properties().css);
     }
 
     return {
@@ -73,3 +86,4 @@
         }
     }
 }();
+//# sourceURL=/js/pages/editorpropertypages/text.js

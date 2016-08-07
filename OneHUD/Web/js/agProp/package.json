@@ -1,0 +1,32 @@
+{
+  "name": "agProp",
+  "version": "1.0.0",
+  "description": "A small and simple property grid in JS to view/edit POJOs, excellent if you have a \"settings\" object you want to give the user to edit",
+  "main": "agProp.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alex-developer/agProp.git"
+  },
+  "keywords": [
+    "jquery-plugin",
+    "ecosystem:jquery"
+  ],
+  "author": "Alex Greenland",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alex-develoepr/agProp/issues"
+  },
+  "homepage": "https://github.com/alex-developer/agProp",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-jscs": "^2.8.0",
+    "load-grunt-tasks": "^3.5.0"
+  }
+}

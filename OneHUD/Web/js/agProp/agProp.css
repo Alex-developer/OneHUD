@@ -1,0 +1,334 @@
+/**
+ * jqPropertyGrid
+ * https://github.com/ValYouW/jqPropertyGrid
+ * Author: YuvalW (ValYouW)
+ * License: MIT
+ */
+.agTable {
+    height: 100%;
+    color: black;
+    background: #fff;    
+}
+
+    .agTable input[type=text], .agTable select {
+        width: 100%;
+        height: 100%;
+        outline: none;
+        border: none;
+        padding: 1px;
+        box-shadow: none;     
+    }
+
+.agEditor {
+    height: 80%;    
+    border-left: solid 1px #eee;
+    border-right: solid 1px #eee;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.agHelp {
+    height: 20%;
+    border-left: solid 1px #eee;
+    border-right: solid 1px #eee;    
+    border-bottom: solid 1px #eee;
+    padding: 3px;
+}
+
+    .agHelp h1 {
+        font-size: 1.2em;
+        margin-bottom: 0em;
+        margin-top: 0.5em;
+    }
+
+    .agHelp p {
+        margin-top: 0.5em;
+    }
+    
+.agHeaderRow {
+    background-color: #ddd;
+    padding: 2px;
+}
+
+.agGroupRow {
+    background-color: #eee;
+    font-weight: bold;
+    padding: 5px;
+    border-top: solid 1px #eee;    
+    border-bottom: solid 1px #eee;    
+}
+
+.pgGroupCell {
+    display: -ms-flex; display: -webkit-flex; display: flex;
+}
+    
+    .pgGroupCell .pgSpacer {
+        background-color: #eee;
+        flex:1;
+    }
+
+.pgContent {
+    padding: 3px;
+}
+
+    .pgContent input[type=text] {
+        width: 100%;
+    }
+
+    .pgContent.right {
+        text-align: right;
+    }
+    
+.pgRow{
+}
+
+.pgCell {
+    border-bottom: solid 1px #eee;
+    padding: 0px;
+}
+
+.pgTooltip {
+    margin-left: 5px;
+}
+
+
+
+.agicons {
+    background: url('icons.png') no-repeat top left; 
+    width: 23px; 
+    height: 22px;    
+}
+
+    .agicons.azoff { 
+        background-position: 0 0; 
+    } 
+
+    .agicons.azon { 
+        background-position: -23px 0; 
+    } 
+    
+    .agicons.sortoff { 
+        background-position: -46px 0; 
+    } 
+
+    .agicons.sorton { 
+        background-position: -69px 0; 
+    } 
+    
+    .agicons.close { 
+        background-position: -92px 0; 
+    }         
+    
+    .agicons.open::before {
+        background-position: -92px 0;   
+        content: "";
+    }
+    
+    .agicons.close::before { 
+        content: "";
+        background-position: -115px 0; 
+    }
+    
+    .agicons.open { 
+        background-position: -115px 0; 
+    }         
+
+
+/* **********************************************************************************
+
+    SIMPLE GRID - FRAMEWORK 
+
+************************************************************************************* */
+/*
+    sg-nav
+*/
+#sg-nav-trigger {
+    background: none;
+    border-radius: 5px;
+    border: 2px solid #c49b0b;
+    cursor: pointer;
+    width: 44px;
+    height: 40px;
+}
+#sg-nav-trigger span {
+    background: #c49b0b;
+    display: block;
+    margin: 4px auto; 
+    width: 30px;
+    height: 3px;
+}
+
+#sg-nav {
+    top: 20px;
+    left: 20px;
+    position: fixed;
+}
+#sg-nav ul {
+    background: #000;
+    border-radius: 5px;
+    padding: 20px 0;
+    display: none;
+}
+#sg-nav ul li a {
+    display: inline-block;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 30px;
+}
+
+
+/*
+    Grid
+*/
+.agcontainer {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.agcontainer-fluid {
+    margin: 0 auto;
+    width: 100%;
+}
+
+.agrow:before,
+.agrow:after {
+  display: table;
+  line-height: 0;
+  content: "";
+}
+
+.agrow:after {
+  clear: both;
+}
+
+.agcol-1, .agcol-2, .agcol-3, .agcol-4, .agcol-5, .agcol-6,
+.agcol-7, .agcol-8, .agcol-9, .agcol-10, .agcol-11, .agcol-12,
+.agcol-offset-1, .agcol-offset-2, .agcol-offset-3, .agcol-offset-4, .agcol-offset-5, .agcol-offset-6,
+.agcol-offset-7, .agcol-offset-8, .agcol-offset-9, .agcol-offset-10, .agcol-offset-11, .agcol-offset-12 {
+    float: left;
+    min-height: 1px;
+ }
+
+.agbox {
+    padding: 20px;
+}
+
+.agbox-margin {
+    margin: 0 10px 0 10px;
+}
+
+.agcol-1, .agcol-offset-1 {
+    width: 8.33333333333%;
+}
+
+.agcol-2, .agcol-offset-2 {
+    width: 16.6666666666%;
+}
+
+.agcol-3, .agcol-offset-3 {
+    width: 24.9999999999%;
+}
+
+.agcol-4, .agcol-offset-4 {
+    width: 33.3333333333%;
+}
+
+.agcol-5, .agcol-offset-5 {
+    width: 41.6666666666%;
+}
+
+.agcol-6, .agcol-offset-6 {
+    width: 49.9999999999%;
+}
+
+.agcol-7, .agcol-offset-7 {
+    width: 58.3333333333%;
+}
+
+.agcol-8, .agcol-offset-8 {
+    width: 66.6666666666%;
+}
+
+.agcol-9, .agcol-offset-9 {
+    width: 74.9999999999%;
+}
+
+.agcol-10, .agcol-offset-10 {
+    width: 83.3333333333%;
+}
+
+.agcol-11, .agcol-offset-11 {
+    width: 91.6666666666%;
+}
+
+.agcol-12, .agcol-offset-12 {
+    width: 100%;
+}
+
+@media only screen and (max-width : 768px) and (min-width : 480px) {
+    /*
+        Grid
+    */
+    .agcontainer {
+        width: 96%;
+    }
+
+    .agcol-1, .agcol-2, .agcol-3, .agcol-5, .agcol-6,
+    .agcol-7, .agcol-8, .agcol-9, .agcol-10, .agcol-11 {
+        width: 50%;
+     }
+
+     .agcol-4 {
+        width: 33.3333333333%;
+    }
+
+     .agcol-12 {
+         width:100%;
+     }
+
+     .agcol-offset-1, .agcol-offset-2, .agcol-offset-3, .agcol-offset-4,
+     .agcol-offset-5, .agcol-offset-6, .agcol-offset-7, .agcol-offset-8,
+     .agcol-offset-9, .agcol-offset-10, .agcol-offset-11, .agcol-offset-12 {
+         width: 0% !important;
+         display: none;
+     }
+
+     .agbox-margin {
+        margin: 0 10px 0 10px;
+    }
+}
+
+@media only screen and (max-width : 479px) {
+    /*
+        Grid
+    */
+    .agcontainer {
+        width: 96%;
+    }
+
+    .agcol-1, .agcol-2, .agcol-3, .agcol-4, .agcol-5, .agcol-6,
+    .agcol-7, .agcol-8, .agcol-9, .agcol-10, .agcol-11, .agcol-12 {
+        float: none;
+        width: 100%;
+     }
+
+     .agcol-offset-1, .agcol-offset-2, .agcol-offset-3, .agcol-offset-4,
+     .agcol-offset-5, .agcol-offset-6, .agcol-offset-7, .agcol-offset-8,
+     .agcol-offset-9, .agcol-offset-10, .agcol-offset-11, .agcol-offset-12 {
+         width: 0% !important;
+         display: none;
+     }
+
+     .agbox-margin {
+        margin: 0 10px 0 10px;
+    }
+}
+
+.agcc {
+    background-color: #ccc;
+}
+
+.agcontent {
+    padding: 5px;
+}

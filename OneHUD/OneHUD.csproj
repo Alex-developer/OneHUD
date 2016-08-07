@@ -5120,6 +5120,38 @@
     <None Include="Web\fonts\Lato-Regular.woff2">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Web\js\agProp\.editorconfig" />
+    <None Include="Web\js\agProp\.gitignore" />
+    <None Include="Web\js\agProp\.git\config" />
+    <None Include="Web\js\agProp\.git\description" />
+    <None Include="Web\js\agProp\.git\FETCH_HEAD" />
+    <None Include="Web\js\agProp\.git\HEAD" />
+    <None Include="Web\js\agProp\.git\hooks\applypatch-msg.sample" />
+    <None Include="Web\js\agProp\.git\hooks\commit-msg.sample" />
+    <None Include="Web\js\agProp\.git\hooks\post-update.sample" />
+    <None Include="Web\js\agProp\.git\hooks\pre-applypatch.sample" />
+    <None Include="Web\js\agProp\.git\hooks\pre-commit.sample" />
+    <None Include="Web\js\agProp\.git\hooks\pre-push.sample" />
+    <None Include="Web\js\agProp\.git\hooks\pre-rebase.sample" />
+    <None Include="Web\js\agProp\.git\hooks\prepare-commit-msg.sample" />
+    <None Include="Web\js\agProp\.git\hooks\update.sample" />
+    <None Include="Web\js\agProp\.git\index" />
+    <None Include="Web\js\agProp\.git\info\exclude" />
+    <None Include="Web\js\agProp\.git\logs\HEAD" />
+    <None Include="Web\js\agProp\.git\logs\refs\heads\master" />
+    <None Include="Web\js\agProp\.git\logs\refs\remotes\origin\HEAD" />
+    <None Include="Web\js\agProp\.git\objects\8e\4fa2c6ef4207e25ee89c03303e0f7c47f63f97" />
+    <None Include="Web\js\agProp\.git\objects\9c\ecc1d4669ee8af2ca727a5d8cde10cd8b2d7cc" />
+    <None Include="Web\js\agProp\.git\objects\db\a7df65f5903bd1042ac71ca60ce480182dc481" />
+    <None Include="Web\js\agProp\.git\packed-refs" />
+    <None Include="Web\js\agProp\.git\refs\heads\master" />
+    <None Include="Web\js\agProp\.git\refs\remotes\origin\HEAD" />
+    <None Include="Web\js\agProp\.jscsrc" />
+    <None Include="Web\js\agProp\.jshintrc" />
+    <None Include="Web\js\agProp\assets\icons.psd" />
+    <None Include="Web\js\agProp\LICENSE" />
+    <None Include="Web\js\agProp\package.json" />
+    <None Include="Web\js\agProp\README.md" />
     <None Include="Web\js\gauge\.gitignore" />
     <None Include="Web\js\gauge\bower.json" />
     <None Include="Web\js\gauge\build.bat" />
@@ -17525,6 +17557,18 @@
     <Content Include="Web\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Web\js\agProp\agProp.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\js\agProp\agProp.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\js\agProp\example\example.png" />
+    <Content Include="Web\js\agProp\example\index.html" />
+    <Content Include="Web\js\agProp\Gruntfile.js" />
+    <Content Include="Web\js\agProp\icons.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web\js\app.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -17773,6 +17817,9 @@
     <Folder Include="WebSource\dist\assets\img\" />
     <Folder Include="WebSource\dist\assets\scss\" />
     <Folder Include="WebSource\etc\" />
+    <Folder Include="Web\js\agProp\.git\objects\info\" />
+    <Folder Include="Web\js\agProp\.git\objects\pack\" />
+    <Folder Include="Web\js\agProp\.git\refs\tags\" />
     <Folder Include="Web\js\gauge\fonts\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
