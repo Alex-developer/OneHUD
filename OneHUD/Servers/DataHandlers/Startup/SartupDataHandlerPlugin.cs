@@ -9,6 +9,32 @@ namespace AGServer.Servers.DataHandlers.Startup
         private string _pluginVersion = "";
         private string _gameShortName = "";
         private string _gameLongName = "";
+        private string _author = "";
+        private string _url = "";
+
+        public string URL
+        {
+            get
+            {
+                return _url;
+            }
+            set
+            {
+                _url = value;
+            }
+
+        }
+        public string Author
+        {
+            get
+            {
+                return _author;
+            }
+            set
+            {
+                _author = value;
+            }
+        }
 
         public string GameLongName
         {

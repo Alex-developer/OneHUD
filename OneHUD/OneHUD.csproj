@@ -5102,6 +5102,35 @@
     <None Include="WebSource\src\data\.gitkeep" />
     <None Include="WebSource\src\partials\.gitkeep" />
     <None Include="WebSource\src\styleguide\index.md" />
+    <None Include="Web\fonts\font-awesome\fonts\fontawesome-webfont.eot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Web\fonts\font-awesome\fonts\fontawesome-webfont.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Web\fonts\font-awesome\fonts\fontawesome-webfont.woff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Web\fonts\font-awesome\fonts\fontawesome-webfont.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Web\fonts\font-awesome\fonts\FontAwesome.otf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Web\fonts\font-awesome\less\animated.less" />
+    <None Include="Web\fonts\font-awesome\less\bordered-pulled.less" />
+    <None Include="Web\fonts\font-awesome\less\core.less" />
+    <None Include="Web\fonts\font-awesome\less\fixed-width.less" />
+    <None Include="Web\fonts\font-awesome\less\font-awesome.less" />
+    <None Include="Web\fonts\font-awesome\less\icons.less" />
+    <None Include="Web\fonts\font-awesome\less\larger.less" />
+    <None Include="Web\fonts\font-awesome\less\list.less" />
+    <None Include="Web\fonts\font-awesome\less\mixins.less" />
+    <None Include="Web\fonts\font-awesome\less\path.less" />
+    <None Include="Web\fonts\font-awesome\less\rotated-flipped.less" />
+    <None Include="Web\fonts\font-awesome\less\screen-reader.less" />
+    <None Include="Web\fonts\font-awesome\less\stacked.less" />
+    <None Include="Web\fonts\font-awesome\less\variables.less" />
     <None Include="Web\fonts\foundation-icons\.DS_Store" />
     <None Include="Web\fonts\foundation-icons\.fontcustom-data" />
     <None Include="Web\fonts\foundation-icons\foundation-icons.eot">
@@ -16566,6 +16595,28 @@
     <Content Include="Web\favicon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Web\fonts\font-awesome\css\font-awesome.css" />
+    <Content Include="Web\fonts\font-awesome\css\font-awesome.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\fonts\font-awesome\fonts\fontawesome-webfont.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\fonts\font-awesome\HELP-US-OUT.txt" />
+    <Content Include="Web\fonts\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Web\fonts\font-awesome\scss\_animated.scss" />
+    <Content Include="Web\fonts\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Web\fonts\font-awesome\scss\_core.scss" />
+    <Content Include="Web\fonts\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Web\fonts\font-awesome\scss\_icons.scss" />
+    <Content Include="Web\fonts\font-awesome\scss\_larger.scss" />
+    <Content Include="Web\fonts\font-awesome\scss\_list.scss" />
+    <Content Include="Web\fonts\font-awesome\scss\_mixins.scss" />
+    <Content Include="Web\fonts\font-awesome\scss\_path.scss" />
+    <Content Include="Web\fonts\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Web\fonts\font-awesome\scss\_screen-reader.scss" />
+    <Content Include="Web\fonts\font-awesome\scss\_stacked.scss" />
+    <Content Include="Web\fonts\font-awesome\scss\_variables.scss" />
     <Content Include="Web\fonts\foundation-icons\foundation-icons.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

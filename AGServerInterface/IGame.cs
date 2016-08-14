@@ -20,6 +20,8 @@ namespace OneHUDInterface
 
         string Author { get; }
 
+        string URL { get; }
+
         bool Start(TelemetryData telemetryData, TimingData timingData);
 
         bool Stop();

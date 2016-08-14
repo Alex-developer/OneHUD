@@ -14,10 +14,19 @@ namespace OneHUDInterface
         protected string _displayName = "";
         protected List<string> _processNames;
         protected string _author;
+        protected string _url;
 
         public GameBase()
         {
             _processNames = new List<string>();
+        }
+
+        public string URL
+        {
+            get
+            {
+                return _url;
+            }
         }
 
         public string Author

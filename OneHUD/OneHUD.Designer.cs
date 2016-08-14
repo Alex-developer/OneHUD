@@ -58,7 +58,6 @@
             this.PluginAuthor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.pictureConnected = new System.Windows.Forms.PictureBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.splitter1 = new System.Windows.Forms.Splitter();
             this.statusStrip.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -66,7 +65,6 @@
             this.tabServers.SuspendLayout();
             this.tabPageHTTP.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureConnected)).BeginInit();
             this.SuspendLayout();
@@ -269,7 +267,6 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.splitter1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -335,14 +332,6 @@
             this.tabPage3.Text = "IOT Server";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // splitter1
-            // 
-            this.splitter1.Location = new System.Drawing.Point(3, 3);
-            this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(386, 375);
-            this.splitter1.TabIndex = 0;
-            this.splitter1.TabStop = false;
-            // 
             // OneHUD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -367,7 +356,6 @@
             this.tabPageHTTP.ResumeLayout(false);
             this.tabPageHTTP.PerformLayout();
             this.groupBox1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureConnected)).EndInit();
@@ -406,7 +394,6 @@
         private System.Windows.Forms.ColumnHeader PluginAuthor;
         private System.Windows.Forms.PictureBox pictureConnected;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.Splitter splitter1;
     }
 }
 
