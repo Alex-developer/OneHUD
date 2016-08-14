@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Net;
 using System.IO;
+using System.Drawing;
 using OneHUD.Plugin;
 using OneHUD.Processes;
 using OneHUD.Servers.HTTP;
@@ -42,6 +43,8 @@ namespace OneHUD
             _telemetryData = new TelemetryData();
             _timingData = new TimingData();
 
+            lsvPlugins.Items.Clear();
+
             _plugins = new Dictionary<string, IGame>();
             ICollection<IGame> plugins = PluginLoader<IGame>.LoadPlugins("Plugins");
             if (plugins.Count > 0)
@@ -49,6 +52,28 @@ namespace OneHUD
                 foreach (var item in plugins)
                 {
                     _plugins.Add(item.Name, item);
+
+                    string[] lvText = new string[4];
+                    lvText[0] = "";
+                    lvText[1] = item.DisplayName;
+                    lvText[2] = item.Version;
+                    lvText[3] = item.Author;
+
+                    ListViewItem lvItem = new ListViewItem(lvText);
+
+                    Bitmap pluginIcon = item.Icon;
+
+                    if (pluginIcon != null)
+                    {
+                        imageListPlugins.Images.Add(item.Name, pluginIcon);
+                        lvItem.ImageKey = item.Name;
+                    }
+                    else
+                    {
+                        lvItem.ImageKey = "missing";
+                    }
+
+                    lsvPlugins.Items.Add(lvItem);
                 }
                 _processMonitor = new ProcessMonitor(_plugins);
                 _processMonitor.GameLoadedEvent += new ProcessMonitor.GameLoaded(GameLoaded);
@@ -73,7 +98,14 @@ namespace OneHUD
             if (_game == null)
             {
                 _game = _plugins[gameName];
-                Status.Text = _game.DisplayName;
+
+                Invoke(new Action(() => { Status.Text = _game.DisplayName; }));
+                Invoke(new Action(() => { labelStatus.Text = _game.DisplayName; }));
+
+                if (imageListPlugins.Images.ContainsKey(_game.Name))
+                {
+                    Invoke(new Action(() => { pictureConnected.Image = imageListPlugins.Images[_game.Name]; }));
+                }
                 _telemetryData.Reset();
                 _telemetryData.Game = gameName;
                 _telemetryData.Description = _plugins[gameName].DisplayName;
@@ -99,7 +131,10 @@ namespace OneHUD
         {
             StopGameReaderThread();
             _game = null;
-            Status.Text = "Waiting ...";
+
+            Invoke(new Action(() => { Status.Text = "Waiting ..."; }));
+            Invoke(new Action(() => { labelStatus.Text = "Not Connected"; }));
+            Invoke(new Action(() => { pictureConnected.Image = null; }));
         }
 
         #endregion
@@ -213,7 +248,17 @@ namespace OneHUD
             StartWebServer();
         }
         #endregion
+
+        private void txtPort_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
         #endregion
+
+        private void labelStatus_Click(object sender, EventArgs e)
+        {
+
+        }
 
     }
 }

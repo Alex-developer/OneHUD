@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using OneHUDData;
 
 namespace OneHUDInterface
@@ -14,6 +15,10 @@ namespace OneHUDInterface
         List<string> ProcessNames { get; }
 
         string Version { get; }
+
+        Bitmap Icon { get; }
+
+        string Author { get; }
 
         bool Start(TelemetryData telemetryData, TimingData timingData);
 

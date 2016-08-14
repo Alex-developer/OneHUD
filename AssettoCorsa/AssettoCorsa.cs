@@ -38,6 +38,8 @@ namespace AssettoCorsa
         {
             _name = "AC";
             _displayName = "Assetto Corsa";
+            _author = "Alex Greenland";
+
             _processNames.Add("acs");
 
             _physicsMemoryReader = new SharedMemoryReader(_physicsFileName, _physicsBufferSize);

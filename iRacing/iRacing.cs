@@ -30,6 +30,7 @@ namespace iRacing
             _name = "iRacing";
             _displayName = "iRacing";
             _displayName = "iRacing";
+            _author = "Alex Greenland";
             _processNames.Add("iRacingSim");
             _processNames.Add("iRacingSim64");
             _processNames.Add("iRacingSim64DX11");

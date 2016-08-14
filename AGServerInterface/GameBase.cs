@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using System.Diagnostics;
+using System.Drawing;
 using System.Reflection;
 using System.Collections.Generic;
 using OneHUDData;
@@ -13,10 +13,19 @@ namespace OneHUDInterface
         protected string _name = "";
         protected string _displayName = "";
         protected List<string> _processNames;
+        protected string _author;
 
         public GameBase()
         {
             _processNames = new List<string>();
+        }
+
+        public string Author
+        {
+            get
+            {
+                return _author;
+            }
         }
 
         public string Name
@@ -47,8 +56,17 @@ namespace OneHUDInterface
         {
             get
             {
-                Version version = Assembly.GetEntryAssembly().GetName().Version;
-                return FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion; ;
+                Assembly me = Assembly.GetAssembly(this.GetType());
+                return me.GetName().Version.ToString();
+            }
+        }
+
+        public Bitmap Icon
+        {
+            get
+            {
+                Bitmap icon = GetImageByName("icon");
+                return icon;
             }
         }
 
@@ -60,6 +78,24 @@ namespace OneHUDInterface
         public virtual bool Stop()
         {
             return true;
+        }
+
+        private Bitmap GetImageByName(string imageName)
+        {
+            Assembly asm = Assembly.GetAssembly(this.GetType());
+            string resourceName = asm.GetName().Name + ".Properties.Resources";
+            var rm = new System.Resources.ResourceManager(resourceName, asm);
+            Bitmap image = null;
+            try
+            {
+                image = (Bitmap)rm.GetObject(imageName);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return image;
+
         }
 
     }

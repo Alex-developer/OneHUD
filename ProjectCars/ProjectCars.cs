@@ -30,6 +30,7 @@ namespace ProjectCars
         {
             _name = "pCars";
             _displayName = "Project Cars";
+            _author = "Alex Greenland";
             _processNames.Add("pCARS");
             _processNames.Add("pCARS64");
             _processNames.Add("pCARS2Gld");

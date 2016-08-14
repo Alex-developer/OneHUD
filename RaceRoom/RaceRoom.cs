@@ -39,6 +39,7 @@ namespace RaceRoom
             _gameData = JsonConvert.DeserializeObject<GameData>(jsonString);
 
 
+            _author = "Alex Greenland";
             _name = "R3E";
             _displayName = "RaceRoom Experience";
             _processNames.Add("RRRE");
