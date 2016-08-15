@@ -29,7 +29,8 @@
         var html = Mustache.to_html(template);
         jQuery('#content').html(html);
 
-        var pluginHTML = '<h3>Available Plugins</h3>';
+        var pluginHTML = '<h3>Available Plugins</h3><div>';
+        pluginHTML += '<div class="callout nintyOpacity success"><h5>OneHUD Server</h5><p>Version: ' + options.Version + ' <span> Author: Alex Greenland</span></p></div>';
         var linkHTML = '';
         for (var i = 0; i < options.Plugins.length; i++) {
             linkHTML = '';
@@ -38,6 +39,7 @@
             }
             pluginHTML += '<div class="callout nintyOpacity"><h5>' + options.Plugins[i].GameLongName + ' ' + linkHTML + '</h5><p>Version: ' + options.Plugins[i].PluginVersion + ' <span> Author: ' + options.Plugins[i].Author + '</span></p></div>';
         }
+        pluginHTML += '</div>';
         jQuery('#about-left').html(pluginHTML);
     }
 

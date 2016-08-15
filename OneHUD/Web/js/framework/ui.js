@@ -7,6 +7,12 @@
     var _currentGame = null;
     var _id = 0;
     var _connected = false;
+    var _cookieName = 'OneHUD';
+    var _settings = null;
+    var _defaultSettings = {
+        showVideos: true,
+        defaultPage: 'Home'
+    };
 
     function SetOffCanvasHeight() {
         var height = jQuery(window).height();
@@ -23,6 +29,7 @@
         blockUI();
         createDataReader();
         addGlobalEvents()
+        readSettings();
     }
 
     function init() {
@@ -37,6 +44,36 @@
             });
         });
         return deferred.promise();
+    }
+
+    function readSettings() {
+        var cookieSettings = Cookies.getJSON(_cookieName);
+        if (cookieSettings === undefined) {
+            cookieSettings = _defaultSettings;
+        }
+        _settings = cookieSettings;
+    }
+
+    function saveSettings() {
+        Cookies.set(_cookieName, _settings);
+    }
+
+    function getSetting(setting) {
+        var result = _settings;
+        if (setting !== undefined) {
+            if (_settings[setting] !== undefined) {
+                result = _settings[setting];
+            } else {
+                retult = null;
+            }
+        }
+
+        return result;
+    }
+
+    function setSetting(setting, value) {
+        _settings[setting] = value;
+        saveSettings();
     }
 
     function createDataReader() {
@@ -98,7 +135,11 @@
     function pageLoader(page) {
 
         if (page === undefined || page === null) {
-            page = _options.DefaultPage;
+            if (_settings.defaultPage !== undefined) {
+                page = _settings.defaultPage;
+            } else {
+                page = _options.DefaultPage;
+            }
         }
 
         location.hash = page;
@@ -169,9 +210,11 @@
     function setupBackgroundVideo() {
         var showVideo = false;
 
-        if (_currentPage.showVideo !== undefined) {
-            if (_currentPage.showVideo) {
-                showVideo = true;
+        if (_settings.showVideos) {
+            if (_currentPage.showVideo !== undefined) {
+                if (_currentPage.showVideo) {
+                    showVideo = true;
+                }
             }
         }
 
@@ -336,6 +379,18 @@
 
         getURI: function () {
             return getURI();
+        },
+
+        getSetting: function (setting) {
+            return getSetting(setting);
+        },
+
+        setSetting: function (setting, value) {
+            setSetting(setting, value);
+        },
+
+        setupBackgroundVideo: function () {
+            setupBackgroundVideo();
         }
     }
 }();

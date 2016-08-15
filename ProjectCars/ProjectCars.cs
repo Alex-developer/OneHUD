@@ -39,7 +39,6 @@ namespace ProjectCars
         }
         #endregion
 
-
         #region Public Methods
         public override bool Start(TelemetryData telemetryData, TimingData timingData)
         {

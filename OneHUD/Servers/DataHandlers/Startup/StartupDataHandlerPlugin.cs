@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace AGServer.Servers.DataHandlers.Startup
 {
-    class SartupDataHandlerPlugin
+    class StarupDataHandlerPlugin
     {
         private string _pluginName = "";
         private string _pluginVersion = "";

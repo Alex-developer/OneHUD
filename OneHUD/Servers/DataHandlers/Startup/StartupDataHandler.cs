@@ -18,7 +18,7 @@ namespace AGServer.Servers.DataHandlers.Startup
         public static StartupDataHandlerResult ProcessStartupRequest(TelemetryData telemetry, Dictionary<string, IGame> plugins, NameValueCollection postData)
         {
             StartupDataHandlerResult result = new StartupDataHandlerResult() { Result = false };
-            result.Plugins = new List<SartupDataHandlerPlugin>();
+            result.Plugins = new List<StarupDataHandlerPlugin>();
             result.Pages = new List<StartupDataPageInfo>();
             result.Widgets = new List<StartupDataWidgetInfo>();
 
@@ -29,7 +29,7 @@ namespace AGServer.Servers.DataHandlers.Startup
             foreach (var key in plugins)
             {
                 IGame game = key.Value;
-                SartupDataHandlerPlugin plugin = new SartupDataHandlerPlugin();
+                StarupDataHandlerPlugin plugin = new StarupDataHandlerPlugin();
                 plugin.PluginName = "";
                 plugin.GameShortName = game.Name;
                 plugin.GameLongName = game.DisplayName;

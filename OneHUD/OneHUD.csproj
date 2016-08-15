@@ -69,7 +69,7 @@
     <Compile Include="Servers\DataHandlers\Actions\ActionsDataHandlerResult.cs" />
     <Compile Include="Servers\DataHandlers\HeartBeat\HeartBeatDataHandler.cs" />
     <Compile Include="Servers\DataHandlers\HeartBeat\HeartBeatDataHandlerResult.cs" />
-    <Compile Include="Servers\DataHandlers\Startup\SartupDataHandlerPlugin.cs" />
+    <Compile Include="Servers\DataHandlers\Startup\StartupDataHandlerPlugin.cs" />
     <Compile Include="Servers\DataHandlers\Startup\StartupDataHandler.cs" />
     <Compile Include="Servers\DataHandlers\Startup\StartupDataHandlerResult.cs" />
     <Compile Include="Servers\DataHandlers\Startup\StartupDataPageInfo.cs" />
@@ -5207,6 +5207,19 @@
     <None Include="Web\js\jqPropertyGrid\LICENSE" />
     <None Include="Web\js\jqPropertyGrid\package.json" />
     <None Include="Web\js\jqPropertyGrid\README.md" />
+    <None Include="Web\js\js-cookie\.gitignore" />
+    <None Include="Web\js\js-cookie\.jshintignore" />
+    <None Include="Web\js\js-cookie\.jshintrc" />
+    <None Include="Web\js\js-cookie\.tm_properties" />
+    <None Include="Web\js\js-cookie\.travis.yml" />
+    <None Include="Web\js\js-cookie\bower.json" />
+    <None Include="Web\js\js-cookie\CONTRIBUTING.md" />
+    <None Include="Web\js\js-cookie\package.json" />
+    <None Include="Web\js\js-cookie\README.md" />
+    <None Include="Web\js\js-cookie\SERVER_SIDE.md" />
+    <None Include="Web\js\js-cookie\src\.jshintrc" />
+    <None Include="Web\js\js-cookie\test\.jshintrc" />
+    <None Include="Web\js\js-cookie\travis.sh" />
     <None Include="Web\js\jspanel3\.gitattributes" />
     <None Include="Web\js\jspanel3\.travis.yml" />
     <None Include="Web\js\jspanel3\bower.json" />
@@ -17709,6 +17722,23 @@
     <Content Include="Web\js\jquery-ui\jquery-ui.structure.min.css" />
     <Content Include="Web\js\jquery-ui\jquery-ui.theme.css" />
     <Content Include="Web\js\jquery-ui\jquery-ui.theme.min.css" />
+    <Content Include="Web\js\js-cookie\Gruntfile.js" />
+    <Content Include="Web\js\js-cookie\MIT-LICENSE.txt" />
+    <Content Include="Web\js\js-cookie\src\js.cookie.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\js\js-cookie\test\amd-config.js" />
+    <Content Include="Web\js\js-cookie\test\amd.html" />
+    <Content Include="Web\js\js-cookie\test\amd.js" />
+    <Content Include="Web\js\js-cookie\test\encoding.html" />
+    <Content Include="Web\js\js-cookie\test\encoding.js" />
+    <Content Include="Web\js\js-cookie\test\index.html" />
+    <Content Include="Web\js\js-cookie\test\malformed_cookie.html" />
+    <Content Include="Web\js\js-cookie\test\missing_semicolon.html" />
+    <Content Include="Web\js\js-cookie\test\node.js" />
+    <Content Include="Web\js\js-cookie\test\polyfill.js" />
+    <Content Include="Web\js\js-cookie\test\tests.js" />
+    <Content Include="Web\js\js-cookie\test\utils.js" />
     <Content Include="Web\js\jspanel3\LICENSE.TXT" />
     <Content Include="Web\js\jspanel3\source\fonts\jsglyph.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

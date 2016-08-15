@@ -42,7 +42,10 @@
   <ItemGroup>
     <Compile Include="GameBase.cs" />
     <Compile Include="IGame.cs" />
+    <Compile Include="ITrackRecorder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Track\Track.cs" />
+    <Compile Include="Track\TrackPoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AGData\OneHUDData.csproj">

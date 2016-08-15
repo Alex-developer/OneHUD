@@ -32,6 +32,10 @@
         content: " \f08e";
     }
 
+    #main-menu {
+        font-family: 'FontAwesome';
+    }
+
 /* Webfont: Lato-Regular */
 @font-face {
     font-family: 'LatoWeb';
@@ -288,7 +292,7 @@ audio, canvas, progress, video {
             </div>
 
             <div class="off-canvas-content" data-off-canvas-content data-close-on-click="false">
-                <button type="button" class="button toggle-menu" data-toggle="offCanvas">Open Menu</button>
+                <button type="button" class="button toggle-menu" data-toggle="offCanvas" id="main-menu">&#xf0c9;</button>
                     <div id="content">
                 
                     </div>
@@ -307,6 +311,7 @@ audio, canvas, progress, video {
     <script src="js/framework/protocol.js"></script>
 
     <script src="js/app.js"></script>
+    <script src="js/js-cookie/src/js.cookie.js"></script>
     <script src="js/slick/slick/slick.min.js"></script>
     <script src="js/blockui/blockUI.min.js"></script>
     <script src="js/bigtext/bigtext.js"></script>
