@@ -1,6 +1,8 @@
 
 ![alt tag](https://github.com/Alex-developer/OneHUD/blob/master/OneHUD/assets/OneHUD Logo.png)
 
+## Overview
+
 OneHud is the server and dashboard component for my sim racing telemetry app.
 
 The server provides data in real time for several games out of the box. Additional plugins can be devel;oped by 3rd party developers, full details for how to build plugins is provided.
@@ -13,8 +15,7 @@ The current supported games are
 - Assetto Corsa
 - Raceroom Experience
 
-
-Features
+## Features
 
 - 100% HTML and Javascript client allowing it to run on any modern tablet. 
 - Fully customisable dashboards
