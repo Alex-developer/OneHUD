@@ -36,8 +36,13 @@ The current supported games are
 ## Screenshots
 
 ![alt tag](https://github.com/Alex-developer/OneHUD/blob/master/OneHUD/assets/Screenshots/iPhone6/dash.png)
+Dashboard running on an iPhone 6 - NOTE: This is a test dash, the real ones will look better !
 
 ![alt tag](https://github.com/Alex-developer/OneHUD/blob/master/OneHUD/assets/Screenshots/iPhone6/timing.png)
+iRacing timing screen running on an iPhone 6
+
+![alt tag](https://github.com/Alex-developer/OneHUD/blob/master/OneHUD/assets/Screenshots/Misc/trackrecorder.gif)
+The track recorder (See videos below). NOTE: This is very much an Alpha version of the recorder
 
 ## Videos
 
