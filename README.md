@@ -24,6 +24,7 @@ The current supported games are
   - Dashboard
   - Timing Screen
   - Track recorder
+  - Track map
   - Options
 - The dashboards are fully customisable
   - Fully editable in a browser
@@ -49,7 +50,8 @@ iRacing timing screen running on an iPhone 6
 
 ![alt tag](https://github.com/Alex-developer/OneHUD/blob/master/OneHUD/assets/Screenshots/Misc/trackrecorder.gif)
 
-The track recorder (See videos below). NOTE: This is very much an Alpha version of the recorder
+The track recorder (See videos below). NOTE: This is very much an Alpha version of the recorder.
+The idea behind the track recorder is that you drive a few laps in the game and pick the best one to then use on the dashboards or trackmap. There are still a few issues, particularly on the first lap out of the pits but they will be sorted.
 
 ## Videos
 
