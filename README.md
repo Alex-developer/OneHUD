@@ -36,15 +36,25 @@ The current supported games are
 ## Screenshots
 
 ![alt tag](https://github.com/Alex-developer/OneHUD/blob/master/OneHUD/assets/Screenshots/iPhone6/dash.png)
+
 Dashboard running on an iPhone 6 - NOTE: This is a test dash, the real ones will look better !
 
 ![alt tag](https://github.com/Alex-developer/OneHUD/blob/master/OneHUD/assets/Screenshots/iPhone6/timing.png)
+
 iRacing timing screen running on an iPhone 6
 
 ![alt tag](https://github.com/Alex-developer/OneHUD/blob/master/OneHUD/assets/Screenshots/Misc/trackrecorder.gif)
+
 The track recorder (See videos below). NOTE: This is very much an Alpha version of the recorder
 
 ## Videos
+
+[https://www.youtube.com/watch?v=80sd_RzdSD4](https://www.youtube.com/watch?v=80sd_RzdSD4)
+
+Alpha version of the track recorder
+
+
+### Older videos - Previous versions
 
 A video of the latest version showing the default iPhine dash running on lots of devices [https://www.youtube.com/watch?v=Fo_JXQd9oz4](https://www.youtube.com/watch?v=Fo_JXQd9oz4)
 
@@ -53,20 +63,6 @@ A video of the Alpha track map can be found at  [https://www.youtube.com/watch?v
 An early Alpha version of the dash running can be found at [https://www.youtube.com/watch?v=TkxlwAKm2Eo](https://www.youtube.com/watch?v=TkxlwAKm2Eo/)
 
 The PC side of the app will also support the hardware dash I am building for iRacing / pCars (Again all opensource software and hardware). A crappy video is available at [https://www.youtube.com/watch?v=6MKJRQLznj8](https://www.youtube.com/watch?v=6MKJRQLznj8/)
-
-
-![Dashboard](/Screenshots/home.png)
-
-An Example Dashboard - Note that this is just one of my testing dashboards you can customise it however you like
-
-![Toolbox](/Screenshots/toolbox.png)
-
-A library of tools, widgets, are provided. With a little Javascript knowledge you can add your own widgets as well. Full documentation will be provided once the code is a little more stable.
-
-![More](/Screenshots/more.png)
-
-Another example Dashboard
-
 
 
 # Credits
