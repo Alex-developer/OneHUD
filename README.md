@@ -3,22 +3,25 @@
 
 OneHud is the server and dashboard component for my sim racing telemetry app.
 
-The server provides data in real time for 
+The server provides data in real time for several games out of the box. Additional plugins can be devel;oped by 3rd party developers, full details for how to build plugins is provided.
 
-iRacing
-Project Cars
-Assetto Corsa
-Raceroom Experience
-More will be added
+The current supported games are
+
+- iRacing
+- Project Cars
+- Project Cars 2
+- Assetto Corsa
+- Raceroom Experience
+
 
 Features
 
-Client is 100% HTML5 and Javascript so no app to install on your tablet / phone
-Runs on any modern tablet, tested on iphone6, 6, 6+, iPad Mini, iPad, Xoom, Nexus 7
-Dashboards are FULLY customisable
-Contains numerous widgets to build dashboards
-Track Recorder, to allow track position to be shown on the dashboard
-Telemetry recoding and analysis
+- 100% HTML and Javascript client allowing it to run on any modern tablet. 
+- Fully customisable dashboards
+  - Built in list of widgets
+  - Full documentation for developers to build their own widgets
+- Built in track recorder, for games that support it
+
 
 A video of the latest version showing the default iPhine dash running on lots of devices [https://www.youtube.com/watch?v=Fo_JXQd9oz4](https://www.youtube.com/watch?v=Fo_JXQd9oz4)
 
