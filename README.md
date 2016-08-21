@@ -17,12 +17,29 @@ The current supported games are
 
 ## Features
 
-- 100% HTML and Javascript client allowing it to run on any modern tablet. 
-- Fully customisable dashboards
+- 100% Open Source
+- 100% HTML and Javascript client allowing it to run on any modern tablet.
+- Supports pretty much any phone / tablet and modern desktop browser
+- Built in pages
+  - Dashboard
+  - Timing Screen
+  - Track recorder
+  - Options
+- The dashboards are fully customisable
+  - Fully editable in a browser
   - Built in list of widgets
   - Full documentation for developers to build their own widgets
 - Built in track recorder, for games that support it
+- Auto program start
+  - Allows your favourite apps to be started when a game is launched
 
+## Screenshots
+
+![alt tag](https://github.com/Alex-developer/OneHUD/blob/master/OneHUD/assets/Screenshots/iPhone6/dash.png)
+
+![alt tag](https://github.com/Alex-developer/OneHUD/blob/master/OneHUD/assets/Screenshots/iPhone6/timing.png)
+
+## Videos
 
 A video of the latest version showing the default iPhine dash running on lots of devices [https://www.youtube.com/watch?v=Fo_JXQd9oz4](https://www.youtube.com/watch?v=Fo_JXQd9oz4)
 
