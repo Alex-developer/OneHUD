@@ -35,6 +35,10 @@ The current supported games are
 
 ## Screenshots
 
+![alt tag](https://github.com/Alex-developer/OneHUD/blob/master/OneHUD/assets/Screenshots/Misc/editor.png)
+
+The Dashboard editor
+
 ![alt tag](https://github.com/Alex-developer/OneHUD/blob/master/OneHUD/assets/Screenshots/iPhone6/dash.png)
 
 Dashboard running on an iPhone 6 - NOTE: This is a test dash, the real ones will look better !
