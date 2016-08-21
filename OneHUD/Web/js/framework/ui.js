@@ -11,7 +11,8 @@
     var _settings = null;
     var _defaultSettings = {
         showVideos: true,
-        defaultPage: 'Home'
+        defaultPage: 'Home',
+        debugMode: false
     };
 
     function SetOffCanvasHeight() {
@@ -26,10 +27,10 @@
     }
 
     function run() {
+        readSettings();
         blockUI();
         createDataReader();
         addGlobalEvents()
-        readSettings();
     }
 
     function init() {
@@ -52,6 +53,10 @@
             cookieSettings = _defaultSettings;
         }
         _settings = cookieSettings;
+
+        if (_settings.DebugMode === undefined) {
+            _settings.DebugMode = false;
+        }
     }
 
     function saveSettings() {
@@ -231,16 +236,20 @@
     }
 
     function blockUI() {
-        jQuery.blockUI({
-            css: {
-                width: '40%'
-            },
-            message: '<h3><img src="images/busy.gif" /> Waiting for OneHUD Server</h3>'
-        });
+        if (!_settings.debugMode) {
+            jQuery.blockUI({
+                css: {
+                    width: '40%'
+                },
+                message: '<h3><img src="images/busy.gif" /> Waiting for OneHUD Server</h3>'
+            });
+        }
     }
 
     function unblockUI() {
-        jQuery.unblockUI();
+        if (!_settings.debugMode) {
+            jQuery.unblockUI();
+        }
     }
 
     function addHandlers() {

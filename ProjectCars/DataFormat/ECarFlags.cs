@@ -1,4 +1,4 @@
-﻿namespace ProjectCars.DataFormat
+﻿namespace ProjectCars2.DataFormat
 {
     public enum ECarFlags
     {

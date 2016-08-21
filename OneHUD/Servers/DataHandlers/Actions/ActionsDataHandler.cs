@@ -6,13 +6,14 @@ using System.Collections.Specialized;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using OneHUDData;
+using OneHUDInterface;
 
 namespace AGServer.Servers.DataHandlers.Actions
 {
     static class ActionsDataHandler
     {
 
-        public static ActionsDataHandlerResult ProcessFileRequest(TelemetryData telemetry, NameValueCollection postData)
+        public static ActionsDataHandlerResult ProcessFileRequest(TelemetryData telemetry, Dictionary<string, IGame> plugins, NameValueCollection postData)
         {
             ActionsDataHandlerResult result = new ActionsDataHandlerResult();
 
@@ -29,12 +30,35 @@ namespace AGServer.Servers.DataHandlers.Actions
                         }
                         break;
 
+                    case "StartRecording":
+                        if (telemetry.Game != null)
+                        {
+                            IGame _game = plugins[telemetry.Game];
+                            if (_game.SupportsTrackRecorder()) {
+                                _game.StartTrackRecorder();
+                                result.Result = true;
+                            }
+                        }
+                        break;
+
+                    case "StopRecording":
+                        if (telemetry.Game != null)
+                        {
+                            IGame _game = plugins[telemetry.Game];
+                            if (_game.SupportsTrackRecorder())
+                            {
+                                _game.StopTrackRecorder();
+                                result.Result = true;
+                            }
+                        }
+                        break;
                 }
             }
 
             return result;
         }
 
+        #region Dashboard 
         private static string FindDash(NameValueCollection postData)
         {
             int screenx;
@@ -123,5 +147,7 @@ namespace AGServer.Servers.DataHandlers.Actions
 
             return dash;
         }
+        #endregion
+
     }
 }

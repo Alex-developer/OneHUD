@@ -2,10 +2,15 @@
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using OneHUDInterface;
+using OneHUDInterface.TrackInfo;
+using OneHUDInterface.TrackRecorder;
 using ProjectCars.DataFormat;
 using ProjectCars.Readers;
 using OneHUDData;
+
+using System.Diagnostics;
 
 namespace ProjectCars
 {
@@ -24,6 +29,11 @@ namespace ProjectCars
         private TimingData _timingData;
         private bool _connected = false;
 
+        private TrackRecording _trackRecording;
+        private bool _recording = false;
+        private float _lastLapDistance = 0;
+        private int _recordingDelta = 5;
+
         #region Constructor
         public AGProjectCars()
             : base()
@@ -33,7 +43,6 @@ namespace ProjectCars
             _author = "Alex Greenland";
             _processNames.Add("pCARS");
             _processNames.Add("pCARS64");
-            _processNames.Add("pCARS2Gld");
             _memoryReader = new SharedMemoryReader(_sharedMemoryFileName, _bufferSize);
             _cancel = new CancellationTokenSource();
         }
@@ -132,6 +141,18 @@ namespace ProjectCars
                 _telemetryData.Engine.WaterTemp = _data.MWaterTempCelsius;
 
                 _telemetryData.Timing.CurrentLapTime = _data.MCurrentTime;
+
+                if (_recording)
+                {
+                    float myLapDistance = _data.MParticipantInfo[_data.MViewedParticipantIndex].mCurrentLapDistance;
+
+
+                    if (_lastLapDistance == -1 || (Math.Abs(_lastLapDistance - myLapDistance) > _recordingDelta))
+                    {
+                        AddTrackPoint(_data.MParticipantInfo[_data.MViewedParticipantIndex].mCurrentLap, _data.MParticipantInfo[_data.MViewedParticipantIndex].mWorldPosition);
+                        _lastLapDistance = myLapDistance;
+                    }
+                }
             }
         }
         #endregion
@@ -142,5 +163,70 @@ namespace ProjectCars
             return Speed * (float)2.236936;
         }
         #endregion
+
+        #region Track recorder
+        public override bool SupportsTrackRecorder()
+        {
+            return true;
+        }
+
+        public override bool StartTrackRecorder()
+        {
+            _trackRecording = new TrackRecording();
+            _recording = true;
+            _lastLapDistance = -1;
+            return true;
+        }
+
+        public override TrackRecording StopTrackRecorder()
+        {
+            _recording = false;
+            ConvertPoints();
+            return _trackRecording;
+        }
+
+        public override TrackRecording GetTrackRecording()
+        {
+            ConvertPoints();
+            return _trackRecording;
+        }
+
+        public virtual Track GetTrack()
+        {
+            if (_recording)
+            {
+                StopTrackRecorder();
+            }
+            return new Track();
+        }
+
+        private void AddTrackPoint(int lap, float[] fPos)
+        {
+            _trackRecording.AddPoint(lap, fPos[0], fPos[2], fPos[1]);
+        }
+
+        private void ConvertPoints()
+        {
+            List<TrackLap> trackLaps = _trackRecording.TrackLaps;
+            TrackBounds trackBounds = _trackRecording.TrackBounds;
+
+            foreach (TrackLap trackLap in trackLaps)
+            {
+                List<TrackPoint> trackPoints = trackLap.TrackPoints;
+
+                foreach (TrackPoint trackPoint in trackPoints)
+                {
+                    trackPoint.X = -trackPoint.GameX + Math.Abs(trackBounds.MinGameX);
+                    trackPoint.Y = trackPoint.GameY + Math.Abs(trackBounds.MinGameY);
+                    trackPoint.Z = trackPoint.GameZ + Math.Abs(trackBounds.MinGameZ);
+                }
+            }
+
+            _trackRecording.TrackBounds.Width = Math.Abs(_trackRecording.TrackBounds.MinGameX) + Math.Abs(_trackRecording.TrackBounds.MaxGameX);
+            _trackRecording.TrackBounds.Height = Math.Abs(_trackRecording.TrackBounds.MinGameY) + Math.Abs(_trackRecording.TrackBounds.MaxGameY);
+
+        }
+        #endregion
+
     }
 }

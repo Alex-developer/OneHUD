@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Reflection;
 using System.Collections.Generic;
 using OneHUDData;
+using OneHUDInterface.TrackInfo;
+using OneHUDInterface.TrackRecorder;
 
 namespace OneHUDInterface
 {
@@ -106,6 +108,33 @@ namespace OneHUDInterface
             return image;
 
         }
+
+        #region Track recorder
+        public virtual bool SupportsTrackRecorder()
+        {
+            return false;
+        }
+
+        public virtual bool StartTrackRecorder()
+        {
+            return false;
+        }
+
+        public virtual TrackRecording StopTrackRecorder()
+        {
+            return null;
+        }
+
+        public virtual TrackRecording GetTrackRecording()
+        {
+            return null;
+        }
+
+        public virtual Track GetTrack()
+        {
+            return null;
+        }
+        #endregion
 
     }
 }

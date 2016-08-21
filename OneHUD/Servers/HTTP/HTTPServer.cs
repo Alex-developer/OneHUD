@@ -148,7 +148,6 @@ namespace OneHUD.Servers.HTTP
             _webSocketServer = new WebSocketSharp.Server.HttpServer(_port);
             _webSocketServer.RootPath = _rootDirectory + "\\";
 
-           // _webSocketServer.AddWebSocketService<FileService>("/File", () => new FileService(_telemetryData));
             _webSocketServer.AddWebSocketService<TelemetryService>("/Telemetry", () => new TelemetryService(_telemetryData));
             _webSocketServer.AddWebSocketService<HeartBeatService>("/HeartBeat", () => new HeartBeatService(_telemetryData));
             _webSocketServer.AddWebSocketService<TimingService>("/Timing", () => new TimingService(_timingData));
@@ -179,7 +178,11 @@ namespace OneHUD.Servers.HTTP
 
                         switch (action) {
                             case "File":
-                                result = ActionsDataHandler.ProcessFileRequest(_telemetryData, postData);
+                                result = ActionsDataHandler.ProcessFileRequest(_telemetryData, _plugins, postData);
+                                break;
+
+                            case "TrackRecorder":
+                                result = TrackRecorderDataHandler.ProcessRequest(_telemetryData, _plugins, postData);
                                 break;
 
                             case "Connected":

@@ -78,11 +78,12 @@
     <Compile Include="Servers\DataHandlers\Telemetry\TelemetryDataHandlerResult.cs" />
     <Compile Include="Servers\DataHandlers\Timing\TimingDataHandlerResult.cs" />
     <Compile Include="Servers\DataHandlers\Timing\TimingDataHandler.cs" />
+    <Compile Include="Servers\DataHandlers\TrackRecorder\TrackRecorderDataHandler.cs" />
+    <Compile Include="Servers\DataHandlers\TrackRecorder\TrackRecorderDataHandlerResult.cs" />
     <Compile Include="Servers\HTTP\HTTPServer.cs" />
     <Compile Include="Servers\HTTP\Services\BaseService.cs" />
     <Compile Include="Servers\HTTP\Services\BaseTimingService.cs" />
     <Compile Include="Servers\HTTP\Services\ConnectedService.cs" />
-    <Compile Include="Servers\HTTP\Services\FileService.cs" />
     <Compile Include="Servers\HTTP\Services\HeartBeatService.cs" />
     <Compile Include="Servers\HTTP\Services\TelemetryService.cs" />
     <Compile Include="Servers\HTTP\Services\TestService.cs" />
@@ -102,6 +103,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="assets\different_car_dashboard_design_vector_523576.zip" />
+    <None Include="assets\different_car_dashboard_design_vector_523577.zip" />
+    <None Include="assets\different_car_dashboard_design_vector_523579.zip" />
+    <None Include="assets\fundamental_brigade.zip" />
+    <None Include="assets\OneHUD Logo.psd" />
     <None Include="packages.config" />
     <None Include="Panels\default.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -118,6 +124,7 @@
     <None Include="Panels\Defaults\default-667x375.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Plugins\ProjectCars2.dll.config" />
     <None Include="Plugins\R3E-GameData.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -5313,6 +5320,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\editor-icons\Car.png" />
+    <Content Include="assets\editor-icons\Engine.png" />
+    <Content Include="assets\editor-icons\Environment.png" />
+    <Content Include="assets\editor-icons\Misc.png" />
+    <Content Include="assets\editor-icons\Timing.png" />
+    <Content Include="assets\favicon 16.ico" />
+    <Content Include="assets\favicon 32.ico" />
+    <Content Include="assets\OneHUD Logo.png" />
+    <Content Include="assets\trackrecorder.gif" />
     <Content Include="favicon 32.ico" />
     <Content Include="Plugins\AssettoCorsa.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -5339,6 +5355,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Plugins\ProjectCars.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Plugins\ProjectCars2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Plugins\ProjectCars2.pdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Plugins\RaceRoom.dll">
@@ -17800,6 +17822,9 @@
     <Content Include="Web\js\jspanel3\vendor\jquery-ui-1.11.4.custom\jquery-ui.theme.css" />
     <Content Include="Web\js\jspanel3\vendor\jquery-ui-1.11.4.custom\jquery-ui.theme.min.css" />
     <Content Include="Web\js\jspanel3\vendor\jquery.ui.touch-punch.min.js" />
+    <Content Include="Web\js\konva\konva.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web\js\mustache\mustache.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -17851,6 +17876,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\js\slick\slick\slick.scss" />
+    <Content Include="Web\js\timer\timer.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web\js\touchswipe\touchswipe.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

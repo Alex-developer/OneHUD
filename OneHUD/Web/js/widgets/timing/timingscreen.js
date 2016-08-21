@@ -46,12 +46,11 @@
         var html = '<div class="row timingheader expanded">';
         html += '<div class="small-3 large-3 columns">Driver</div>';
         html += '<div class="small-1 large-1 columns">Prac</div>';
-        html += '<div class="small-1 large-1 columns">Time</div>';
+        html += '<div class="small-2 large-2 columns">Time</div>';
         html += '<div class="small-1 large-1 columns">Qual</div>';
-        html += '<div class="small-1 large-1 columns">Time</div>';
+        html += '<div class="small-2 large-2 columns">Time</div>';
         html += '<div class="small-1 large-1 columns">Race</div>';
-        html += '<div class="small-1 large-1 columns">Time</div>';
-        html += '<div class="small-3 large-3 columns"></div>';
+        html += '<div class="small-2 large-2 columns">Time</div>';
         html += '</div>';
 
         for (var i = 0; i < drivers.length; i++) {
@@ -59,12 +58,11 @@
                 html += '<div class="row timingrow expanded">';
                 html += '<div class="small-3 large-3 columns driver' + i + '"></div>';
                 html += '<div class="small-1 large-1 columns pracpos' + i + ' pos"></div>';
-                html += '<div class="small-1 large-1 columns practime' + i + ' time"></div>';
+                html += '<div class="small-2 large-2 columns practime' + i + ' time"></div>';
                 html += '<div class="small-1 large-1 columns qualpos' + i + ' pos"></div>';
-                html += '<div class="small-1 large-1 columns qualtime' + i + ' time"></div>';
+                html += '<div class="small-2 large-2 columns qualtime' + i + ' time"></div>';
                 html += '<div class="small-1 large-1 columns racepos' + i + ' pos"></div>';
-                html += '<div class="small-1 large-1 columns racetime' + i + ' time"></div>';
-                html += '<div class="small-3 large-3 columns"></div>';
+                html += '<div class="small-2 large-2 columns racetime' + i + ' time"></div>';
                 html += '</div>';
             }
         };

@@ -47,6 +47,11 @@
     <Compile Include="Sessions\Sector.cs" />
     <Compile Include="TimingData.cs" />
     <Compile Include="Timing\Times.cs" />
+    <Compile Include="TrackInfo\Track.cs" />
+    <Compile Include="TrackInfo\TrackBounds.cs" />
+    <Compile Include="TrackInfo\TrackPoint.cs" />
+    <Compile Include="TrackRecorder\TrackLap.cs" />
+    <Compile Include="TrackRecorder\TrackRecording.cs" />
     <Compile Include="Vehicle\Car.cs" />
     <Compile Include="Vehicle\Chassis.cs" />
     <Compile Include="Vehicle\Engine.cs" />
