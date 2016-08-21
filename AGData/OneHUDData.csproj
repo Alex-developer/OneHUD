@@ -32,6 +32,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,6 +52,7 @@
     <Compile Include="TrackInfo\Track.cs" />
     <Compile Include="TrackInfo\TrackBounds.cs" />
     <Compile Include="TrackInfo\TrackPoint.cs" />
+    <Compile Include="TrackManager.cs" />
     <Compile Include="TrackRecorder\TrackLap.cs" />
     <Compile Include="TrackRecorder\TrackRecording.cs" />
     <Compile Include="Vehicle\Car.cs" />

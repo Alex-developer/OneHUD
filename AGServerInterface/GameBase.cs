@@ -4,8 +4,8 @@ using System.Drawing;
 using System.Reflection;
 using System.Collections.Generic;
 using OneHUDData;
-using OneHUDInterface.TrackInfo;
-using OneHUDInterface.TrackRecorder;
+using OneHUDData.TrackInfo;
+using OneHUDData.TrackRecorder;
 
 namespace OneHUDInterface
 {
@@ -131,6 +131,16 @@ namespace OneHUDInterface
         }
 
         public virtual Track GetTrack()
+        {
+            return null;
+        }
+
+        public virtual bool SaveTrack(int lap)
+        {
+            return false;
+        }
+
+        public virtual Track LoadTrack()
         {
             return null;
         }

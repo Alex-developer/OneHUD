@@ -1,17 +1,30 @@
 ﻿using System;
 using System.Linq;
 using OneHUDInterface;
-using OneHUDInterface.TrackInfo;
-using OneHUDInterface.TrackRecorder;
+using OneHUDData.TrackInfo;
+using OneHUDData.TrackRecorder;
 
 namespace AGServer.Servers.DataHandlers.Actions
 {
-    class TrackRecorderDataHandlerResult : DataHandlerResult
+    class TrackDataHandlerResult : DataHandlerResult
     {
 
         private bool _result = false;
 
         private TrackRecording _trackRecording = null;
+        private Track _track;
+
+        public Track Track
+        {
+            get
+            {
+                return _track;
+            }
+            set
+            {
+                _track = value;
+            }
+        }
 
         public bool Result
         {

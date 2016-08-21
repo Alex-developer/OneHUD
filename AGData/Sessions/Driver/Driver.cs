@@ -29,6 +29,9 @@ namespace OneHUDData.Sessions.Drivers
         private float _raceFastestLap;
         private int _racePosition;
 
+        private float _x;
+        private float _y;
+        private float _z;
 
         #region Constructor
         public Driver()
@@ -38,6 +41,44 @@ namespace OneHUDData.Sessions.Drivers
         #endregion
 
         #region Getters and Setters
+        #region Track coordinates
+        public float X
+        {
+            get
+            {
+                return _x;
+            }
+            set
+            {
+                _x = value;
+            }
+        }
+
+        public float Y
+        {
+            get
+            {
+                return _y;
+            }
+            set
+            {
+                _y = value;
+            }
+        }
+
+        public float Z
+        {
+            get
+            {
+                return _z;
+            }
+            set
+            {
+                _z = value;
+            }
+        } 
+        #endregion
+
         #region Position and Timing
         public int RacePosition
         {

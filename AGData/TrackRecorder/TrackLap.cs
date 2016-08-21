@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using OneHUDInterface.TrackInfo;
+using OneHUDData.TrackInfo;
 
-namespace OneHUDInterface.TrackRecorder
+namespace OneHUDData.TrackRecorder
 {
     public class TrackLap
     {

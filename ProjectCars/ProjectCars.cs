@@ -4,8 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using OneHUDInterface;
-using OneHUDInterface.TrackInfo;
-using OneHUDInterface.TrackRecorder;
+using OneHUDData.TrackInfo;
+using OneHUDData.TrackRecorder;
 using ProjectCars.DataFormat;
 using ProjectCars.Readers;
 using OneHUDData;
@@ -29,7 +29,7 @@ namespace ProjectCars
         private TimingData _timingData;
         private bool _connected = false;
 
-        private TrackRecording _trackRecording;
+        private TrackManager _trackManager = new TrackManager();
         private bool _recording = false;
         private float _lastLapDistance = 0;
         private int _recordingDelta = 5;
@@ -121,12 +121,15 @@ namespace ProjectCars
                 {
                     _timingData.RaceInfo.TrackLongName = _data.MTrackLocation.Value + " " + _data.MTrackVariation.Value;
                     _timingData.RaceInfo.TrackShortName = _data.MTrackLocation.Value;
-                    _timingData.RaceInfo.TrackName = _data.MTrackLocation.ToString() + " " + _data.MTrackVariation.Value;
+                    _timingData.RaceInfo.TrackName = _data.MTrackLocation.Value + " " + _data.MTrackVariation.Value;
                     _timingData.RaceInfo.TrackVariation = _data.MTrackVariation.Value;
                     _timingData.RaceInfo.TrackLength = (int)_data.MTrackLength;
 
                     _timingData.RaceInfo.TrackTemperature = _data.MTrackTemperature;
                     _timingData.RaceInfo.AmbientTemperature = _data.MAmbientTemperature;
+
+//                    _trackManager.LoadTrack(_timingData.RaceInfo.TrackName, _displayName);
+
                 }
             }
 
@@ -144,6 +147,8 @@ namespace ProjectCars
 
                 if (_recording)
                 {
+                    SetTrackname(_timingData.RaceInfo.TrackName);
+
                     float myLapDistance = _data.MParticipantInfo[_data.MViewedParticipantIndex].mCurrentLapDistance;
 
 
@@ -172,7 +177,9 @@ namespace ProjectCars
 
         public override bool StartTrackRecorder()
         {
-            _trackRecording = new TrackRecording();
+
+            _trackManager.StartRecording();
+
             _recording = true;
             _lastLapDistance = -1;
             return true;
@@ -182,13 +189,13 @@ namespace ProjectCars
         {
             _recording = false;
             ConvertPoints();
-            return _trackRecording;
+            return _trackManager.TrackRecording;
         }
 
         public override TrackRecording GetTrackRecording()
         {
             ConvertPoints();
-            return _trackRecording;
+            return _trackManager.TrackRecording;
         }
 
         public virtual Track GetTrack()
@@ -200,15 +207,30 @@ namespace ProjectCars
             return new Track();
         }
 
+        public bool SaveTrack(int lap)
+        {
+            return _trackManager.SaveTrack(lap, _displayName);
+        }
+
+        public override Track LoadTrack()
+        {
+            return _trackManager.LoadTrack(_timingData.RaceInfo.TrackName, _displayName);
+        }
+
+        private void SetTrackname(string name)
+        {
+            _trackManager.SetTrackname(name);
+        }
+
         private void AddTrackPoint(int lap, float[] fPos)
         {
-            _trackRecording.AddPoint(lap, fPos[0], fPos[2], fPos[1]);
+            _trackManager.AddPoint(lap, fPos[0], fPos[2], fPos[1]);
         }
 
         private void ConvertPoints()
         {
-            List<TrackLap> trackLaps = _trackRecording.TrackLaps;
-            TrackBounds trackBounds = _trackRecording.TrackBounds;
+            List<TrackLap> trackLaps = _trackManager.TrackLaps;
+            TrackBounds trackBounds = _trackManager.TrackBounds;
 
             foreach (TrackLap trackLap in trackLaps)
             {
@@ -222,8 +244,8 @@ namespace ProjectCars
                 }
             }
 
-            _trackRecording.TrackBounds.Width = Math.Abs(_trackRecording.TrackBounds.MinGameX) + Math.Abs(_trackRecording.TrackBounds.MaxGameX);
-            _trackRecording.TrackBounds.Height = Math.Abs(_trackRecording.TrackBounds.MinGameY) + Math.Abs(_trackRecording.TrackBounds.MaxGameY);
+            _trackManager.TrackBounds.Width = Math.Abs(_trackManager.TrackBounds.MinGameX) + Math.Abs(_trackManager.TrackBounds.MaxGameX);
+            _trackManager.TrackBounds.Height = Math.Abs(_trackManager.TrackBounds.MinGameY) + Math.Abs(_trackManager.TrackBounds.MaxGameY);
 
         }
         #endregion

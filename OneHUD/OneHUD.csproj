@@ -78,8 +78,8 @@
     <Compile Include="Servers\DataHandlers\Telemetry\TelemetryDataHandlerResult.cs" />
     <Compile Include="Servers\DataHandlers\Timing\TimingDataHandlerResult.cs" />
     <Compile Include="Servers\DataHandlers\Timing\TimingDataHandler.cs" />
-    <Compile Include="Servers\DataHandlers\TrackRecorder\TrackRecorderDataHandler.cs" />
-    <Compile Include="Servers\DataHandlers\TrackRecorder\TrackRecorderDataHandlerResult.cs" />
+    <Compile Include="Servers\DataHandlers\Track\TrackDataHandler.cs" />
+    <Compile Include="Servers\DataHandlers\Track\TrackDataHandlerResult.cs" />
     <Compile Include="Servers\HTTP\HTTPServer.cs" />
     <Compile Include="Servers\HTTP\Services\BaseService.cs" />
     <Compile Include="Servers\HTTP\Services\BaseTimingService.cs" />
@@ -17922,6 +17922,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\js\widgets\timing\currentlaptime.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\js\widgets\track\trackmap.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\videos\background.mp4">

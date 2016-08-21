@@ -181,8 +181,12 @@ namespace OneHUD.Servers.HTTP
                                 result = ActionsDataHandler.ProcessFileRequest(_telemetryData, _plugins, postData);
                                 break;
 
+                            case "Track":
+                                result = TrackDataHandler.ProcessRequest(_telemetryData, _plugins, postData);
+                                break;
+
                             case "TrackRecorder":
-                                result = TrackRecorderDataHandler.ProcessRequest(_telemetryData, _plugins, postData);
+                                result = TrackDataHandler.ProcessRequest(_telemetryData, _plugins, postData);
                                 break;
 
                             case "Connected":

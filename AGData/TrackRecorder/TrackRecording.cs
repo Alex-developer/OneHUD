@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using OneHUDInterface.TrackInfo;
+using System.IO;
+using System.Web.Script.Serialization;
+using OneHUDData.TrackInfo;
 
-namespace OneHUDInterface.TrackRecorder
+namespace OneHUDData.TrackRecorder
 {
     public class TrackRecording
     {
         private int _lastLap = -99;
         private List<TrackLap> _trackLaps;
         private TrackBounds _trackBounds;
+        private string _trackName;
 
         #region Constructor
         public TrackRecording()
@@ -20,6 +23,18 @@ namespace OneHUDInterface.TrackRecorder
         #endregion
 
         #region Getters and Setters
+        public string TrackName
+        {
+            get
+            {
+                return _trackName;
+            }
+            set
+            {
+                _trackName = value;
+            }
+        }
+
         public TrackBounds TrackBounds
         {
             get
@@ -74,6 +89,30 @@ namespace OneHUDInterface.TrackRecorder
             TrackLap trackLap = _trackLaps.Find(x => x.Lap == lap);
 
             return trackLap;
+        }
+        #endregion
+
+        #region Build and Save the Track Object
+        public bool SaveTrack(int lap, string gameName)
+        {
+            Track track = new Track();
+            track.TrackBounds = _trackBounds;
+            track.TrackName = _trackName;
+            track.TrackPoints = _trackLaps[lap].TrackPoints;
+
+            string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder​.MyDocuments),"My Games", "OneHUD", gameName, "Tracks");
+            
+            if(!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            string json = new JavaScriptSerializer().Serialize(track);
+
+            string fileName = System.IO.Path.Combine(path, _trackName);
+
+            File.WriteAllText(fileName, json);
+            return true;
         }
         #endregion
         #endregion

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace OneHUDInterface.TrackInfo
+namespace OneHUDData.TrackInfo
 {
     public class TrackPoint
     {

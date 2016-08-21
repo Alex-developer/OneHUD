@@ -2,14 +2,55 @@
 using System.Linq;
 using System.Collections.Generic;
 
-namespace OneHUDInterface.TrackInfo
+namespace OneHUDData.TrackInfo
 {
     public class Track
     {
         private List<TrackPoint> _trackPoints;
         private TrackBounds _trackBounds;
+        private string _trackName;
 
-        #region Constructor        
+
+        #region Getters and Setters
+        public List<TrackPoint> TrackPoints
+        {
+            get
+            {
+                return _trackPoints;
+            }
+            set
+            {
+                _trackPoints = value;
+            }
+        }
+
+        public TrackBounds TrackBounds
+        {
+            get
+            {
+                return _trackBounds;
+            }
+            set
+            {
+                _trackBounds = value;
+            }
+        }
+
+        public string TrackName
+        {
+            get
+            {
+                return _trackName;
+            }
+            set
+            {
+                _trackName = value;
+            }
+        }
+
+        #endregion
+
+        #region Constructor
         /// <summary>
         /// Initializes a new instance of the <see cref="Track"/> class.
         /// </summary>
@@ -19,5 +60,7 @@ namespace OneHUDInterface.TrackInfo
             _trackBounds = new TrackBounds();
         }
         #endregion
+
+
     }
 }

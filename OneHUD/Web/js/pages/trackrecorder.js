@@ -78,6 +78,7 @@
                                       </label>\
                                    </div>\
                                 </li>\
+                                <li><button type="button" class="success button fa" id="recorder-save">&#xf0c7 ;</button></li>\
                             </ul>\
                         </div>\
                         <div class="top-bar-right">\
@@ -154,19 +155,37 @@
             drawTrackInformation();
         });
 
-        jQuery('input[name=track-points]').on("change", function () {
+        jQuery('#recorder-menu').on("change", 'input[name=track-points]', function () {
             drawTrack();
         });
+
+        jQuery('#recorder-menu').on("click", '#recorder-save', function () {
+            saveTrack();
+        });   
     }
 
-    function sendCommand(command) {
+    function saveTrack() {
+        var trackToDraw = _trackRecordingData.TrackRecording.TrackLaps.length - 1;
+        if (_selectedLap !== null) {
+            trackToDraw = _selectedLap;
+        }
+        var data = { lap: trackToDraw };
+        sendCommand('SaveTrack', data);
+    }
+
+    function sendCommand(command, data) {
         var deferred = jQuery.Deferred();
+
+        if (data === undefined) {
+            data = {};
+        }
         jQuery.ajax({
             url: _uri + 'TrackRecorder',
             cache: false,
             method: 'POST',
             data: {
-                action: command
+                action: command,
+                data: data
             }
         }).success(function (result) {
             if (result.Result === true) {
@@ -186,15 +205,15 @@
         if (_timer === null) {
             _timer = jQuery.timer(_timeout, function () {
 
-               /* sendCommand('GetTrackRecording')
+                sendCommand('GetTrackRecording')
                     .done(function (result) {
                         _trackRecordingData = result;
                         drawTrackInformation();
                     })
                     .fail();
-                 */   
+                   
 
-                _trackRecordingData = result5m;
+                //_trackRecordingData = result5m;
 
                 drawTrackInformation();
 

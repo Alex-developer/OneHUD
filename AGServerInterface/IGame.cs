@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using OneHUDData;
-using OneHUDInterface.TrackInfo;
-using OneHUDInterface.TrackRecorder;
+using OneHUDData.TrackInfo;
+using OneHUDData.TrackRecorder;
 
 namespace OneHUDInterface
 {
@@ -57,5 +57,17 @@ namespace OneHUDInterface
         /// </summary>
         /// <returns></returns>
         Track GetTrack();
+
+        /// <summary>
+        /// Saves the track.
+        /// </summary>
+        /// <param name="lap">The lap.</param>
+        bool SaveTrack(int lap);
+
+        /// <summary>
+        /// Loads the track.
+        /// </summary>
+        /// <returns></returns>
+        Track LoadTrack();
     }
 }

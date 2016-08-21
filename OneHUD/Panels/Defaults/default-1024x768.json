@@ -155,6 +155,19 @@
                 "font-style": "normal",
                 "color": "white"
             }
+        },
+        {
+            "type": "trackmap",
+            "css": {
+                "left": 0,
+                "top": 400,
+                "width": 200,
+                "height": 200,
+                "font-family": "LatoWeb",
+                "font-weight": "normal",
+                "font-style": "normal",
+                "color": "white"
+            }
         }
     ]
 }
