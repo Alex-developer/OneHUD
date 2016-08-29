@@ -9,7 +9,11 @@ namespace AGServer.Servers.DataHandlers.Telemetry
     {
         public static TelemetryDataHandlerResult ProcessConnectedRequest(TelemetryData telemetry, NameValueCollection postData)
         {
-            TelemetryDataHandlerResult result = new TelemetryDataHandlerResult() { Data = telemetry};
+            TelemetryDataHandlerResult result;
+            lock (telemetry)
+            {
+                result = new TelemetryDataHandlerResult() { Data = telemetry };
+            }
             return result;
         }
     }

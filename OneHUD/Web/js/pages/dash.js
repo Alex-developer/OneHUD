@@ -166,6 +166,7 @@
         var element = jQuery('<div>').css(properties.css)
             .addClass('widget agselectable')
             .attr('id', OneHUDUI.getNextId())
+            .data('type', widgetClass);
         jQuery('#content').append(element);
         element.data('type', widgetController.name);
 
@@ -192,7 +193,7 @@
                 if (widget.update !== undefined) {
                     if (widget.messages !== undefined) {
                         if (widget.messages.indexOf(type) !== -1) {
-                            widget.update(data);
+                            widget.update(data, type);
                         }
                     }
                 }

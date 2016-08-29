@@ -4,8 +4,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using OneHUDInterface;
-using OneHUDInterface.TrackInfo;
-using OneHUDInterface.TrackRecorder;
+using OneHUDData.TrackInfo;
+using OneHUDData.TrackRecorder;
+using OneHUDData.AnalysisData;
 using ProjectCars2.DataFormat;
 using ProjectCars2.Readers;
 using OneHUDData;
@@ -29,10 +30,14 @@ namespace ProjectCars2
         private TimingData _timingData;
         private bool _connected = false;
 
-        private TrackRecording _trackRecording;
+        private TrackManager _trackManager = new TrackManager();
         private bool _recording = false;
-        private float _lastLapDistance = 0;
+        private float[] _lastLapDistance = new float[100];
         private int _recordingDelta = 5;
+
+        private EGameState _lastGameState = EGameState.GameExited;
+
+        private AnalysisManager _analysisData;
 
         #region Constructor
         public AGProjectCars2()
@@ -49,10 +54,12 @@ namespace ProjectCars2
         #endregion
 
         #region Public Methods
-        public override bool Start(TelemetryData telemetryData, TimingData timingData)
+        public override bool Start(TelemetryData telemetryData, TimingData timingData, AnalysisManager analysisData)
         {
             _telemetryData = telemetryData;
             _timingData = timingData;
+            _analysisData = analysisData;
+            Reset();
             ReadData(_cancel.Token);
             return true;
         }
@@ -61,6 +68,12 @@ namespace ProjectCars2
         {
             _cancel.Cancel();
             return true;
+        }
+
+        public void Reset()
+        {
+            _telemetryData.Reset();
+            _timingData.Reset();
         }
         #endregion
 
@@ -106,53 +119,90 @@ namespace ProjectCars2
             EGameState gameState = (EGameState)_data.MGameState;
             ESessionState sessionState = (ESessionState)_data.MSessionState;
 
-            if (gameState == EGameState.GameIngamePlaying)
+            if (gameState != _lastGameState)
             {
-                _telemetryData.Car.InCar = true;
+                if (gameState == EGameState.GameFrontEnd)
+                {
+                    Reset();
+                }
+                _lastGameState = gameState;
+            }
+
+            if (gameState != EGameState.GameFrontEnd)
+            {
+                lock (_timingData)
+                {
+                    if (_timingData.RaceInfo.TrackLongName == null)
+                    {
+                        if (_data.MTrackLocation.Value != "")
+                        {
+                            _timingData.RaceInfo.TrackLongName = _data.MTrackLocation.Value + " " + _data.MTrackVariation.Value;
+                            _timingData.RaceInfo.TrackShortName = _data.MTrackLocation.Value;
+                            _timingData.RaceInfo.TrackName = _data.MTrackLocation.Value + " " + _data.MTrackVariation.Value;
+                            _timingData.RaceInfo.TrackVariation = _data.MTrackVariation.Value;
+                            _timingData.RaceInfo.TrackLength = (int)_data.MTrackLength;
+
+                            _timingData.RaceInfo.TrackTemperature = _data.MTrackTemperature;
+                            _timingData.RaceInfo.AmbientTemperature = _data.MAmbientTemperature;
+
+                            _trackManager.LoadCurrentTrack(_timingData.RaceInfo.TrackName, _displayName);
+                        }
+                    }
+                }
+
+                lock (_telemetryData)
+                {
+                    _telemetryData.Car.InCar = true;
+
+                    _telemetryData.Engine.RPM = _data.MRpm;
+                    _telemetryData.Car.Speed = ConvertSpeedToMPH(_data.MSpeed);
+                    _telemetryData.Car.Gear = _data.MGear;
+                    _telemetryData.Car.FuelRemaining = _data.MFuelLevel * _data.MFuelCapacity;
+                    _telemetryData.Car.FuelCapacity = _data.MFuelCapacity;
+
+                    _telemetryData.Engine.WaterTemp = _data.MWaterTempCelsius;
+
+                    _telemetryData.Timing.CurrentLapTime = _data.MCurrentTime;
+
+                    if (_recording)
+                    {
+                        SetTrackname(_timingData.RaceInfo.TrackName);
+
+                        for (int i = 0; i < _data.MNumParticipants; i++)
+                        {
+                            float lapDistance = _data.MParticipantInfo[i].mCurrentLapDistance;
+
+                            if (_lastLapDistance[i] == -1 || (Math.Abs(_lastLapDistance[i] - lapDistance) > _recordingDelta))
+                            {
+                                AddTrackPoint(i, _data.MParticipantInfo[i].mCurrentLap, _data.MParticipantInfo[i].mWorldPosition);
+                                _lastLapDistance[i] = lapDistance;
+
+                            }
+                        }
+                    }
+
+                    if (_trackManager.CurrentTrack != null)
+                    {
+                        _telemetryData.ResetPlayers();
+                        for (int i = 0; i < _data.MNumParticipants; i++)
+                        {
+                            float x = -_data.MParticipantInfo[i].mWorldPosition[0] + Math.Abs(_trackManager.CurrentTrack.TrackBounds.MaxGameX);
+                            float y = _data.MParticipantInfo[i].mWorldPosition[2] + Math.Abs(_trackManager.CurrentTrack.TrackBounds.MinGameY);
+                            float z = _data.MParticipantInfo[i].mWorldPosition[1] + Math.Abs(_trackManager.CurrentTrack.TrackBounds.MinGameZ);
+                            bool isMe = false;
+                            if (i == _data.MViewedParticipantIndex)
+                            {
+                                isMe = true;
+                            }
+                            _telemetryData.AddPlayer(x, y, z, isMe);
+                        }
+                    }
+
+                }
             }
             else
             {
                 _telemetryData.Car.InCar = false;
-            }
-
-            if (_timingData.RaceInfo.TrackLongName == null)
-            {
-                if (_data.MTrackLocation.Value != "")
-                {
-                    _timingData.RaceInfo.TrackLongName = _data.MTrackLocation.Value + " " + _data.MTrackVariation.Value;
-                    _timingData.RaceInfo.TrackShortName = _data.MTrackLocation.Value;
-                    _timingData.RaceInfo.TrackName = _data.MTrackLocation.ToString() + " " + _data.MTrackVariation.Value;
-                    _timingData.RaceInfo.TrackVariation = _data.MTrackVariation.Value;
-                    _timingData.RaceInfo.TrackLength = (int)_data.MTrackLength;
-
-                    _timingData.RaceInfo.TrackTemperature = _data.MTrackTemperature;
-                    _timingData.RaceInfo.AmbientTemperature = _data.MAmbientTemperature;
-                }
-            }
-
-            if (_telemetryData.Car.InCar)
-            {
-                _telemetryData.Engine.RPM = _data.MRpm;
-                _telemetryData.Car.Speed = ConvertSpeedToMPH(_data.MSpeed);
-                _telemetryData.Car.Gear = _data.MGear;
-                _telemetryData.Car.FuelRemaining = _data.MFuelLevel * _data.MFuelCapacity;
-                _telemetryData.Car.FuelCapacity = _data.MFuelCapacity;
-
-                _telemetryData.Engine.WaterTemp = _data.MWaterTempCelsius;
-
-                _telemetryData.Timing.CurrentLapTime = _data.MCurrentTime;
-
-                if (_recording)
-                {
-                    float myLapDistance = _data.MParticipantInfo[_data.MViewedParticipantIndex].mCurrentLapDistance;
-
-
-                    if (_lastLapDistance == -1 || (Math.Abs(_lastLapDistance - myLapDistance) > _recordingDelta))
-                    {
-                        AddTrackPoint(_data.MParticipantInfo[_data.MViewedParticipantIndex].mCurrentLap, _data.MParticipantInfo[_data.MViewedParticipantIndex].mWorldPosition);
-                        _lastLapDistance = myLapDistance;
-                    }
-                }
             }
         }
         #endregion
@@ -172,9 +222,14 @@ namespace ProjectCars2
 
         public override bool StartTrackRecorder()
         {
-            _trackRecording = new TrackRecording();
+
+            _trackManager.StartRecording();
+
             _recording = true;
-            _lastLapDistance = -1;
+            for (int i = 0; i < _lastLapDistance.Length; i++)
+            {
+                _lastLapDistance[i] = -1;
+            }
             return true;
         }
 
@@ -182,13 +237,13 @@ namespace ProjectCars2
         {
             _recording = false;
             ConvertPoints();
-            return _trackRecording;
+            return _trackManager.TrackRecording;
         }
 
         public override TrackRecording GetTrackRecording()
         {
             ConvertPoints();
-            return _trackRecording;
+            return _trackManager.TrackRecording;
         }
 
         public virtual Track GetTrack()
@@ -200,31 +255,51 @@ namespace ProjectCars2
             return new Track();
         }
 
-        private void AddTrackPoint(int lap, float[] fPos)
+        public bool SaveTrack(int driverPos, int lap)
         {
-            _trackRecording.AddPoint(lap, fPos[0], fPos[2], fPos[1]);
+            return _trackManager.SaveTrack(driverPos, lap, _displayName);
+        }
+
+        public override Track LoadTrack()
+        {
+            return _trackManager.LoadTrack(_timingData.RaceInfo.TrackName, _displayName);
+        }
+
+        private void SetTrackname(string name)
+        {
+            _trackManager.SetTrackname(name);
+        }
+
+        private void AddTrackPoint(int driverPos, int lap, float[] fPos)
+        {
+            _trackManager.AddPoint(driverPos, lap, fPos[0], fPos[2], fPos[1]);
         }
 
         private void ConvertPoints()
         {
-            List<TrackLap> trackLaps = _trackRecording.TrackLaps;
-            TrackBounds trackBounds = _trackRecording.TrackBounds;
+            int drivers = _trackManager.TrackRecording.TrackDrivers.Count;
 
-            foreach (TrackLap trackLap in trackLaps)
+            TrackBounds trackBounds = _trackManager.TrackBounds;
+            _trackManager.TrackBounds.Width = Math.Abs(_trackManager.TrackBounds.MinGameX) + Math.Abs(_trackManager.TrackBounds.MaxGameX) + (trackBounds.Margin * 2);
+            _trackManager.TrackBounds.Height = Math.Abs(_trackManager.TrackBounds.MinGameY) + Math.Abs(_trackManager.TrackBounds.MaxGameY) + (trackBounds.Margin * 2);
+
+            for (int i = 0; i < drivers; i++)
             {
-                List<TrackPoint> trackPoints = trackLap.TrackPoints;
+                List<TrackLap> trackLaps = _trackManager.TrackRecording.TrackDrivers.Find(p => p.Id == i).TrackLaps;
 
-                foreach (TrackPoint trackPoint in trackPoints)
+                foreach (TrackLap trackLap in trackLaps)
                 {
-                    trackPoint.X = -trackPoint.GameX + Math.Abs(trackBounds.MinGameX);
-                    trackPoint.Y = trackPoint.GameY + Math.Abs(trackBounds.MinGameY);
-                    trackPoint.Z = trackPoint.GameZ + Math.Abs(trackBounds.MinGameZ);
+                    List<TrackPoint> trackPoints = trackLap.TrackPoints;
+
+                    foreach (TrackPoint trackPoint in trackPoints)
+                    {
+                        trackPoint.X = -trackPoint.GameX + Math.Abs(trackBounds.MaxGameX) + trackBounds.Margin;
+                        trackPoint.Y = trackPoint.GameY + Math.Abs(trackBounds.MinGameY) + trackBounds.Margin;
+                        trackPoint.Z = trackPoint.GameZ + Math.Abs(trackBounds.MinGameZ);
+                    }
                 }
+
             }
-
-            _trackRecording.TrackBounds.Width = Math.Abs(_trackRecording.TrackBounds.MinGameX) + Math.Abs(_trackRecording.TrackBounds.MaxGameX);
-            _trackRecording.TrackBounds.Height = Math.Abs(_trackRecording.TrackBounds.MinGameY) + Math.Abs(_trackRecording.TrackBounds.MaxGameY);
-
         }
         #endregion
 

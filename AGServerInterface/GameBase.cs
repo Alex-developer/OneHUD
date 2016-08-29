@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Reflection;
 using System.Collections.Generic;
 using OneHUDData;
+using OneHUDData.AnalysisData;
 using OneHUDData.TrackInfo;
 using OneHUDData.TrackRecorder;
 
@@ -17,10 +18,23 @@ namespace OneHUDInterface
         protected List<string> _processNames;
         protected string _author;
         protected string _url;
+        protected ConnectionType _connectionType = ConnectionType.BYPROCESS;
 
         public GameBase()
         {
             _processNames = new List<string>();
+        }
+
+        public ConnectionType ConnectionType
+        {
+            get
+            {
+                return _connectionType;
+            }
+            set
+            {
+                _connectionType = value;
+            }
         }
 
         public string URL
@@ -81,7 +95,7 @@ namespace OneHUDInterface
             }
         }
 
-        public virtual bool Start(TelemetryData telemetryData, TimingData timingData)
+        public virtual bool Start(TelemetryData telemetryData, TimingData timingData, AnalysisManager analysisData)
         {
             return true;
         }
@@ -135,7 +149,7 @@ namespace OneHUDInterface
             return null;
         }
 
-        public virtual bool SaveTrack(int lap)
+        public virtual bool SaveTrack(int driver, int lap)
         {
             return false;
         }
@@ -146,5 +160,11 @@ namespace OneHUDInterface
         }
         #endregion
 
+        #region Default Options Dialog
+        public virtual void ShowOptions()
+        {
+
+        }
+        #endregion
     }
 }

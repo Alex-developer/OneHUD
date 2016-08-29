@@ -58,6 +58,7 @@ var OneHUDDataReader = function () {
         } else {
             _usingWebSockets = false;
         }
+
         startTimer();
         if (_config.persistant) {
             _reading = true;

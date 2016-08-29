@@ -11,8 +11,21 @@ namespace OneHUDData
     public class TrackManager
     {
         private TrackRecording _trackRecording;
+        private Track _currentTrack;
 
         #region Getters and Setters
+        public Track CurrentTrack
+        {
+            get
+            {
+                return _currentTrack;
+            }
+            set
+            {
+                _currentTrack = value;
+            }
+        }
+
         public TrackRecording TrackRecording
         {
             get
@@ -22,14 +35,6 @@ namespace OneHUDData
             set
             {
                 _trackRecording = value;
-            }
-        }
-
-        public List<TrackLap> TrackLaps
-        {
-            get
-            {
-                return _trackRecording.TrackLaps;
             }
         }
 
@@ -51,8 +56,8 @@ namespace OneHUDData
         #endregion
 
         #region Add Track Point
-        public void AddPoint(int lap, float x, float y, float z) {
-            _trackRecording.AddPoint(lap, x, y, z);
+        public void AddPoint(int driverPos, int lap, float x, float y, float z) {
+            _trackRecording.AddPoint(driverPos, lap, x, y, z);
         }
         #endregion
 
@@ -67,29 +72,38 @@ namespace OneHUDData
         #endregion
 
         #region Save a Track
-        public bool SaveTrack(int lap, string trackName)
+        public bool SaveTrack(int driverPos, int lap, string trackName)
         {
-            return _trackRecording.SaveTrack(lap, trackName);
+            return _trackRecording.SaveTrack(driverPos, lap, trackName);
         }
         #endregion
 
         #region Load a track
+        public void LoadCurrentTrack(string trackName, string gameName) {
+            _currentTrack = LoadTrack( trackName,  gameName);
+        }
+
         public Track LoadTrack(string trackName, string gameName)
         {
-
-            string fileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games", "OneHUD", gameName, "Tracks", trackName);
-
             Track track = null;
 
-            if (File.Exists(fileName))
+            try
             {
-                string trackData = System.IO.File.ReadAllText(fileName);
+                string fileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games", "OneHUD", gameName, "Tracks", trackName);
 
-                track = new Track();
+                if (File.Exists(fileName))
+                {
+                    string trackData = System.IO.File.ReadAllText(fileName);
 
-                track = new JavaScriptSerializer().Deserialize<Track>(trackData);
+                    track = new Track();
+
+                    track = new JavaScriptSerializer().Deserialize<Track>(trackData);
+                }
             }
+            catch (Exception ex)
+            {
 
+            }
             return track;
         }
         #endregion

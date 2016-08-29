@@ -3,6 +3,7 @@ using System.Globalization;
 using OneHUDInterface;
 using iRacingSdkWrapper;
 using OneHUDData;
+using OneHUDData.AnalysisData;
 using OneHUDData.Sessions;
 using OneHUDData.Sessions.Drivers;
 
@@ -15,6 +16,7 @@ namespace iRacing
 
         private TelemetryData _telemetryData;
         private TimingData _timingData;
+        private AnalysisManager _analysisData;
         private TelemetryInfo _ti;
         private SessionInfo _si;
 
@@ -56,10 +58,11 @@ namespace iRacing
         /// </summary>
         /// <param name="telemetryData">The telemetry data.</param>
         /// <returns>true !</returns>
-        public override bool Start(TelemetryData telemetryData, TimingData timingData)
+        public override bool Start(TelemetryData telemetryData, TimingData timingData, AnalysisManager analysisData)
         {
             _telemetryData = telemetryData;
             _timingData = timingData;
+            _analysisData = analysisData;
             _wrapper.Start();
             return true;
         }

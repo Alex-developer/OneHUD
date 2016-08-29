@@ -11,6 +11,7 @@ using OneHUD.Processes;
 using OneHUD.Servers.HTTP;
 using OneHUD.Servers.Utils;
 using OneHUDInterface;
+using OneHUDData.AnalysisData;
 using OneHUDData;
 
 namespace OneHUD
@@ -22,6 +23,7 @@ namespace OneHUD
         private IGame _game = null;
         private TelemetryData _telemetryData;
         private TimingData _timingData;
+        private AnalysisManager _analysisData;
         private Thread _gameReaderThread;
         private Thread _httpServerThread;
 
@@ -42,6 +44,7 @@ namespace OneHUD
         {
             _telemetryData = new TelemetryData();
             _timingData = new TimingData();
+            _analysisData = new AnalysisManager();
 
             lsvPlugins.Items.Clear();
 
@@ -117,7 +120,7 @@ namespace OneHUD
 
         private void GameReaderThread()
         {
-            _game.Start(_telemetryData, _timingData);
+            _game.Start(_telemetryData, _timingData, _analysisData);
         }
 
         private void StopGameReaderThread()

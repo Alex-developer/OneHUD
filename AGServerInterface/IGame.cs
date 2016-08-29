@@ -4,6 +4,7 @@ using System.Drawing;
 using OneHUDData;
 using OneHUDData.TrackInfo;
 using OneHUDData.TrackRecorder;
+using OneHUDData.AnalysisData;
 
 namespace OneHUDInterface
 {
@@ -24,7 +25,7 @@ namespace OneHUDInterface
 
         string URL { get; }
 
-        bool Start(TelemetryData telemetryData, TimingData timingData);
+        bool Start(TelemetryData telemetryData, TimingData timingData, AnalysisManager analysisData);
 
         bool Stop();
 
@@ -62,12 +63,22 @@ namespace OneHUDInterface
         /// Saves the track.
         /// </summary>
         /// <param name="lap">The lap.</param>
-        bool SaveTrack(int lap);
+        bool SaveTrack(int driver, int lap);
 
         /// <summary>
         /// Loads the track.
         /// </summary>
         /// <returns></returns>
         Track LoadTrack();
+
+        void ShowOptions();
+
+    }
+
+    public enum ConnectionType
+    {
+        BYPROCESS,
+        MANUAL,
+        BOTH
     }
 }

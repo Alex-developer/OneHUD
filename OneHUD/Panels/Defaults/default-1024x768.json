@@ -9,8 +9,8 @@
         {
             "type": "status",
             "css": {
-                "left": 0,
-                "top": 540,
+                "left": 715,
+                "top": 0,
                 "width": 200,
                 "height": 25,
                 "font-family": "LatoWeb",
@@ -143,13 +143,13 @@
                 "color": "white"
             }
         },
-        { 
-           "type": "sessionname",
+        {
+            "type": "trackmap",
             "css": {
-                "left": 0,
-                "top": 575,
-                "width": 150,
-                "height": 30,
+                "left": 4,
+                "top": 450,
+                "width": 280,
+                "height": 280,
                 "font-family": "LatoWeb",
                 "font-weight": "normal",
                 "font-style": "normal",
@@ -157,12 +157,12 @@
             }
         },
         {
-            "type": "trackmap",
+            "type": "rpmled",
             "css": {
-                "left": 0,
-                "top": 400,
-                "width": 200,
-                "height": 200,
+                "left": 50,
+                "top": 0,
+                "width": 655,
+                "height": 50,
                 "font-family": "LatoWeb",
                 "font-weight": "normal",
                 "font-style": "normal",

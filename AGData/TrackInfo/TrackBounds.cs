@@ -15,7 +15,21 @@ namespace OneHUDData.TrackInfo
         private float _width;
         private float _height;
 
+        private int _margin = 5;
+
         #region getters and Setters
+        public int Margin
+        {
+            get
+            {
+                return _margin;
+            }
+            set
+            {
+                _margin = value;
+            }
+        }
+
         public float MinGameX
         {
             get

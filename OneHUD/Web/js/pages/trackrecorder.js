@@ -12,12 +12,15 @@
     var _uri = OneHUDUI.getURI();
 
     var _timer = null;
-    var _timeout = 500;
+    var _timeout = 1000;
 
     var _stage;
     var _trackLayer;
     var _carLayer;
     var _pointLayer;
+
+    var _driversSetup = false;
+    var _currentDriver = 0;
 
     var _trackRecordingData = null;
     var _selectedLap = null;
@@ -55,7 +58,12 @@
         <div class="off-canvas-wrap">\
             <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>\
                 <div class="off-canvas position-left reveal-for-large" id="track-recorder-left" data-off-canvas data-position="left">\
-                    <div id="lap-info" style="margin-top:50px;"></div>\
+                    <div style="margin-top:50px;">\
+                        <select id="driver-select">\
+                        </select>\
+                    </div>\
+                    <div id="lap-info">\
+                    </div>\
                 </div>\
                 <div class="off-canvas-content" data-off-canvas-content id="track-recorder-right">\
                     <div id ="recorder-menu" class="top-bar">\
@@ -155,6 +163,13 @@
             drawTrackInformation();
         });
 
+        jQuery('#track-recorder-left').on('change', '#driver-select', function () {
+            _currentDriver = jQuery(this).val();
+            _selectedLap = 0;
+            drawTrackInformation();
+        });
+
+
         jQuery('#recorder-menu').on("change", 'input[name=track-points]', function () {
             drawTrack();
         });
@@ -165,11 +180,14 @@
     }
 
     function saveTrack() {
-        var trackToDraw = _trackRecordingData.TrackRecording.TrackLaps.length - 1;
+        var trackToDraw = _trackRecordingData.TrackRecording.TrackDrivers[_currentDriver].TrackLaps.length - 1;
         if (_selectedLap !== null) {
             trackToDraw = _selectedLap;
         }
-        var data = { lap: trackToDraw };
+        var data = {
+            driver: _currentDriver,
+            lap: trackToDraw
+        };
         sendCommand('SaveTrack', data);
     }
 
@@ -233,7 +251,7 @@
 
         var html = '';
         if (_trackRecordingData !== null) {
-            jQuery.each(_trackRecordingData.TrackRecording.TrackLaps, function (index, trackLap) {
+            jQuery.each(_trackRecordingData.TrackRecording.TrackDrivers[_currentDriver].TrackLaps, function (index, trackLap) {
                 html += '<button type="button" class="expanded button trackinfo" data-index="' + index + '">Lap ' + trackLap.Lap + ' Points ' + trackLap.TrackPoints.length + '</button>';
             });
         } else {
@@ -258,13 +276,14 @@
     function drawTrack() {
 
         if (_trackRecordingData !== null) {
-            var trackToDraw = _trackRecordingData.TrackRecording.TrackLaps.length - 1;
+            var trackToDraw = _trackRecordingData.TrackRecording.TrackDrivers[_currentDriver].TrackLaps.length - 1;
             if (_selectedLap !== null) {
                 trackToDraw = _selectedLap;
             }
-            var trackLap = _trackRecordingData.TrackRecording.TrackLaps[trackToDraw]
+            var trackLap = _trackRecordingData.TrackRecording.TrackDrivers[_currentDriver].TrackLaps[trackToDraw]
 
             if (trackLap !== undefined) {
+                setupDrivers();
                 _pointLayer.destroyChildren();
                 var points = [];
                 jQuery.each(trackLap.TrackPoints, function (index, point) {
@@ -296,6 +315,19 @@
                 _trackLayer.draw();
                 _pointLayer.draw();
             }
+        }
+    }
+
+    function setupDrivers() {
+        if (!_driversSetup) {
+            var totalDrivers = _trackRecordingData.TrackRecording.TrackDrivers.length;
+            for (var i = 0; i < totalDrivers; i++) {
+                jQuery('#driver-select').append(jQuery('<option>', {
+                    value: i,
+                    text: 'Driver ' + i
+                }));
+            }
+            _driversSetup = true;
         }
     }
 

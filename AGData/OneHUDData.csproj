@@ -41,6 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnalysisData\AnalysisManager.cs" />
+    <Compile Include="AnalysisData\Data\AnalysisData.cs" />
+    <Compile Include="AnalysisData\Driver\AnalysisDriver.cs" />
+    <Compile Include="AnalysisData\Lap\AnalysisLap.cs" />
+    <Compile Include="Players\Player.cs" />
     <Compile Include="Sessions\Class.cs" />
     <Compile Include="Sessions\Driver\Driver.cs" />
     <Compile Include="Sessions\Driver\DriverCar.cs" />
@@ -53,6 +58,7 @@
     <Compile Include="TrackInfo\TrackBounds.cs" />
     <Compile Include="TrackInfo\TrackPoint.cs" />
     <Compile Include="TrackManager.cs" />
+    <Compile Include="TrackRecorder\TrackDriver.cs" />
     <Compile Include="TrackRecorder\TrackLap.cs" />
     <Compile Include="TrackRecorder\TrackRecording.cs" />
     <Compile Include="Vehicle\Car.cs" />

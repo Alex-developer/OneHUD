@@ -64,10 +64,18 @@ namespace AGServer.Servers.DataHandlers.Actions
                             if (_game.SupportsTrackRecorder())
                             {
                                 int lap;
+                                int driver;
                                 if (Int32.TryParse(postData["data[lap]"], out lap))
                                 {
-                                    _game.SaveTrack(lap);
-                                    result.Result = true;
+                                    if (Int32.TryParse(postData["data[driver]"], out driver))
+                                    {
+                                        _game.SaveTrack(driver, lap);
+                                        result.Result = true;
+                                    }
+                                    else
+                                    {
+                                        result.Result = false;
+                                    }
                                 } else {
                                     result.Result = false;
                                 }

@@ -16,6 +16,11 @@
     var _stage;
     var _trackLayer;
     var _carLayer;
+    var _xScale;
+    var _yScale;
+
+    var _ready = false;
+    var _haveTrackInformation = false;
 
     var _properties = {
         type: 'trackmap',
@@ -30,7 +35,7 @@
             color: 'white'
         }
     };
-    var _messages = ['telemetry'];
+    var _messages = ['telemetry','timing'];
 
     function init(element, properties) {
         _el = element;
@@ -40,9 +45,15 @@
         }
 
         head.load(_requires, function () {
+            _ready = true;
+        });
+    }
+
+    function setupTrack() {
+        if (_ready && _haveTrackInformation) {
             loadTrack();
             buildUI();
-        });
+        }
     }
 
     function loadTrack() {
@@ -57,7 +68,7 @@
         }).success(function (result) {
             _track = result;
             drawTrack();
-        }).fail(function () {
+        }).fail(function (a,b) {
             var tt = 56;
         });
     }
@@ -74,33 +85,66 @@
     function drawTrack() {
 
         if (_track !== null) {
+            if (_track.Track !== null) {
 
+                var width = jQuery(_el).width();
+                var height = jQuery(_el).height();
 
-            var width = jQuery(_el).width();
-            var height = jQuery(_el).height();
+                _xScale = width / _track.Track.TrackBounds.Width;
+                _yScale = height / _track.Track.TrackBounds.Height;
 
-            var xScale = width / _track.Track.TrackBounds.Width;
-            var yScale = height / _track.Track.TrackBounds.Height;
-
-            var points = [];
-            jQuery.each(_track.Track.TrackPoints, function (index, point) {
-                points.push(point.X * xScale);
-                points.push(point.Y * yScale);
-            });
-            var trackMap = new Konva.Line({
-                points: points,
-                stroke: '#ff0000',
-                strokeWidth: 2,
-                lineCap: 'round'
-            });
-            _trackLayer.destroyChildren();
-            _trackLayer.add(trackMap);
-            _trackLayer.draw();
+                var points = [];
+                jQuery.each(_track.Track.TrackPoints, function (index, point) {
+                    points.push(point.X * _xScale);
+                    points.push(point.Y * _yScale);
+                });
+                var trackMap = new Konva.Line({
+                    points: points,
+                    stroke: '#ff0000',
+                    strokeWidth: 2,
+                    lineCap: 'round'
+                });
+                _trackLayer.destroyChildren();
+                _trackLayer.add(trackMap);
+                _trackLayer.draw();
+            }
         }
     }
 
-    function update(data) {
+    function update(data, type) {
 
+        if (type === 'timing') {
+            if (data.RaceInfo.TrackName !== null) {
+                if (!_haveTrackInformation) {
+                    _haveTrackInformation = true;
+                    setupTrack();
+                }
+            }
+        } else {
+        if (_track !== null) {
+            if (_track.Track !== null) {
+                if (data.Players !== undefined) {
+                    if (data.Players.length > 0) {
+                        _carLayer.destroyChildren();
+                        for (var i = 0; i < data.Players.length; i++) {
+                            var color = '#00ff00';
+                            if (data.Players[i].IsMe) {
+                                color = '#ff0000';
+                            }
+                            var circle = new Konva.Circle({
+                                x: data.Players[i].X * _xScale,
+                                y: data.Players[i].Y * _yScale,
+                                radius: 4,
+                                fill: color
+                            });
+                            _carLayer.add(circle);
+                        }
+                        _carLayer.draw();
+                    }
+                }
+            }
+        }
+}
     }
 
     function resize() {
@@ -147,8 +191,8 @@
             destroy();
         },
 
-        update: function (data) {
-            update(data);
+        update: function (data, type) {
+            update(data, type);
         },
 
         resize: function () {

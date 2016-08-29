@@ -9,8 +9,7 @@ namespace OneHUDData.TrackRecorder
 {
     public class TrackRecording
     {
-        private int _lastLap = -99;
-        private List<TrackLap> _trackLaps;
+        private List<TrackDriver> _trackDrivers;
         private TrackBounds _trackBounds;
         private string _trackName;
 
@@ -18,11 +17,23 @@ namespace OneHUDData.TrackRecorder
         public TrackRecording()
         {
             _trackBounds = new TrackBounds();
-            _trackLaps = new List<TrackLap>();
+            _trackDrivers = new List<TrackDriver>();
         }
         #endregion
 
         #region Getters and Setters
+        public List<TrackDriver> TrackDrivers
+        {
+            get
+            {
+                return _trackDrivers;
+            }
+            set
+            {
+                _trackDrivers = value;
+            }
+        }
+
         public string TrackName
         {
             get
@@ -46,59 +57,32 @@ namespace OneHUDData.TrackRecorder
                 _trackBounds = value;
             }
         }
-
-        public List<TrackLap> TrackLaps
-        {
-            get
-            {
-                return this._trackLaps;
-            }
-            set
-            {
-                this._trackLaps = value;
-            }
-        }
-
         #endregion
 
         #region public methods
         #region Add new trackpoint
-        public void AddPoint(int lap, float x, float y, float z)
+        public void AddPoint(int driverPos, int lap, float x, float y, float z)
         {
-            if (lap != _lastLap) {
-                _trackLaps.Add(new TrackLap() { Lap = lap});
-                _lastLap = lap;
+
+            TrackDriver driver = _trackDrivers.Find(p => p.Id == driverPos);
+            if (driver == null)
+            {
+                driver = new TrackDriver() { Id = driverPos };
+                _trackDrivers.Add(driver);
             }
 
-            TrackLap currentLap = _trackLaps.Last();
-            TrackPoint trackPoint = new TrackPoint() { GameX = x, GameY = y, GameZ = z };
-            currentLap.AddPoint(trackPoint);
+            TrackPoint trackPoint = driver.AddPoint(lap, x, y, z);
             _trackBounds.Update(trackPoint);
-        }
-
-        #endregion
-
-        #region Lap Info
-        public int GetTotalLaps()
-        {
-            return _trackLaps.Count;
-        }
-
-        public TrackLap GetLap(int lap)
-        {
-            TrackLap trackLap = _trackLaps.Find(x => x.Lap == lap);
-
-            return trackLap;
         }
         #endregion
 
         #region Build and Save the Track Object
-        public bool SaveTrack(int lap, string gameName)
+        public bool SaveTrack(int driverPos, int lap, string gameName)
         {
             Track track = new Track();
             track.TrackBounds = _trackBounds;
             track.TrackName = _trackName;
-            track.TrackPoints = _trackLaps[lap].TrackPoints;
+            track.TrackPoints = _trackDrivers.Find(p => p.Id == driverPos).Lap(lap).TrackPoints;
 
             string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder​.MyDocuments),"My Games", "OneHUD", gameName, "Tracks");
             

@@ -8,7 +8,6 @@ namespace OneHUDData
     public class TimingData
     {
         public RaceInfo RaceInfo { get; set; }
-        private readonly Object _lock = new Object();
 
         public TimingData()
         {
@@ -17,10 +16,7 @@ namespace OneHUDData
 
         public void Reset()
         {
-            lock (_lock)
-            {
-                RaceInfo = new RaceInfo();
-            }
+            RaceInfo = new RaceInfo();
         }
 
     }

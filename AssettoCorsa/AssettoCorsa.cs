@@ -7,6 +7,7 @@ using OneHUDInterface;
 using AssettoCorsa.Readers;
 using AssettoCorsa.DataFormat;
 using OneHUDData;
+using OneHUDData.AnalysisData;
 
 namespace AssettoCorsa
 {
@@ -14,6 +15,7 @@ namespace AssettoCorsa
     {
         private TelemetryData _telemetryData;
         private TimingData _timingData;
+        private AnalysisManager _analysisData;
         private readonly CancellationTokenSource _physicsCancel;
         private readonly CancellationTokenSource _staticCancel; 
         private DateTime _physicsLastTimeStamp;
@@ -50,10 +52,11 @@ namespace AssettoCorsa
         #endregion
 
         #region Public Methods
-        public override bool Start(TelemetryData telemetryData, TimingData timingData)
+        public override bool Start(TelemetryData telemetryData, TimingData timingData, AnalysisManager analysisData)
         {
             _telemetryData = telemetryData;
             _timingData = timingData;
+            _analysisData = analysisData;
             ReadPhysicsData(_physicsCancel.Token);
             ReadStaticData(_staticCancel.Token);
             return true;

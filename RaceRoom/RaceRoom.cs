@@ -9,6 +9,7 @@ using System.IO;
 using Newtonsoft.Json;
 using OneHUDInterface;
 using OneHUDData;
+using OneHUDData.AnalysisData;
 using RaceRoom.Readers;
 using RaceRoom.DataFormat;
 
@@ -26,6 +27,7 @@ namespace RaceRoom
         private readonly double _pollInterval = 10.0;
         private TelemetryData _telemetryData;
         private TimingData _timingData;
+        private AnalysisManager _analysisData;
         private bool _connected = false;
         private GameData _gameData;
 
@@ -76,10 +78,11 @@ namespace RaceRoom
         #endregion
 
         #region Public Methods
-        public override bool Start(TelemetryData telemetryData, TimingData timingData)
+        public override bool Start(TelemetryData telemetryData, TimingData timingData, AnalysisManager analysisData)
         {
             _telemetryData = telemetryData;
             _timingData = timingData;
+            _analysisData = analysisData;
             ReadData(_cancel.Token);
             return true;
         }
