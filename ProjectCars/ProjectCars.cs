@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using OneHUDInterface;
 using OneHUDData.TrackInfo;
 using OneHUDData.TrackRecorder;
@@ -11,8 +12,6 @@ using ProjectCars.DataFormat;
 using ProjectCars.Readers;
 using OneHUDData;
 
-using System.Diagnostics;
-
 namespace ProjectCars
 {
     public class AGProjectCars : GameBase, IGame
@@ -20,8 +19,11 @@ namespace ProjectCars
         private readonly string _sharedMemoryFileName = "$pcars$";
 
         private readonly SharedMemoryReader _memoryReader;
+        private UDPReader _udpReader;
         private readonly int _bufferSize = Marshal.SizeOf(typeof(ProjectCars.DataFormat.SharedMemory));
         ProjectCars.DataFormat.SharedMemory _data;
+
+        private PageTypes _supports = PageTypes.Dash | PageTypes.TrackMap | PageTypes.Telemetry | PageTypes.ServerOptions;
 
         private readonly CancellationTokenSource _cancel;
         private DateTime _lastTimeStamp;
@@ -49,19 +51,38 @@ namespace ProjectCars
             _author = "Alex Greenland";
             _processNames.Add("pCARS");
             _processNames.Add("pCARS64");
+            _connectionType = OneHUDInterface.ConnectionType.BOTH;
             _memoryReader = new SharedMemoryReader(_sharedMemoryFileName, _bufferSize);
             _cancel = new CancellationTokenSource();
         }
         #endregion
 
         #region Public Methods
+        public override PageTypes Supports
+        {
+            get
+            {
+                return _supports;
+            }
+        }
+
         public override bool Start(TelemetryData telemetryData, TimingData timingData, AnalysisManager analysisData)
         {
             _telemetryData = telemetryData;
             _timingData = timingData;
             _analysisData = analysisData;
             Reset();
-            ReadData(_cancel.Token);
+
+            ConnectionType connectionType = (ConnectionType)Properties.Settings.Default.connectionType;
+
+            if (connectionType == ProjectCars.ConnectionType.SharedMemory)
+            {
+                ReadData(_cancel.Token);
+            }
+            else
+            {
+                _udpReader = new UDPReader();
+            }
             return true;
         }
 
@@ -313,5 +334,41 @@ namespace ProjectCars
         }
         #endregion
 
+        #region Default Options Dialog
+        public override void ShowOptions()
+        {
+            Options optionsDialog = new Options();
+
+            ConnectionType connectionType = (ConnectionType)Properties.Settings.Default.connectionType;
+            string ipAddress = Properties.Settings.Default.ipAddress;
+            string port = Properties.Settings.Default.port;
+
+            optionsDialog.ConnectionType = connectionType;
+            optionsDialog.IPAddress = ipAddress;
+            optionsDialog.Port = port;
+
+
+            optionsDialog.Text = DisplayName + " Options";
+            DialogResult result = optionsDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                connectionType = optionsDialog.ConnectionType;
+                ipAddress = optionsDialog.IPAddress;
+                port = optionsDialog.Port;
+
+                Properties.Settings.Default.connectionType = (int)connectionType;
+                Properties.Settings.Default.ipAddress = ipAddress;
+                Properties.Settings.Default.port = port;
+
+                Properties.Settings.Default.Save();
+            }
+        }
+        #endregion
+    }
+
+    public enum ConnectionType
+    {
+        SharedMemory = 1,
+        UDP = 2
     }
 }

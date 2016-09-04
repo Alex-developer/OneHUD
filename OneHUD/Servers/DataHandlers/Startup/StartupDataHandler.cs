@@ -36,6 +36,7 @@ namespace AGServer.Servers.DataHandlers.Startup
                 plugin.PluginVersion = game.Version;
                 plugin.Author = game.Author;
                 plugin.URL = game.URL;
+                plugin.Supports = (int)game.Supports;
                 result.Plugins.Add(plugin);
             }
 

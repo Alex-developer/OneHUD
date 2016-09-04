@@ -60,7 +60,6 @@ namespace OneHUD
                     lvText[0] = "";
                     lvText[1] = item.DisplayName;
                     lvText[2] = item.Version;
-                    lvText[3] = item.Author;
 
                     ListViewItem lvItem = new ListViewItem(lvText);
 
@@ -98,12 +97,26 @@ namespace OneHUD
         #region Event Handlers
         private void GameLoaded(string gameName, EventArgs e)
         {
+            if (_game != null)
+            {
+                EventArgs ev = new EventArgs();
+                GameClosed(_game.Name, ev);
+            }
             if (_game == null)
             {
                 _game = _plugins[gameName];
 
                 Invoke(new Action(() => { Status.Text = _game.DisplayName; }));
                 Invoke(new Action(() => { labelStatus.Text = _game.DisplayName; }));
+
+                if (_game.ConnectionType == ConnectionType.BOTH || _game.ConnectionType == ConnectionType.MANUAL)
+                {
+                    Invoke(new Action(() => { buttonStop.Enabled = true; }));
+                }
+                else
+                {
+                    Invoke(new Action(() => { buttonStop.Enabled = false; }));
+                }
 
                 if (imageListPlugins.Images.ContainsKey(_game.Name))
                 {
@@ -138,6 +151,7 @@ namespace OneHUD
             Invoke(new Action(() => { Status.Text = "Waiting ..."; }));
             Invoke(new Action(() => { labelStatus.Text = "Not Connected"; }));
             Invoke(new Action(() => { pictureConnected.Image = null; }));
+            Invoke(new Action(() => { buttonStop.Enabled = false; }));
         }
 
         #endregion
@@ -258,9 +272,127 @@ namespace OneHUD
         }
         #endregion
 
-        private void labelStatus_Click(object sender, EventArgs e)
+        #region Helper Functions
+        IGame FindPluginByName(string name)
         {
+            IGame result = null;
 
+            foreach (var item in _plugins)
+            {
+                IGame game = item.Value;
+                if (game.DisplayName == name)
+                {
+                    result = game;
+                    break;
+                }
+            }
+            return result;
+        }
+
+        bool IsFeatureSupported(IGame plugin, PageTypes feature)
+        {
+            bool result = false;
+
+            if ((plugin.Supports & feature) == feature)
+            {
+                result = true;
+            }
+            return result;
+        }
+        #endregion
+
+        private void lsvPlugins_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                if (lsvPlugins.FocusedItem.Bounds.Contains(e.Location) == true)
+                {
+                    ListViewItem item = lsvPlugins.SelectedItems[0];
+
+                    IGame plugin = FindPluginByName(item.SubItems[1].Text);
+                    if (plugin != null)
+                    {
+                        if (IsFeatureSupported(plugin, PageTypes.ServerOptions))
+                        {
+                            toolStripMenuItemOptions.Enabled = true;
+                        }
+                        else
+                        {
+                            toolStripMenuItemOptions.Enabled = false;
+                        }
+
+                        if (plugin.ConnectionType == ConnectionType.BOTH || plugin.ConnectionType == ConnectionType.MANUAL)
+                        {
+                            if (_game != null)
+                            {
+                                if (_game.Name == plugin.Name)
+                                {
+                                    toolStripMenuItemStopPlugin.Enabled = true;
+                                }
+                                else
+                                {
+                                    toolStripMenuItemStopPlugin.Enabled = false;
+                                }
+                            }
+                            else
+                            {
+                                toolStripMenuItemLoadPlugin.Enabled = true;
+                                toolStripMenuItemStopPlugin.Enabled = false;
+                            }
+                        }
+                        else
+                        {
+                            toolStripMenuItemLoadPlugin.Enabled = false;
+                        }
+                    }
+                    else
+                    {
+                        toolStripMenuItemOptions.Enabled = false;
+                    }
+                    contextMenuStripPluginMenuOptions.Show(Cursor.Position);
+                }
+            } 
+        }
+
+        private void toolStripMenuItemOptions_Click(object sender, EventArgs e)
+        {
+            ListViewItem item = lsvPlugins.SelectedItems[0];
+
+            IGame plugin = FindPluginByName(item.SubItems[1].Text);
+            if (plugin != null)
+            {
+                plugin.ShowOptions();
+            }
+        }
+
+        private void toolStripMenuItemLoadPlugin_Click(object sender, EventArgs e)
+        {
+            ListViewItem item = lsvPlugins.SelectedItems[0];
+
+            IGame plugin = FindPluginByName(item.SubItems[1].Text);
+            if (plugin != null)
+            {
+                EventArgs ev = new EventArgs();
+                GameLoaded(plugin.Name, ev);
+            }
+        }
+
+        private void toolStripMenuItemStopPlugin_Click(object sender, EventArgs e)
+        {
+            ListViewItem item = lsvPlugins.SelectedItems[0];
+
+            IGame plugin = FindPluginByName(item.SubItems[1].Text);
+            if (plugin != null)
+            {
+                EventArgs ev = new EventArgs();
+                GameClosed(plugin.Name, ev);
+            }
+        }
+
+        private void buttonStop_Click(object sender, EventArgs e)
+        {
+            EventArgs ev = new EventArgs();
+            GameClosed(_game.Name, ev);
         }
 
     }

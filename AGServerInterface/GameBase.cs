@@ -37,6 +37,14 @@ namespace OneHUDInterface
             }
         }
 
+        public virtual PageTypes Supports
+        {
+            get
+            {
+                return PageTypes.None;
+            }
+        }
+
         public string URL
         {
             get

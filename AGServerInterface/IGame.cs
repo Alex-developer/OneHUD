@@ -29,6 +29,9 @@ namespace OneHUDInterface
 
         bool Stop();
 
+        PageTypes Supports { get; }
+        ConnectionType ConnectionType { get; }
+
         /// <summary>
         /// Supports the track recorder.
         /// </summary>
@@ -80,5 +83,16 @@ namespace OneHUDInterface
         BYPROCESS,
         MANUAL,
         BOTH
+    }
+
+    public enum PageTypes
+    {
+        None = 0,
+        Dash = 1,
+        Timing = 2,
+        TrackMap = 4,
+        Telemetry = 8,
+
+        ServerOptions = 16384
     }
 }

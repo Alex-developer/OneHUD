@@ -35,6 +35,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBoxStatus = new System.Windows.Forms.GroupBox();
+            this.pictureConnected = new System.Windows.Forms.PictureBox();
             this.labelStatus = new System.Windows.Forms.Label();
             this.tabServers = new System.Windows.Forms.TabControl();
             this.tabPageHTTP = new System.Windows.Forms.TabPage();
@@ -45,28 +46,33 @@
             this.lblPortLabel = new System.Windows.Forms.Label();
             this.lblIPAddress = new System.Windows.Forms.Label();
             this.lblIPAddressLabel = new System.Windows.Forms.Label();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lsvPlugins = new System.Windows.Forms.ListView();
+            this.pluginIcon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.PluginName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.PluginVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.imageListPlugins = new System.Windows.Forms.ImageList(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pluginIcon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.imageListPlugins = new System.Windows.Forms.ImageList(this.components);
-            this.PluginAuthor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.pictureConnected = new System.Windows.Forms.PictureBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.contextMenuStripPluginMenuOptions = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemOptions = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemLoadPlugin = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemStopPlugin = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonStop = new System.Windows.Forms.Button();
             this.statusStrip.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBoxStatus.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureConnected)).BeginInit();
             this.tabServers.SuspendLayout();
             this.tabPageHTTP.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.mainMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureConnected)).BeginInit();
+            this.contextMenuStripPluginMenuOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -110,6 +116,7 @@
             // 
             // groupBoxStatus
             // 
+            this.groupBoxStatus.Controls.Add(this.buttonStop);
             this.groupBoxStatus.Controls.Add(this.pictureConnected);
             this.groupBoxStatus.Controls.Add(this.labelStatus);
             this.groupBoxStatus.Location = new System.Drawing.Point(12, 30);
@@ -118,6 +125,14 @@
             this.groupBoxStatus.TabIndex = 10;
             this.groupBoxStatus.TabStop = false;
             this.groupBoxStatus.Text = "Status";
+            // 
+            // pictureConnected
+            // 
+            this.pictureConnected.Location = new System.Drawing.Point(27, 24);
+            this.pictureConnected.Name = "pictureConnected";
+            this.pictureConnected.Size = new System.Drawing.Size(32, 32);
+            this.pictureConnected.TabIndex = 1;
+            this.pictureConnected.TabStop = false;
             // 
             // labelStatus
             // 
@@ -128,7 +143,6 @@
             this.labelStatus.Size = new System.Drawing.Size(196, 31);
             this.labelStatus.TabIndex = 0;
             this.labelStatus.Text = "Not Connected";
-            this.labelStatus.Click += new System.EventHandler(this.labelStatus_Click);
             // 
             // tabServers
             // 
@@ -225,6 +239,15 @@
             this.lblIPAddressLabel.TabIndex = 7;
             this.lblIPAddressLabel.Text = "IP Address";
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(390, 210);
+            this.tabPage3.TabIndex = 1;
+            this.tabPage3.Text = "IOT Server";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.lsvPlugins);
@@ -241,8 +264,7 @@
             this.lsvPlugins.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.pluginIcon,
             this.PluginName,
-            this.PluginVersion,
-            this.PluginAuthor});
+            this.PluginVersion});
             this.lsvPlugins.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lsvPlugins.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lsvPlugins.FullRowSelect = true;
@@ -254,6 +276,12 @@
             this.lsvPlugins.TabIndex = 0;
             this.lsvPlugins.UseCompatibleStateImageBehavior = false;
             this.lsvPlugins.View = System.Windows.Forms.View.Details;
+            this.lsvPlugins.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lsvPlugins_MouseClick);
+            // 
+            // pluginIcon
+            // 
+            this.pluginIcon.Text = " ";
+            this.pluginIcon.Width = 40;
             // 
             // PluginName
             // 
@@ -264,6 +292,12 @@
             // 
             this.PluginVersion.Text = "Version";
             this.PluginVersion.Width = 100;
+            // 
+            // imageListPlugins
+            // 
+            this.imageListPlugins.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListPlugins.ImageStream")));
+            this.imageListPlugins.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListPlugins.Images.SetKeyName(0, "missing");
             // 
             // tabPage2
             // 
@@ -299,38 +333,53 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
-            // pluginIcon
+            // contextMenuStripPluginMenuOptions
             // 
-            this.pluginIcon.Text = " ";
-            this.pluginIcon.Width = 40;
+            this.contextMenuStripPluginMenuOptions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemOptions,
+            this.toolStripSeparator1,
+            this.toolStripMenuItemLoadPlugin,
+            this.toolStripMenuItemStopPlugin});
+            this.contextMenuStripPluginMenuOptions.Name = "contextMenuStripPluginMenuOptions";
+            this.contextMenuStripPluginMenuOptions.Size = new System.Drawing.Size(136, 76);
+            this.contextMenuStripPluginMenuOptions.Text = "Options";
             // 
-            // imageListPlugins
+            // toolStripMenuItemOptions
             // 
-            this.imageListPlugins.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListPlugins.ImageStream")));
-            this.imageListPlugins.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListPlugins.Images.SetKeyName(0, "missing");
+            this.toolStripMenuItemOptions.Name = "toolStripMenuItemOptions";
+            this.toolStripMenuItemOptions.Size = new System.Drawing.Size(135, 22);
+            this.toolStripMenuItemOptions.Text = "Options";
+            this.toolStripMenuItemOptions.Click += new System.EventHandler(this.toolStripMenuItemOptions_Click);
             // 
-            // PluginAuthor
+            // toolStripSeparator1
             // 
-            this.PluginAuthor.Text = "Author";
-            this.PluginAuthor.Width = 200;
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(132, 6);
             // 
-            // pictureConnected
+            // toolStripMenuItemLoadPlugin
             // 
-            this.pictureConnected.Location = new System.Drawing.Point(27, 24);
-            this.pictureConnected.Name = "pictureConnected";
-            this.pictureConnected.Size = new System.Drawing.Size(32, 32);
-            this.pictureConnected.TabIndex = 1;
-            this.pictureConnected.TabStop = false;
+            this.toolStripMenuItemLoadPlugin.Name = "toolStripMenuItemLoadPlugin";
+            this.toolStripMenuItemLoadPlugin.Size = new System.Drawing.Size(135, 22);
+            this.toolStripMenuItemLoadPlugin.Text = "Start Plugin";
+            this.toolStripMenuItemLoadPlugin.Click += new System.EventHandler(this.toolStripMenuItemLoadPlugin_Click);
             // 
-            // tabPage3
+            // toolStripMenuItemStopPlugin
             // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(390, 210);
-            this.tabPage3.TabIndex = 1;
-            this.tabPage3.Text = "IOT Server";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.toolStripMenuItemStopPlugin.Name = "toolStripMenuItemStopPlugin";
+            this.toolStripMenuItemStopPlugin.Size = new System.Drawing.Size(135, 22);
+            this.toolStripMenuItemStopPlugin.Text = "Stop Plugin";
+            this.toolStripMenuItemStopPlugin.Click += new System.EventHandler(this.toolStripMenuItemStopPlugin_Click);
+            // 
+            // buttonStop
+            // 
+            this.buttonStop.Enabled = false;
+            this.buttonStop.Location = new System.Drawing.Point(324, 20);
+            this.buttonStop.Name = "buttonStop";
+            this.buttonStop.Size = new System.Drawing.Size(60, 36);
+            this.buttonStop.TabIndex = 2;
+            this.buttonStop.Text = "Stop";
+            this.buttonStop.UseVisualStyleBackColor = true;
+            this.buttonStop.Click += new System.EventHandler(this.buttonStop_Click);
             // 
             // OneHUD
             // 
@@ -352,13 +401,14 @@
             this.tabPage1.ResumeLayout(false);
             this.groupBoxStatus.ResumeLayout(false);
             this.groupBoxStatus.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureConnected)).EndInit();
             this.tabServers.ResumeLayout(false);
             this.tabPageHTTP.ResumeLayout(false);
             this.tabPageHTTP.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureConnected)).EndInit();
+            this.contextMenuStripPluginMenuOptions.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -391,9 +441,14 @@
         private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.ColumnHeader pluginIcon;
         private System.Windows.Forms.ImageList imageListPlugins;
-        private System.Windows.Forms.ColumnHeader PluginAuthor;
         private System.Windows.Forms.PictureBox pictureConnected;
         private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripPluginMenuOptions;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOptions;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemLoadPlugin;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStopPlugin;
+        private System.Windows.Forms.Button buttonStop;
     }
 }
 

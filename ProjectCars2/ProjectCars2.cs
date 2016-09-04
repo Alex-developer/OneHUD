@@ -23,6 +23,8 @@ namespace ProjectCars2
         private readonly int _bufferSize = Marshal.SizeOf(typeof(ProjectCars2.DataFormat.SharedMemory));
         ProjectCars2.DataFormat.SharedMemory _data;
 
+        private PageTypes _supports = PageTypes.Dash | PageTypes.TrackMap | PageTypes.Telemetry;
+
         private readonly CancellationTokenSource _cancel;
         private DateTime _lastTimeStamp;
         private readonly double _pollInterval = 60.0;
@@ -48,12 +50,21 @@ namespace ProjectCars2
             _author = "Alex Greenland";
             _processNames.Add("pCARS2Gld");
             _processNames.Add("pCARS2QA");
+            _connectionType = OneHUDInterface.ConnectionType.BOTH;
             _memoryReader = new SharedMemoryReader(_sharedMemoryFileName, _bufferSize);
             _cancel = new CancellationTokenSource();
         }
         #endregion
 
         #region Public Methods
+        public override PageTypes Supports
+        {
+            get
+            {
+                return _supports;
+            }
+        }
+
         public override bool Start(TelemetryData telemetryData, TimingData timingData, AnalysisManager analysisData)
         {
             _telemetryData = telemetryData;

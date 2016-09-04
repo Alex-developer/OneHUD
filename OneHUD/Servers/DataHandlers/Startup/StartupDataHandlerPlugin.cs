@@ -11,6 +11,19 @@ namespace AGServer.Servers.DataHandlers.Startup
         private string _gameLongName = "";
         private string _author = "";
         private string _url = "";
+        private int _supports;
+
+        public int Supports
+        {
+            get
+            {
+                return _supports;
+            }
+            set
+            {
+                _supports = value;
+            }
+        }
 
         public string URL
         {
@@ -22,8 +35,8 @@ namespace AGServer.Servers.DataHandlers.Startup
             {
                 _url = value;
             }
-
         }
+
         public string Author
         {
             get
