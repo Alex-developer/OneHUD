@@ -28,7 +28,7 @@ namespace ProjectCars
         private readonly CancellationTokenSource _cancel;
         private DateTime _lastTimeStamp;
         private DateTime _lastAnalysisTimeStamp;
-        private readonly double _pollInterval = 60.0;
+        private readonly int _pollInterval = 60;
         private TelemetryData _telemetryData;
         private TimingData _timingData;
         private bool _connected = false;
@@ -130,7 +130,7 @@ namespace ProjectCars
                         }
 
                     }
-                    Thread.Sleep((int)_pollInterval);
+                    Thread.Sleep(_pollInterval);
                 }
             }));
         }
@@ -145,8 +145,11 @@ namespace ProjectCars
             {
                 while (!token.IsCancellationRequested)
                 {
-                    ProcessUDPData();
-                    Thread.Sleep((int)_pollInterval);
+                    if (_udpReader.Connected)
+                    {
+                        ProcessUDPData();
+                    }
+                    Thread.Sleep(_pollInterval);
                 }
             }));
             _udpReader.Stop();
@@ -209,10 +212,56 @@ namespace ProjectCars
                 _data.MWorldFastestSector2Time = _tempTelemetryData.sWorldFastestSector2Time;
                 _data.MWorldFastestSector3Time = _tempTelemetryData.sWorldFastestSector3Time;
 
+                _data.MHighestFlagColour = (int)_tempTelemetryData.sHighestFlag & 7; 
+                _data.MHighestFlagReason = (int)_tempTelemetryData.sHighestFlag >> 3 & 3;
 
+                _data.MPitMode = (int)_tempTelemetryData.sPitModeSchedule & 7;
+                _data.MPitSchedule = (int)_tempTelemetryData.sPitModeSchedule >> 3 & 3;
+
+                _data.MCarFlags = _tempTelemetryData.sCarFlags;
+                _data.MOilTempCelsius = _tempTelemetryData.sOilTempCelsius;
+                _data.MOilPressureKPa = _tempTelemetryData.sOilPressureKPa;
+                _data.MWaterTempCelsius = _tempTelemetryData.sWaterTempCelsius;
+                _data.MWaterPressureKPa = _tempTelemetryData.sWaterPressureKpa;
+                _data.MFuelPressureKPa = _tempTelemetryData.sFuelPressureKpa;
+                _data.MFuelLevel = _tempTelemetryData.sFuelLevel;
+                _data.MFuelCapacity = _tempTelemetryData.sFuelCapacity;
+                _data.MSpeed = _tempTelemetryData.sSpeed;
+                _data.MRpm = _tempTelemetryData.sRpm;
+                _data.MMaxRpm = _tempTelemetryData.sMaxRpm;
+                _data.MBrake = (float)_tempTelemetryData.sBrake / 255f;
+                _data.MThrottle = (float)_tempTelemetryData.sThrottle / 255f;
+                _data.MClutch = (float)_tempTelemetryData.sClutch / 255f;
+                _data.MSteering = (float)_tempTelemetryData.sSteering / 127f;
+                _data.MGear = _tempTelemetryData.sGearNumGears & 15;
+                _data.MNumGears = _tempTelemetryData.sGearNumGears >> 4;
+                _data.MOdometerKm = _tempTelemetryData.sOdometerKM;
+                _data.MAntiLockActive = (_tempTelemetryData.sRaceStateFlags >> 4 & 1) == 1;
+                _data.MBoostActive = (_tempTelemetryData.sRaceStateFlags >> 5 & 1) == 1;
+                _data.MBoostAmount = _tempTelemetryData.sBoostAmount;
+
+                _data.MOrientation = _tempTelemetryData.sOrientation;
+                _data.MLocalVelocity = _tempTelemetryData.sLocalVelocity;
+                _data.MWorldVelocity = _tempTelemetryData.sWorldVelocity;
+                _data.MAngularVelocity = _tempTelemetryData.sAngularVelocity;
+                _data.MLocalAcceleration = _tempTelemetryData.sLocalAcceleration;
+                _data.MWorldAcceleration = _tempTelemetryData.sWorldAcceleration;
+                _data.MExtentsCentre = _tempTelemetryData.sExtentsCentre;
+
+                _data.MTyreFlags = ConvertByteToIntArray(_tempTelemetryData.sTyreFlags); 
             }
 
             ProcessData();
+        }
+
+        private int[] ConvertByteToIntArray(byte[] bytes)
+        {
+            List<int> intArray = new List<int>();
+            foreach (byte i in bytes)
+            {
+                intArray.Add((byte)i);
+            }
+            return intArray.ToArray();
         }
 
         private void SetValueIfNotNULL(SmString property, SmString value)

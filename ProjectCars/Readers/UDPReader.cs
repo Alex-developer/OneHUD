@@ -24,6 +24,9 @@ namespace ProjectCars.Readers
         private UDPDataFormat.sParticipantInfoStringsAdditional _participantInfoStringsAdditional;
 
         private bool _readData = true;
+        private bool _connected = false;
+
+        private long _ticksAtLastPacket = -1;
 
         public UDPReader()
         {
@@ -38,6 +41,20 @@ namespace ProjectCars.Readers
         }
 
         #region Getters and Setters
+        public bool Connected
+        {
+            get
+            {
+
+                if ((DateTime.Now.Ticks - _ticksAtLastPacket) > TimeSpan.TicksPerSecond)
+                {
+                    _connected = false;
+                }
+
+                return _connected;
+            }
+        }
+
         public UDPDataFormat.sParticipantInfoStringsAdditional ParticipantInfoStringsAdditional
         {
             get
@@ -89,6 +106,11 @@ namespace ProjectCars.Readers
                 if (received > 0)
                 {
                     ReceiveData(_receivedDataBuffer);
+                    _connected = true;
+                    if (_ticksAtLastPacket == -1)
+                    {
+                        _ticksAtLastPacket = DateTime.Now.Ticks;
+                    }
                 }
                 if (_readData)
                 {
