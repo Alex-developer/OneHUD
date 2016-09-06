@@ -81,7 +81,7 @@ namespace ProjectCars
             }
             else
             {
-                _udpReader = new UDPReader();
+                ReadUDPData(_cancel.Token);
             }
             return true;
         }
@@ -99,6 +99,7 @@ namespace ProjectCars
         }
         #endregion
 
+        #region Data Readers
         #region Shared Memory Data Reader
         private async void ReadData(CancellationToken token)
         {
@@ -132,6 +133,94 @@ namespace ProjectCars
                     Thread.Sleep((int)_pollInterval);
                 }
             }));
+        }
+        #endregion
+
+        #region UDP Data Reader
+        private async void ReadUDPData(CancellationToken token)
+        {
+            _udpReader = new UDPReader();
+
+            await Task.Factory.StartNew((Action)(() =>
+            {
+                while (!token.IsCancellationRequested)
+                {
+                    ProcessUDPData();
+                    Thread.Sleep((int)_pollInterval);
+                }
+            }));
+            _udpReader.Stop();
+            _udpReader = null;
+        }
+        #endregion
+        #endregion
+
+
+        #region Process UDP Data. Merge into normal shared memory packet
+        private void ProcessUDPData()
+        {
+            lock (_udpReader) // YUK !!!!
+            {
+                UDPDataFormat.sTelemetryData _tempTelemetryData = _udpReader.TelemetryData;
+                UDPDataFormat.sParticipantInfoStrings _tempParticipantInfoString = _udpReader.ParticipantInfoStrings;
+
+                _data.MGameState = (int)_tempTelemetryData.sGameSessionState & 7;
+                _data.MSessionState = (int)_tempTelemetryData.sGameSessionState >> 4;
+                _data.MRaceState = (int)_tempTelemetryData.sRaceStateFlags & 7;
+
+                _data.MViewedParticipantIndex = _tempTelemetryData.sViewedParticipantIndex;
+                _data.MNumParticipants = _tempTelemetryData.sNumParticipants;
+
+                _data.MUnfilteredThrottle = _tempTelemetryData.sUnfilteredThrottle;
+                _data.MUnfilteredBrake = _tempTelemetryData.sUnfilteredBrake;
+                _data.MUnfilteredSteering = _tempTelemetryData.sUnfilteredSteering;
+                _data.MUnfilteredClutch = _tempTelemetryData.sUnfilteredClutch;
+
+                SetValueIfNotNULL(_data.MCarName, _tempParticipantInfoString.sCarName);
+                SetValueIfNotNULL(_data.MCarClassName, _tempParticipantInfoString.sCarClassName);
+
+                _data.MLapsInEvent = _tempTelemetryData.sLapsInEvent;
+
+                SetValueIfNotNULL(_data.MTrackLocation, _tempParticipantInfoString.sTrackLocation);
+                SetValueIfNotNULL(_data.MTrackVariation, _tempParticipantInfoString.sTrackVariation);
+                _data.MTrackLength = _tempTelemetryData.sTrackLength;
+
+                _data.MLapInvalidated = (_tempTelemetryData.sRaceStateFlags >> 3 & 1) == 1;
+
+                _data.MBestLapTime = _tempTelemetryData.sBestLapTime;
+                _data.MLastLapTime = _tempTelemetryData.sLastLapTime;
+                _data.MCurrentTime = _tempTelemetryData.sCurrentTime;
+                _data.MSplitTimeAhead = _tempTelemetryData.sSplitTimeAhead;
+                _data.MSplitTimeBehind = _tempTelemetryData.sSplitTimeBehind;
+                _data.MSplitTime = _tempTelemetryData.sSplitTime;
+                _data.MEventTimeRemaining = _tempTelemetryData.sEventTimeRemaining;
+                _data.MPersonalFastestLapTime = _tempTelemetryData.sPersonalFastestLapTime;
+                _data.MWorldFastestLapTime = _tempTelemetryData.sWorldFastestLapTime;
+                _data.MCurrentSector1Time = _tempTelemetryData.sCurrentSector1Time;
+                _data.MCurrentSector2Time = _tempTelemetryData.sCurrentSector2Time;
+                _data.MCurrentSector3Time = _tempTelemetryData.sCurrentSector3Time;
+                _data.MFastestSector1Time = _tempTelemetryData.sFastestSector1Time;
+                _data.MFastestSector2Time = _tempTelemetryData.sFastestSector2Time;
+                _data.MFastestSector3Time = _tempTelemetryData.sFastestSector3Time;
+                _data.MPersonalFastestSector1Time = _tempTelemetryData.sPersonalFastestSector1Time;
+                _data.MPersonalFastestSector2Time = _tempTelemetryData.sPersonalFastestSector2Time;
+                _data.MPersonalFastestSector3Time = _tempTelemetryData.sPersonalFastestSector3Time;
+                _data.MWorldFastestSector1Time = _tempTelemetryData.sWorldFastestSector1Time;
+                _data.MWorldFastestSector2Time = _tempTelemetryData.sWorldFastestSector2Time;
+                _data.MWorldFastestSector3Time = _tempTelemetryData.sWorldFastestSector3Time;
+
+
+            }
+
+            ProcessData();
+        }
+
+        private void SetValueIfNotNULL(SmString property, SmString value)
+        {
+            if (value.Value != null)
+            {
+                property = value;
+            }
         }
         #endregion
 
@@ -366,9 +455,12 @@ namespace ProjectCars
         #endregion
     }
 
+    #region Enums
     public enum ConnectionType
     {
         SharedMemory = 1,
         UDP = 2
     }
+    #endregion
+
 }

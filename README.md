@@ -90,3 +90,4 @@ The PC side of the app will also support the hardware dash I am building for iRa
 # Credits
 
 Chris Kinsman - For the new name (OneHUD) and graphics
+Jim Britton - For CrewChief [https://github.com/mrbelowski] . This has saved me hours in working out the Project Cars UDP Data format. The UDP data structure in OneHud is based upon the code from CrewChief with some modifications

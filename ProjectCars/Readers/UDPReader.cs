@@ -23,6 +23,8 @@ namespace ProjectCars.Readers
         private byte[] _participantInfoStringsAdditionalBuffer = new byte[UDPDataFormat.participantInfoAdditionalSize];
         private UDPDataFormat.sParticipantInfoStringsAdditional _participantInfoStringsAdditional;
 
+        private bool _readData = true;
+
         public UDPReader()
         {
             _socketCallback = new AsyncCallback(ReceiveCallback);
@@ -35,6 +37,49 @@ namespace ProjectCars.Readers
             _udpClient.Client.BeginReceive(_receivedDataBuffer, 0, _receivedDataBuffer.Length, SocketFlags.None, ReceiveCallback, _udpClient.Client);
         }
 
+        #region Getters and Setters
+        public UDPDataFormat.sParticipantInfoStringsAdditional ParticipantInfoStringsAdditional
+        {
+            get
+            {
+                return _participantInfoStringsAdditional;
+            }
+            set
+            {
+                _participantInfoStringsAdditional = value;
+            }
+        }
+
+        public UDPDataFormat.sParticipantInfoStrings ParticipantInfoStrings
+        {
+            get
+            {
+                return _participantInfoStrings;
+            }
+            set
+            {
+                _participantInfoStrings = value;
+            }
+        }
+
+        public UDPDataFormat.sTelemetryData TelemetryData
+        {
+            get
+            {
+                return _telemetryData;
+            }
+            set
+            {
+                _telemetryData = value;
+            }
+        }
+        #endregion
+
+        public void Stop()
+        {
+            _readData = false;
+        }
+
         private void ReceiveCallback(IAsyncResult result)
         {
             try
@@ -45,7 +90,10 @@ namespace ProjectCars.Readers
                 {
                     ReceiveData(_receivedDataBuffer);
                 }
-                socket.BeginReceive(_receivedDataBuffer, 0, _receivedDataBuffer.Length, SocketFlags.None, _socketCallback, socket);
+                if (_readData)
+                {
+                    socket.BeginReceive(_receivedDataBuffer, 0, _receivedDataBuffer.Length, SocketFlags.None, _socketCallback, socket);
+                }
 
             }
             catch (Exception e)
@@ -88,7 +136,10 @@ namespace ProjectCars.Readers
             GCHandle gCHandle = GCHandle.Alloc(_sTelemetryBuffer, GCHandleType.Pinned);
             try
             {
-                _telemetryData = (UDPDataFormat.sTelemetryData)Marshal.PtrToStructure(gCHandle.AddrOfPinnedObject(), typeof(UDPDataFormat.sTelemetryData));
+                lock (this) // YUK
+                {
+                    _telemetryData = (UDPDataFormat.sTelemetryData)Marshal.PtrToStructure(gCHandle.AddrOfPinnedObject(), typeof(UDPDataFormat.sTelemetryData));
+                }
             }
             finally
             {
@@ -103,7 +154,10 @@ namespace ProjectCars.Readers
                 GCHandle gCHandle = GCHandle.Alloc(_participantInfoStringsBuffer, GCHandleType.Pinned);
                 try
                 {
-                    _participantInfoStrings = (UDPDataFormat.sParticipantInfoStrings)Marshal.PtrToStructure(gCHandle.AddrOfPinnedObject(), typeof(UDPDataFormat.sParticipantInfoStrings));
+                    lock (this) // YUK
+                    {
+                        _participantInfoStrings = (UDPDataFormat.sParticipantInfoStrings)Marshal.PtrToStructure(gCHandle.AddrOfPinnedObject(), typeof(UDPDataFormat.sParticipantInfoStrings));
+                    }
                 }
                 finally
                 {
@@ -118,7 +172,10 @@ namespace ProjectCars.Readers
             GCHandle gCHandle = GCHandle.Alloc(_participantInfoStringsAdditionalBuffer, GCHandleType.Pinned);
             try
             {
-                _participantInfoStringsAdditional = (UDPDataFormat.sParticipantInfoStringsAdditional)Marshal.PtrToStructure(gCHandle.AddrOfPinnedObject(), typeof(UDPDataFormat.sParticipantInfoStringsAdditional));
+                lock (this) //YUK
+                {
+                    _participantInfoStringsAdditional = (UDPDataFormat.sParticipantInfoStringsAdditional)Marshal.PtrToStructure(gCHandle.AddrOfPinnedObject(), typeof(UDPDataFormat.sParticipantInfoStringsAdditional));
+                }
             }
             finally
             {
